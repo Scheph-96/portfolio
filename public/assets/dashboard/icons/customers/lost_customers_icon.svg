@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="59" height="59" viewBox="0 0 59 59">
+  <g id="Groupe_170" data-name="Groupe 170" transform="translate(-24.898 -25)">
+    <rect id="Rectangle_225" data-name="Rectangle 225" width="59" height="59" rx="10" transform="translate(24.898 25)" fill="#ff2366" opacity="0.17"/>
+    <g id="Groupe_185" data-name="Groupe 185" transform="translate(-4.551 -2)">
+      <path id="Soustraction_2" data-name="Soustraction 2" d="M-5203.426-1274h-20.125v-3.625c0-2.691,2.956-4.44,5.435-5.433a26.92,26.92,0,0,1,9.065-1.817,25.562,25.562,0,0,1,5.711.759,8.425,8.425,0,0,0-1.711,5.115,8.436,8.436,0,0,0,1.624,5Zm-5.625-14.5a7.258,7.258,0,0,1-7.25-7.249,7.258,7.258,0,0,1,7.25-7.25,7.258,7.258,0,0,1,7.25,7.25A7.258,7.258,0,0,1-5209.051-1288.5Z" transform="translate(5264 1343)" fill="#ff2366"/>
+      <g id="Groupe_183" data-name="Groupe 183" transform="translate(2 -4)">
+        <g id="Ellipse_89" data-name="Ellipse 89" transform="translate(55.449 58)" fill="none" stroke="#ff2366" stroke-width="3">
+          <circle cx="10" cy="10" r="10" stroke="none"/>
+          <circle cx="10" cy="10" r="8.5" fill="none"/>
+        </g>
+        <path id="ic_close_24px" d="M13,5.806,12.194,5,9,8.194,5.806,5,5,5.806,8.194,9,5,12.194,5.806,13,9,9.806,12.194,13,13,12.194,9.806,9Z" transform="translate(56.449 59)" fill="#ff2366" stroke="#ff2366" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+    </g>
+  </g>
+</svg>

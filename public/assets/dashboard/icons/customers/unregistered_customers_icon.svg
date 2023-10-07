@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="59" viewBox="0 0 60 59">
+  <g id="Groupe_146" data-name="Groupe 146" transform="translate(-24.449 -25)">
+    <rect id="Rectangle_223" data-name="Rectangle 223" width="60" height="59" rx="10" transform="translate(24.449 25)" fill="#ffd950" opacity="0.17"/>
+    <g id="Groupe_184" data-name="Groupe 184" transform="translate(-4 -2)">
+      <path id="Soustraction_3" data-name="Soustraction 3" d="M-4834.425-1274h-20.126v-3.626c0-2.691,2.956-4.439,5.436-5.432a26.92,26.92,0,0,1,9.065-1.817,25.541,25.541,0,0,1,5.711.759,8.427,8.427,0,0,0-1.711,5.116,8.437,8.437,0,0,0,1.625,5Zm-5.625-14.5a7.259,7.259,0,0,1-7.25-7.25,7.258,7.258,0,0,1,7.25-7.249,7.257,7.257,0,0,1,7.249,7.249A7.258,7.258,0,0,1-4840.05-1288.5Z" transform="translate(4895 1343)" fill="#ffd950"/>
+      <g id="Groupe_183" data-name="Groupe 183" transform="translate(2 -4)">
+        <g id="Ellipse_89" data-name="Ellipse 89" transform="translate(55.449 58)" fill="none" stroke="#ffd950" stroke-width="3">
+          <circle cx="10" cy="10" r="10" stroke="none"/>
+          <circle cx="10" cy="10" r="8.5" fill="none"/>
+        </g>
+        <g id="Groupe_182" data-name="Groupe 182" transform="translate(61.949 63.843)">
+          <path id="ic_hourglass_full_24px" d="M7.353,6.493,6,6.715H6l0,0L7.81,8.508,6,10.3l0,0H6V12.99h5.429V10.305h0l0,0L9.619,8.508l1.81-1.788,0,0h0L10.3,6.493A1.739,1.739,0,0,1,9.183,7,4.544,4.544,0,0,1,7.353,6.493Z" transform="translate(-5.523 -4.46)" fill="#ffd950"/>
+          <path id="ic_hourglass_full_24px-2" data-name="ic_hourglass_full_24px" d="M6,2V4.559H6l0,0,1.81,1.7L6,7.971l0,0H6V10.53h5.429V7.975h0l0,0L9.619,6.265l1.81-1.7,0,0h0V2Z" transform="translate(-5.523 -2)" fill="none" stroke="#ffd950" stroke-width="1"/>
+          <rect id="Rectangle_16833" data-name="Rectangle 16833" width="6.535" height="0.813" transform="translate(0 8.031)" fill="#ffd950"/>
+          <rect id="Rectangle_16834" data-name="Rectangle 16834" width="6.535" transform="translate(0 0.098)" fill="#ffd950"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

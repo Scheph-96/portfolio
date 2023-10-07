@@ -1,0 +1,28 @@
+:root {
+    
+    --scrollbar-thumb-color: #5C7894;
+}
+
+.dark {
+    --scrollbar-thumb-color: rgba(94, 94, 94);
+}
+
+::-webkit-scrollbar {
+    width: 16px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-color);
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+}
