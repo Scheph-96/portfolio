@@ -8,6 +8,4 @@ const main = () => {
     collapseExtendMenuSideBar();
 }
 
-console.log('LOADED!!!!!');
-
 window.onload = main();

@@ -1,3 +1,7 @@
+import { FileLoader } from '../../services/load_file.service.js';
+import { appConfig } from '../../../dependencies.js';
+
+
 const body = document.querySelector('body');
 const profileDetails = document.querySelector('.profile-details');
 const profileDetailShortcut = document.querySelector('.profile-details-shortcut');
@@ -9,7 +13,12 @@ const workFilterShortcutDisplayer = document.querySelector('.work-filter-shortcu
 const moreLanguagesBtn = document.querySelector('.more-languages-btn');
 const programmingLanguage = document.querySelector('.programming-language');
 const moreLanguages = document.querySelector('.more-languages');
+const orderNow = document.querySelectorAll('.order-now');
+const mainContent = document.querySelector('.main-content');
+const mainContentContainer = document.querySelector('.main-content .container');
 
+
+let fileLoader = new FileLoader();
 
 // function hide() {
 //     document.addEventListener('click', (event) => {
@@ -72,9 +81,29 @@ function programmingLanguageHandler() {
 }
 
 
+function orderHandler() {
+    let url = `${appConfig.host}/page/order/`;
+
+    for (let i = 0; i < orderNow.length; i++) {
+        orderNow[i].addEventListener('click', (e) => {
+            axios.get(`${url + e.currentTarget.getAttribute('service')}`)
+                .then((response) => {
+                    mainContentContainer.innerHTML = response.data;                    
+                    mainContentContainer.scrollTop = 0;
+                })
+                .catch((error) => {
+                    console.error(`UNABLE TO LOAD PAGE::${error}`);
+                });
+
+        });
+
+    }
+}
+
 
 export {
     profilHandler as profile,
     workMenuHandler as workFilter,
     programmingLanguageHandler as moreProgrammingLanguage,
+    orderHandler,
 }

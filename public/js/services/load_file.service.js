@@ -1,4 +1,4 @@
-import { FileLoadingError } from '../plugins/errors/load_file_error.js';
+import { FileLoadingError } from '../errors/load_file_error.js';
 
 /**
  *  Use FileLoader objects to load or include file content in your code
@@ -10,7 +10,6 @@ export class FileLoader {
     /**
      * Load html snippets from file
      * @param {String} filename The file containing the snippet
-     * @param {Boolean} directRender Return directly or send through event
      * @param {Node} eventTarget The target that receive the event once the data is ready
      * @param {Node} node The node that will contains the loaded data
      */
@@ -24,6 +23,7 @@ export class FileLoader {
             // 4: request finished and response is ready
 
             // when user want to signal the end of the request and send the response through an event 
+            console.log(`THE NODE: ${node}`);
             if (this.#xhttp.readyState === 4 && this.#xhttp.status === 200 && !node) {
                 eventTarget.dispatchEvent(new CustomEvent('file-loaded', { detail: { data: this.#xhttp.responseText } }));
                 // when user want to directly load the request response in the destination node
@@ -41,4 +41,5 @@ export class FileLoader {
         // Send request
         this.#xhttp.send()
     }
+
 }

@@ -1,5 +1,5 @@
 import { themeEvent, getCssRule, getFilename } from '../tools/util.js';
-import { FileLoader } from '../services/load_file.service.js';
+import { FileLoader } from '../../services/load_file.service.js';
 import { lineChart, barChart, pieChart } from './charts.js';
 import { MyLocalStorage } from "./persistent_data/local_storage.js";
 // import { emailClick } from "../pages_features/mailbox_features.js";
@@ -294,7 +294,7 @@ function collapseExtendMenuSideBar() {
                 extendMenu(cssMainRule, gridContainerRule, mainContentRule);
             }
         } catch (error) {
-            if (proceedWithoutLocalStorage && error.name === 'TypeError') { }
+            proceedWithoutLocalStorageFoo(proceedWithoutLocalStorage, error);
         }
     });
 }

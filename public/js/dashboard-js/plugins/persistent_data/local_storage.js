@@ -1,4 +1,4 @@
-import { LocalStorageError } from "../errors/local_storage_error.js";
+import { LocalStorageError } from "../../../errors/local_storage_error.js";
 
 /**
  * Use MyLocalStorage objects to manipulate localStorage (create, read, update, delete)
