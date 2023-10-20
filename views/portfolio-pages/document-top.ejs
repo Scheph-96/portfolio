@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio | Omar Scheph</title>
+  <link rel="icon" type="image/x-icon" href="/assets/portfolio/img/coder.png">
+  <link rel="stylesheet" href="/style/portfolio-style.css">
+  <link rel="stylesheet" href="/style/global.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <!-- Link Swiper's CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+</head>
+
+<body>
+  <div class="profile-details-shadow"></div>
+  <div class="profile-details-shortcut">
+    <div>
+      <i class='bx bxs-user-circle'></i>
+    </div>
+  </div>
+  <main>
+    <div class="">
+      <% if(message) {  %>
+        
+      <div class="alert alert-<%= message.type %>">
+        <p>
+          <%= message.message %>
+        </p>
+      </div>
+      <% message = null } %>
+      <section class="profile-details">
+        <div class="profile">
+          <div class="profile-pic"></div>
+          <div class="name">
+            <h2>Omar Scheph</h2>
+          </div>
+          <div class="profession">
+            <p>Web Developer</p>
+            <p>UI Designer</p>
+            <p>Poster & Logo Maker</p>
+          </div>
+        </div>
+        <div class="details-skills">
+          <div class="details">
+            <div class="detail">
+              <p class="title">Telegram:</p>
+              <p>@OmarScheph</p>
+            </div>
+            <div class="detail">
+              <p class="title">Email:</p>
+              <p>scheph69@gmail.com</p>
+            </div>
+            <div class="detail">
+              <p class="title">Age:</p>
+              <p>22</p>
+            </div>
+          </div>
+          <span class="divider"></span>
+          <div class="skills">
+            <div class="programming-language">
+              <div class="visible-language">
+                <div class="html circle-progress">
+                  <span class="arc arc-start html"></span>
+                  <span class="arc arc-end"></span>
+                  <p>95%</p>
+                  <p>html</p>
+                </div>
+                <div class="js circle-progress">
+                  <span class="arc arc-start js"></span>
+                  <span class="arc arc-end"></span>
+                  <p>80%</p>
+                  <p>javascript</p>
+                </div>
+                <div class="css circle-progress">
+                  <span class="arc arc-start css"></span>
+                  <span class="arc arc-end"></span>
+                  <p>95%</p>
+                  <p>css</p>
+                </div>
+                <div class="more-languages-btn circle-progress">
+                  <p><i class='bx bx-plus'></i></p>
+                  <p>more</p>
+                </div>
+              </div>
+              <div class="more-languages">
+                <div class="visible-language">
+                  <div class="wordpress circle-progress">
+                    <span class="arc arc-start"></span>
+                    <span class="arc arc-end"></span>
+                    <p>70%</p>
+                    <p>wordpress</p>
+                  </div>
+                  <div class="php circle-progress">
+                    <span class="arc arc-start php"></span>
+                    <span class="arc arc-end"></span>
+                    <p>85%</p>
+                    <p>php</p>
+                  </div>
+                  <div class="vuejs circle-progress">
+                    <span class="arc arc-start"></span>
+                    <span class="arc arc-end"></span>
+                    <p>70%</p>
+                    <p>vuejs</p>
+                  </div>
+                </div>
+                <div class="visible-language">
+                  <div class="svelte circle-progress">
+                    <span class="arc arc-start"></span>
+                    <span class="arc arc-end"></span>
+                    <p>70%</p>
+                    <p>svelte</p>
+                  </div>
+                  <div class="laravel circle-progress">
+                    <span class="arc arc-start"></span>
+                    <span class="arc arc-end"></span>
+                    <p>70%</p>
+                    <p>laravel</p>
+                  </div>
+                  <div class="flutter circle-progress">
+                    <span class="arc arc-start"></span>
+                    <span class="arc arc-end"></span>
+                    <p>70%</p>
+                    <p>flutter</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="divider"></span>
+            <div class="languages">
+              <div class="language">
+                <p class="title">ENGLISH</p>
+                <span class="english"></span>
+              </div>
+              <div class="language">
+                <p class="title">FRENCH</p>
+                <span class="french"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="main-content">
+        <div class="top-bg"></div>
+        <div class="container">

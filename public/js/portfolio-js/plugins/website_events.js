@@ -16,6 +16,7 @@ const moreLanguages = document.querySelector('.more-languages');
 const orderNow = document.querySelectorAll('.order-now');
 const mainContent = document.querySelector('.main-content');
 const mainContentContainer = document.querySelector('.main-content .container');
+const alert = document.querySelector('.alert');
 
 
 let fileLoader = new FileLoader();
@@ -54,16 +55,19 @@ function profilHandler() {
 }
 
 function workMenuHandler() {
-    workFilterShortcut.addEventListener('click', () => {
-        workFilterShortcutDisplayer.classList.add('show');
-        console.log(workFilterShortcutDisplayer.classList);
-    }, false);
+    if (workFilterShortcut) {
+        workFilterShortcut.addEventListener('click', () => {
+            workFilterShortcutDisplayer.classList.add('show');
+            console.log(workFilterShortcutDisplayer.classList);
+        }, false);
+        
+        document.addEventListener('click', (event) => {
+            if (!workFilterShortcutDisplayer.contains(event.target)) {
+                workFilterShortcutDisplayer.classList.remove('show');
+            }
+        }, true);
+    }
 
-    document.addEventListener('click', (event) => {
-        if (!workFilterShortcutDisplayer.contains(event.target)) {
-            workFilterShortcutDisplayer.classList.remove('show');
-        }
-    }, true);
 }
 
 function programmingLanguageHandler() {
@@ -100,10 +104,23 @@ function orderHandler() {
     }
 }
 
+function fadeAlert() {
+    if (alert) {
+        setTimeout(() => {
+            alert.classList.add('dispose-alert');
+            setTimeout(() => {
+                alert.remove();
+            }, 2000);
+        }, 5000);
+        
+    }
+}
+
 
 export {
     profilHandler as profile,
     workMenuHandler as workFilter,
     programmingLanguageHandler as moreProgrammingLanguage,
     orderHandler,
+    fadeAlert,
 }

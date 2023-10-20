@@ -19,15 +19,6 @@ db.once('open', () => console.log('Connected to database'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// set template engine
-app.set('view engine', 'ejs');
-
-// set public directory
-app.use(express.static(path.join(__dirname, "public")));
-
-// set routes
-app.use('', require(path.join(__dirname, "routes/routes")));
-
 // session attributes
 let sess = {
     cookie: { maxAge: 3600000 },
@@ -35,7 +26,7 @@ let sess = {
         checkPeriod: 3600000
     }),
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     secret: 'MY SECRET',
 }
 
@@ -50,10 +41,22 @@ app.use(session(sess));
 // set local variables
 app.use((req, res, next) => {
     res.locals.message = req.session.message;
+    delete req.session.message;
     next();
 });
+
+// set template engine
+app.set('view engine', 'ejs');
+
+// set public directory
+app.use(express.static(path.join(__dirname, "public")));
+
+// set routes
+app.use('', require(path.join(__dirname, "routes/routes")));
+
 
 
 app.listen(PORT, () => {
     console.log(`Server started at ${appConfig.host}:${appConfig.port}`);
 });
+
