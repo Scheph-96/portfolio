@@ -1,0 +1,44 @@
+</div>
+</section>
+</div>
+</main>
+
+<script src="/js/portfolio-js/main.js" type="module"></script>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+  var swiper = new Swiper(".mySwiper", {
+    slidesPerView: 'auto',
+    // slidesPerView: 3,
+    cssWidthAndHeight: true,
+    spaceBetween: 20,
+    // centeredSlides: true,
+    grabCursor: true,
+    initialSlide: 0,
+    speed: 1000,
+    loop: true,
+    // autoplay: {
+    //     delay: 3000,
+    //     disableOnInteraction: false,
+    // },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next-unique',
+      prevEl: '.swiper-button-prev-unique'
+    }
+  });
+</script>
+
+
+</body>
+
+</html>

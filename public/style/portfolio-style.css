@@ -9,6 +9,10 @@
     --secondary-color: #ecebeb;
     --text-color: #919292;
     --star-color: #FFD700;
+    --success-color: #019425;
+    --danger-color: #bb0202;
+    --warning-color: #dda408;
+    --info-color: #0936c9;
     --main-padding: 17px;
     --x-shadow: 2px 0 5px rgba(0, 0, 0, 0.12);
     --y-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
@@ -37,6 +41,7 @@ main {
     height: 100vh;
     padding: var(--main-padding);
     overflow: hidden;
+    /* position: relative; */
 }
 
 main > div {
@@ -111,6 +116,64 @@ i {
     align-items: center;
     justify-content: center;
     font-size: .8rem;
+}
+
+.alert {
+    position: absolute;
+    top: 7%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    padding: 20px;
+    z-index: 5;
+    height: fit-content;
+    /* width: fit-content; */
+    max-width: 50%;
+    word-wrap: break-word;
+    animation: appeared .5s;
+    border-radius: 10px;
+}
+
+@keyframes appeared {
+    0% { top: 0%; }
+  100% { top: 7%; }
+}
+
+.alert-success {
+    background-color: var(--success-color);
+}
+
+.alert-danger {
+    background-color: var(--danger-color);
+}
+
+.alert-warning {
+    background-color: var(--warning-color);
+}
+
+.alert-info {
+    background-color: var(--info-color);
+}
+
+.alert .btn-close {
+    position: absolute;
+    top: 4%;
+    right: 1%;
+    color: #fff;
+}
+
+.dispose-alert {
+    opacity: 0;
+    animation: fadeOut 1s;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
 h1 {
@@ -879,7 +942,7 @@ h3 {
 }
 
 @media screen and (max-width: 920px) {
-    main {
+    main > div{
         /* background-color: red; */
         display: grid;
         grid-template-columns: auto;

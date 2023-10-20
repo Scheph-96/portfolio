@@ -1,4 +1,4 @@
-import { profile, workFilter, moreProgrammingLanguage, orderHandler } from './plugins/website_events.js';
+import { profile, workFilter, moreProgrammingLanguage, orderHandler, fadeAlert } from './plugins/website_events.js';
 
 
 const main = () => {
@@ -6,6 +6,7 @@ const main = () => {
     workFilter();
     moreProgrammingLanguage();
     orderHandler();
+    fadeAlert();
 }
 
 window.onload = main;

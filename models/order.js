@@ -3,6 +3,12 @@ const mongoose = require('mongoose');
 orderSchema = new mongoose.Schema({
     service: {
         type: String,
+        validate: {
+            validator: (data) => {
+                return /^([a-zA-Z\-]+)$/.test(data);
+            },
+            message: props => `${props.value} is not a valid service`
+        },
         required: true,
     },
     firstname: {
@@ -17,7 +23,7 @@ orderSchema = new mongoose.Schema({
         type: String,
         validate: {
             validator: (data) => {
-                return /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(data)
+                return /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(data);
             },
             message: props => `${props.value} is not a valid email`
         },
@@ -31,6 +37,12 @@ orderSchema = new mongoose.Schema({
     },
     description: {
         type: String,
+        // validate: {
+        //     validator: (data) => {
+        //         return /^([a-zA-Z0-9_\.\s]+)$/.test(data);
+        //     },
+        //     message: props => `Please the description does not support some characters`
+        // },
         required: [function() { 
             return !this.specifications;
         }, 'Description is required']
