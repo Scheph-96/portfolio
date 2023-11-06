@@ -1,11 +1,10 @@
-<%- include('./document-top') %>
 
-<form action="/submit-order" method="post">
+<form method="post" id="order-form" enctype="multipart/form-data">
   <div class="form-container order-form">
     <h3>Confirm your order</h3>
     <div class="input-box">
       <input type="text" name="service" id="service-name" value="<%= service %>" readonly>
-      <label for="service-name" class="input-icon-box">
+      <label for="service" class="input-icon-box">
         <svg class="menu-project-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 28.798 34.723" style="overflow: visible">
           <g transform="translate(-488.683 -236.203)">
             <g transform="translate(488.683 236.203)">
@@ -21,23 +20,23 @@
         </svg></label>
     </div>
     <div class="input-box">
-      <input type="text" name="firstname" id="customer-firstname" placeholder="Customer Firstname" <% if(message) { %> value="<%= message.order.firstname %>" <%  } %> required>
-      <label for="customer-firstname" class="input-icon-box"><i class='bx bxs-user'></i></label>
+      <input type="text" name="firstname" id="customer-firstname" placeholder="Customer Firstname" required>
+      <label for="firstname" class="input-icon-box"><i class='bx bxs-user'></i></label>
     </div>
     <div class="input-box">
-      <input type="text" name="lastname" id="customer-lastname" placeholder="Customer Lastname"<% if(message) { %> value="<%= message.order.lastname %>" <%  } %>  required>
-      <label for="customer-lastname" class="input-icon-box"><i class='bx bxs-user'></i></label>
+      <input type="text" name="lastname" id="customer-lastname" placeholder="Customer Lastname" required>
+      <label for="lastname" class="input-icon-box"><i class='bx bxs-user'></i></label>
     </div>
     <div class="input-box">
-      <input type="email" name="email" id="customer-email" placeholder="Customer Email" <% if(message) { %> value="<%= message.order.email %>" <%  } %>  required>
-      <label for="customer-email" class="input-icon-box"><i class='bx bx-at'></i></label>
+      <input type="email" name="email" id="customer-email" placeholder="Customer Email" required>
+      <label for="email" class="input-icon-box"><i class='bx bx-at'></i></label>
     </div>
     <div class="input-box ">
-      <input type="file" name="specifications" id="specifications">
+      <input type="file" name="specifications" id="project-specifications">
       <label class="input-icon-box" for="specifications"><i class='bx bx-upload'></i></label>
     </div>
     <div class="input-box">
-      <textarea name="description" id="description" cols="30" rows="10" placeholder="Description"></textarea>
+      <textarea name="description" id="project-description" cols="30" rows="10" placeholder="Description"></textarea>
       <label class="input-icon-box" for="description"><i class='bx bxs-envelope'></i></label>
     </div>
     <div>
@@ -47,10 +46,13 @@
         have the
         project specifications simply upload the file and leave the description blank.</p>
     </div>
-    <div class="submit-box">
-      <input type="submit" value="confirm">
+    <div class="submit-btn-section">
+        <div class="submit-box">
+            <a href="/"><input type="button" value="cancel"></a>
+        </div>
+        <div class="submit-box">
+          <input type="submit" value="confirm" id="submit-button">
+        </div>
     </div>
   </div>
 </form>
-
-<%- include('./document-bottom') %>
