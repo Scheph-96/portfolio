@@ -28,16 +28,16 @@
   <div class="services">
     <h2>Services</h2>
     <div class="services-content">
-      <% if(services) { console.log('SERVICES: ', services[0].value) %>
+      <% if(services) { %>
       <% for(let i = 0; i < services.length; i++) { %>
       <div class="service">
         <h3><%= services[i].title %></h3>
         <p><%= services[i].description %></p>
-        <a href="/page/order/<%= services[i].value %>">
-          <div class="order-now">
-            <p>order now</p>
-            <i class='bx bx-chevron-right'></i>
-          </div>
+        <a href="/order/<%= services[i].value %>">
+            <div class="order-now" service="<%= services[i].value %>">
+              <p>order now</p>
+              <i class='bx bx-chevron-right'></i>
+            </div>
         </a>
       </div>
       <% } %>
@@ -377,7 +377,7 @@
         <label class="input-icon-box" for="customer-email"><i class='bx bx-at'></i></label>
       </div>
       <div class="input-box">
-        <textarea name="customer-message" id="" cols="30" rows="13" placeholder="Message"></textarea>
+        <textarea name="customer-message" id="customer-message" cols="30" rows="13" placeholder="Message"></textarea>
         <label class="input-icon-box" for="customer-message"><i class='bx bxs-envelope'></i></label>
       </div>
       <div class="submit-box">

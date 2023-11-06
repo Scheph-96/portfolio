@@ -1,5 +1,5 @@
 import { themeEvent, getCssRule, getFilename } from '../tools/util.js';
-import { FileLoader } from '../../services/load_file.service.js';
+import { AjaxRequest } from '../../services/load_file.service.js';
 import { lineChart, barChart, pieChart } from './charts.js';
 import { MyLocalStorage } from "./persistent_data/local_storage.js";
 // import { emailClick } from "../pages_features/mailbox_features.js";
@@ -20,8 +20,8 @@ const emails = document.querySelectorAll('.email');
 let chart, dropdown, cssMainRule, gridContainerRule,
     mainContentRule, localStorage, proceedBtn, proceedWithoutLocalStorage = false;
 
-// Create new FileLoader instance use to navigate through the pages using XMLHttpRequest
-let fileLoader = new FileLoader();
+// Create new AjaxRequest instance use to navigate through the pages using XMLHttpRequest
+let ajaxRequest = new AjaxRequest();
 
 // All available pages in the pages folder
 const pages = {
@@ -92,7 +92,7 @@ function __init__() {
 
         // if there is a page stored restore it
         if (localStorage.getData(localStorageKeys.currentPageLoaded)) {
-            fileLoader.loadHtml(localStorage.getData(localStorageKeys.currentPageLoaded), mainContent, null);
+            ajaxRequest.loadHtml(localStorage.getData(localStorageKeys.currentPageLoaded), mainContent, null);
             navigation(true);
         }
     } catch (error) {
@@ -145,37 +145,37 @@ function switchPage() {
                 switch (e.currentTarget.getAttribute('menu-item-type')) {
                     case 'dashboard':
 
-                        fileLoader.loadHtml(pages.dashboard, mainContent, null);
+                        ajaxRequest.loadHtml(pages.dashboard, mainContent, null);
 
                         break;
 
                     case 'projects':
 
-                        fileLoader.loadHtml(pages.projects, mainContent, null);
+                        ajaxRequest.loadHtml(pages.projects, mainContent, null);
 
                         break;
 
                     case 'customers':
 
-                        fileLoader.loadHtml(pages.customers, mainContent, null);
+                        ajaxRequest.loadHtml(pages.customers, mainContent, null);
 
                         break;
 
                     case 'mailbox':
 
-                        fileLoader.loadHtml(pages.mailbox, mainContent, null);
+                        ajaxRequest.loadHtml(pages.mailbox, mainContent, null);
 
                         break;
 
                     case 'income':
 
-                        fileLoader.loadHtml(pages.income, mainContent, null);
+                        ajaxRequest.loadHtml(pages.income, mainContent, null);
 
                         break;
 
                     case 'analytics':
 
-                        fileLoader.loadHtml(pages.analytics, mainContent, null);
+                        ajaxRequest.loadHtml(pages.analytics, mainContent, null);
 
                         break;
 
@@ -204,7 +204,7 @@ function navigation(once, clickedElement = null) {
     // the name of the page load from localStorage
     let pageName;
 
-    // listen to file-loaded event, event fire by FileLoader object the needed page is load
+    // listen to file-loaded event, event fire by ajaxRequest object the needed page is load
     mainContent.addEventListener('file-loaded', (readyEvent) => {
         try {
             // in case clickedElement doesn't exist it means that the event is listening from the __init__ function
