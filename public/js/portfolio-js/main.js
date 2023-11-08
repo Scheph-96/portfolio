@@ -1,23 +1,31 @@
-import { profile, workFilter, moreProgrammingLanguage } from './plugins/website_events.js';
+import { profile, moreProgrammingLanguage } from './plugins/website_events.js';
 import { contentHandlerOnEvent, contentHandlerOnRawCode } from './plugins/navigation.js';
-import { contentBehaviorBasedOnUrl, customPushState } from "../tools/route_loader.tool.js";
+import { renderContentBaseOnUrl } from "../tools/route_loader.tool.js";
 
 
 
 
 const main = () => {
     profile();
-    workFilter();
     moreProgrammingLanguage();
-    contentBehaviorBasedOnUrl();
+    renderContentBaseOnUrl();
     contentHandlerOnEvent();
-    
-    
-    window.addEventListener('popstate', () => {
+
+    window.addEventListener('popstate', (e) => {
+        // Event triggered when the user navigate backward or forward
+        // in the browsing history using the browser navigation buttons
         console.log('POPSTATE');
-        contentBehaviorBasedOnUrl();
+        renderContentBaseOnUrl();
+
+        e.preventDefault();
     });
 
+    /**
+     * The event.detail.state represent the state object associated
+     * with the current history entry when the 'popstate' event is triggered.
+     * The state object is set when we use the 'pushState' or 'replacestate' 
+     * method to add an entry to the browser history stack
+    */
     window.addEventListener('pushstate', (event) => {
         console.log('PUSHSTATE');
         if (event.detail.state) {
@@ -25,7 +33,7 @@ const main = () => {
             contentHandlerOnRawCode(event.detail.state);
         }
 
-        contentBehaviorBasedOnUrl();
+        renderContentBaseOnUrl();
     });
 
     window.addEventListener('replacestate', (event) => {
@@ -37,9 +45,17 @@ const main = () => {
             contentHandlerOnRawCode(event.detail.state);
         }
 
-        contentBehaviorBasedOnUrl();
+        renderContentBaseOnUrl();
     })
-    
+
+    // window.addEventListener('resize', () => {
+    //     console.log('Screen resized');
+
+    //     const screenWidth = window.innerWidth;
+    //     const screenHeight = window.innerHeight;
+
+    //     console.log(`Window width: ${screenWidth}, Window height: ${screenHeight}`);
+    // })
 }
 
 window.onload = main;

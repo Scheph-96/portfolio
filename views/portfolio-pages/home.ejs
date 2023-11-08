@@ -32,60 +32,13 @@
         <div class="service">
           <h3><%= services[i].title %></h3>
           <p><%= services[i].description %></p>
-          <!-- <a href="/order/<%= services[i].value %>"> -->
               <div class="order-now" service="<%= services[i].value %>">
                 <p>order now</p>
                 <i class='bx bx-chevron-right'></i>
               </div>
-          <!-- </a> -->
         </div>
         <% } %>
         <% } %>
-        <!-- <div class="service">
-              <h3>Web Development</h3>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Recusandae similique corporis dolore nulla nesciunt voluptates
-                reprehenderit provident sit animi? Sint voluptate sunt est dolore
-                voluptatem ad adipisci reprehenderit saepe unde?
-              </p>
-              <a href="/page/order/web-development">
-                  <div class="order-now" service="web-development">
-                    <p>order now</p>
-                    <i class='bx bx-chevron-right'></i>
-                  </div>
-              </a>
-            </div>
-            <div class="service">
-              <h3>UI Design</h3>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Recusandae similique corporis dolore nulla nesciunt voluptates
-                reprehenderit provident sit animi? Sint voluptate sunt est dolore
-                voluptatem ad adipisci reprehenderit saepe unde?
-              </p>
-              <a href="/page/order/ui-design">
-                  <div class="order-now" service="ui-design">
-                    <p>order now</p>
-                    <i class='bx bx-chevron-right'></i>
-                  </div>
-              </a>
-            </div>
-            <div class="service">
-              <h3>Poster & Logo</h3>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Recusandae similique corporis dolore nulla nesciunt voluptates
-                reprehenderit provident sit animi? Sint voluptate sunt est dolore
-                voluptatem ad adipisci reprehenderit saepe unde?
-              </p>
-              <a href="/page/order/poster-logo">
-                  <div class="order-now" service="poster-logo">
-                    <p>order now</p>
-                    <i class='bx bx-chevron-right'></i>
-                  </div>
-              </a>
-            </div> -->
       </div>
     </div>
     <div class="works">
@@ -93,59 +46,53 @@
         <h2>Works</h2>
         <div class="work-filter">
           <ul>
-            <li><a href="#" class="title active">web</a></li>
-            <li><a href="#" class="title">ui design</a></li>
-            <li><a href="#" class="title">logo</a></li>
-            <li><a href="#" class="title">poster</a></li>
+            <li class="title active">web</li>
+            <li class="title">ui design</li>
+            <li class="title">logo</li>
+            <li class="title">poster</li>
           </ul>
         </div>
         <div class="work-filter-shortcut">
           <i class='bx bx-dots-vertical-rounded'></i>
         </div>
-        <div class="work-filter-shortcut-displayer">
-          <ul>
-            <li><a href="#" class="title active">web</a></li>
-            <li><a href="#" class="title">ui design</a></li>
-            <li><a href="#" class="title">logo</a></li>
-            <li><a href="#" class="title">poster</a></li>
-          </ul>
-        </div>
       </div>
-      <div class="works-content">
-        <div class="web">
-          <div class="web-item-1" style="background-color: transparent;">
-            <div></div>
-            <div></div>
+      <div class="works-content swiper swiper-container">
+        <div class="swiper-wrapper">
+          <div class="web swiper-slide">
+            <div class="web-item-1" style="background-color: transparent;">
+              <div></div>
+              <div></div>
+            </div>
+            <div class="web-item-2"></div>
+            <div class="web-item-3"></div>
+            <div class="web-item-4"></div>
+            <div class="web-item-5"></div>
+            <div class="web-item-6"></div>
           </div>
-          <div class="web-item-2"></div>
-          <div class="web-item-3"></div>
-          <div class="web-item-4"></div>
-          <div class="web-item-5"></div>
-          <div class="web-item-6"></div>
-        </div>
-        <div class="ui-design" style="display: none;">
-          <div class="ui-design-item-1"></div>
-          <div class="ui-design-item-2"></div>
-          <div class="ui-design-item-3"></div>
-          <div class="ui-design-item-4"></div>
-          <div class="ui-design-item-5"></div>
-          <div class="ui-design-item-6"></div>
-        </div>
-        <div class="logo" style="display: none;">
-          <div class="logo-item-1"></div>
-          <div class="logo-item-2"></div>
-          <div class="logo-item-3"></div>
-          <div class="logo-item-4"></div>
-          <div class="logo-item-5"></div>
-          <div class="logo-item-6"></div>
-        </div>
-        <div class="poster" style="display: none;">
-          <div class="poster-item-1"></div>
-          <div class="poster-item-2"></div>
-          <div class="poster-item-3"></div>
-          <div class="poster-item-4"></div>
-          <div class="poster-item-5"></div>
-          <div class="poster-item-6"></div>
+          <div class="ui-design swiper-slide">
+            <div class="ui-design-item-1"></div>
+            <div class="ui-design-item-2"></div>
+            <div class="ui-design-item-3"></div>
+            <div class="ui-design-item-4"></div>
+            <div class="ui-design-item-5"></div>
+            <div class="ui-design-item-6"></div>
+          </div>
+          <div class="logo swiper-slide">
+            <div class="logo-item-1"></div>
+            <div class="logo-item-2"></div>
+            <div class="logo-item-3"></div>
+            <div class="logo-item-4"></div>
+            <div class="logo-item-5"></div>
+            <div class="logo-item-6"></div>
+          </div>
+          <div class="poster swiper-slide">
+            <div class="poster-item-1"></div>
+            <div class="poster-item-2"></div>
+            <div class="poster-item-3"></div>
+            <div class="poster-item-4"></div>
+            <div class="poster-item-5"></div>
+            <div class="poster-item-6"></div>
+          </div>
         </div>
       </div>
     </div>

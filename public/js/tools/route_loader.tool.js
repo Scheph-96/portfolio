@@ -33,7 +33,7 @@ function routeLoader(path, param = null) {
     }
 }
 
-function contentBehaviorBasedOnUrl() {
+function renderContentBaseOnUrl() {
     const path = window.location.pathname;
     let count = 0;
     let splittedPath = path.split('/');
@@ -92,7 +92,7 @@ function customReplaceState(state=null, title=null, url) {
 
 export {
     routeLoader,
-    contentBehaviorBasedOnUrl,
+    renderContentBaseOnUrl,
     customPushState,
     customReplaceState,
 }
