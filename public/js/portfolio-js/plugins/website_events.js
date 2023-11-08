@@ -9,9 +9,7 @@ const profileDetails = document.querySelector('.profile-details');
 const profileDetailShortcut = document.querySelector('.profile-details-shortcut');
 const profileDetailShadow = document.querySelector('.profile-details-shadow');
 const profileDetailShortcutIcon = document.querySelector('.bxs-user-circle');
-const workFilterShortcut = document.querySelector('.work-filter-shortcut');
 const workFilterShortcutIcon = document.querySelector('.bx-dots-vertical-rounded');
-const workFilterShortcutDisplayer = document.querySelector('.work-filter-shortcut-displayer');
 const moreLanguagesBtn = document.querySelector('.more-languages-btn');
 const programmingLanguage = document.querySelector('.programming-language');
 const moreLanguages = document.querySelector('.more-languages');
@@ -42,20 +40,19 @@ const expandCollapseButton = document.querySelector('.main-content .collapse-exp
 // }
 
 function profilHandler() {
-
     let profileDetailsRules = getCssRule('portfolio-style.css', '.profile-details');
     let expandCollapseButtonRules = getCssRule('portfolio-style.css', '.main-content .collapse-expand-sidebar')
     let bodyRules = getCssRule('portfolio-style.css', 'body');
     let mainRules = getCssRule('portfolio-style.css', 'main');
 
     profileDetailShortcut.addEventListener('click', () => {
-        profileDetailsRules.style['transform'] = 'translateX(0px)';
+        profileDetails.style.transform = 'translateX(0px)';
         profileDetailShadow.classList.add('show');
         profileDetailShortcut.classList.add('hide');
     });
 
     profileDetailShadow.addEventListener('click', () => {
-        removeCssPropertyFromRule(profileDetailsRules, 'transform');
+        profileDetails.style.transform = '';
         profileDetailShadow.classList.remove('show');
         profileDetailShortcut.classList.remove('hide');
     });
@@ -83,22 +80,6 @@ function profilHandler() {
             mainFirstDiv.classList.remove('sidebar-collapse');
         }
     });
-}
-
-function workMenuHandler() {
-    if (workFilterShortcut) {
-        workFilterShortcut.addEventListener('click', () => {
-            workFilterShortcutDisplayer.classList.add('show');
-            console.log(workFilterShortcutDisplayer.classList);
-        }, false);
-
-        document.addEventListener('click', (event) => {
-            if (!workFilterShortcutDisplayer.contains(event.target)) {
-                workFilterShortcutDisplayer.classList.remove('show');
-            }
-        }, true);
-    }
-
 }
 
 function programmingLanguageHandler() {
@@ -150,7 +131,6 @@ function proceedAfterOrder() {
 
 export {
     profilHandler as profile,
-    workMenuHandler as workFilter,
     programmingLanguageHandler as moreProgrammingLanguage,
     alertToast,
     proceedAfterOrder,
