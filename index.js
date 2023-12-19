@@ -13,7 +13,7 @@ const server = http.createServer(app);
 const PORT = appConfig.port;
 
 
-mongoose.connect(appConfig.dbUri, { useNewUrlParser: true });
+mongoose.connect(appConfig.dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on('error', (error) => console.log(`DB CONNEXION ERROR::${error}`));
 db.once('open', () => console.log('Connected to database'));
@@ -71,8 +71,22 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, "public"), { index: false }));
 app.use(express.static('uploads'));
 
-// set routes
-// app.use('', require(path.join(__dirname, "routes/routes")));
+// app.use((req, res, next) => {
+//     let hostname = req.headers.host;
+//     let options = domainMap[hostname];
+//     console.log('HOSTNAME: ', hostname);
+//     console.log('OPTIONS: ', options);
+
+//     if (options && options.publicDir) {
+//         let middleware = express.static(path.join(__dirname), 'public', options.publicDir);
+//         middleware(req, res, next);
+//     } else {
+//         next();
+//     }
+// })
+
+// Web work static files
+// app.use('/experience', express.static(path.join(__dirname, '/web-work')));
 
 // Debugging middleware to log request URLs
 app.use((req, res, next) => {

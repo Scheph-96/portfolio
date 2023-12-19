@@ -12,4 +12,6 @@ function formidableFormParser(object) {
 }
 
 
-module.exports = formidableFormParser
+module.exports = {
+    formidableFormParser: formidableFormParser,
+}

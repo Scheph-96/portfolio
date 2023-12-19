@@ -96,30 +96,6 @@ function programmingLanguageHandler() {
     }, true);
 }
 
-
-
-function alertToast(alertType, message) {
-    let toast = document.createElement('div');
-    toast.classList.add("alert", `alert-${alertType}`);
-    toast.innerHTML = `<p>
-                            ${message}
-                       </p>`;
-
-    mainFirstDiv.prepend(toast);
-
-    const alert = document.querySelector('.alert');
-
-    if (alert) {
-        setTimeout(() => {
-            alert.classList.add('dispose-alert');
-            setTimeout(() => {
-                alert.remove();
-            }, 2000);
-        }, 5000);
-
-    }
-}
-
 function proceedAfterOrder() {
     const proceedBtn = document.querySelector('.proceed-after-order-button');
     console.log('IN PROCEED AFTER ORDER');
@@ -132,6 +108,5 @@ function proceedAfterOrder() {
 export {
     profilHandler as profile,
     programmingLanguageHandler as moreProgrammingLanguage,
-    alertToast,
     proceedAfterOrder,
 }

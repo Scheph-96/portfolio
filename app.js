@@ -1,129 +1,55 @@
+// Build-in requirement
 const express = require('express');
-const Order = require('./models/order');
-const Service = require('./models/service');
-const multer = require('multer');
 const util = require('util');
 const fs = require('fs');
 const ejs = require('ejs');
 const formidable = require('formidable');
-const formidableObjectParser = require('./tools/util.tool.js');
 const path = require('path');
+
+// Custom requirement
+const Order = require('./models/order');
+const Service = require('./models/service');
 const FileUploadError = require('./errors/file_upload.error.js');
+const ExperienceRessourceType = require('./models/experience_ressource_type');
+const ServiceCrud = require('./model_crud/service.crud');
+const OrderCrud = require('./model_crud/order.crud');
+const ExperienceCrud = require('./model_crud/experience.crud.js');
+const RecommendationCrud = require('./model_crud/recommendation_crud.js');
+
+// Multiple import
+const formidableMethods = require('./tools/util.tool.js');
+const formidableObjectParser = formidableMethods.formidableFormParser;
 
 
 const app = express();
 
-// let storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-
-//         cb(null, `./uploads/specs/`);
-//     },
-//     filename: (req, file, cb) => {
-
-//         // if (req.path === '/submit-order') {
-//         cb(null, `specs_${file.originalname}`);
-//         // }
-//     },
-// });
-
-// const upload = multer({storage: storage});
-
-const upload = multer();
+let serviceCrud = new ServiceCrud();
+let orderCrud = new OrderCrud();
+let experienceCrud = new ExperienceCrud();
+let recommendationCrud = new RecommendationCrud();
 
 
-async function fileHandler(req, res, files, subdir, objectId) {
-
-    return new Promise((resolve, reject) => {
-        if (!fs.existsSync(`./uploads/${subdir}`)) {
-            fs.mkdirSync(`./uploads/${subdir}`);
-        }
-
-        console.log('IN FILE HANDLER REQ.FILE: ', req.file);
-        console.log('IN FILE HANDLER files: ', files);
-
-        req.file = files;
-
-        const dynamicDestination = (req, file, cb) => {
-            // let destination;
-
-            // if (req.path === '/submit-order') {
-            //    let destination = `./uploads/${subdir}/`;
-            // }
-
-            cb(null, `./uploads/${subdir}/`);
-        }
-
-        const dynamicFilename = (req, file, cb) => {
-
-            // if (req.path === '/submit-order') {
-            cb(null, `${subdir}_${objectId}_${file.originalname}`);
-            // }
-        }
-
-        const fileFilter = (req, file, cb) => {
-            let splittedFilename = file.originalname.split('.');
-            const fileExtension = splittedFilename[splittedFilename.length - 1];
-
-            console.log('FILE EXTENSION: ', fileExtension);
-
-            if (fileExtension.toLowerCase() === "pdf") {
-                cb(null, true);
-            } else {
-                cb(null, false);
-            }
-        }
-
-        let storage = multer.diskStorage({
-            destination: dynamicDestination,
-            filename: dynamicFilename,
-        });
-
-        let dynamicUpload = multer({
-            storage: storage,
-            fileFilter: fileFilter,
-            // limits: {
-            //     fileSize: 10 * 1024 * 1024, // 10 MB
-            // },
-        });
-
-        dynamicUpload.single('specifications')(req, res, (err) => {
-            console.log('THE FILE IN SINGLE: ', req.file);
-            if (err) {
-                console.log(`\n THE FILE UPLOAD ERROR::${util.inspect(err, { showHidden: false, depth: null, colors: true })}\n`);
-
-                reject({
-                    type: 'danger',
-                    message: 'Unexpected error. Please try again!',
-                });
-            }
-            console.log('BE RESOLVE');
-            resolve('done');
-        });
-    })
-}
-
-
-async function writeFile(form, subdir, files, orderId)  {
+async function writeFile(form, subdir, files, orderId) {
     return new Promise((resolve, reject) => {
 
         form.uploadDir = `./uploads/${subdir}`;
 
         let splitted = files.specifications[0].originalFilename.split('.');
-        let fileExtension = splitted[splitted.length -1];
-        
+        let fileExtension = splitted[splitted.length - 1];
+
         if (fileExtension !== 'pdf') {
             reject(new FileUploadError('Only pdf files are allowed for specifications'));
             return;
         }
 
-        let filePath = path.join(__dirname, 'uploads')+ '/specs/specs_' + orderId + '_.' + fileExtension;
+        let filePath = path.join(__dirname, 'uploads') + '/specs/specs_' + orderId + '.' + fileExtension;
 
         let oldPath = files.specifications[0].filepath;
         let newPath = filePath;
 
         try {
             let rawData = fs.readFileSync(oldPath);
-    
+
             fs.writeFileSync(newPath, rawData);
             resolve('done!')
         } catch (error) {
@@ -138,106 +64,83 @@ app.get('/unknown-route', (req, res) => {
 });
 
 app.get('/home', (req, res) => {
-    Service.find().exec()
-        .then((services) => {
-            res.render('portfolio-pages/home', { 'services': services });
+    Promise.all([serviceCrud.readAll(), experienceCrud.readAllFavorite(), recommendationCrud.readAllFavoriteWithPic()])
+        .then((results) => {
+            res.render('portfolio-pages/home', { 'services': results[0], 'experienceFavorite': results[1], 'recommendationFavorite': results[2] });
         })
         .catch((error) => {
             console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
-            req.session.message = {
+            // req.session.message = {
+            //     type: 'danger',
+            //     message: 'Unexpected error. Please try again!',
+            // }
+            // return
+            return res.status(520).send({
                 type: 'danger',
                 message: 'Unexpected error. Please try again!',
-            }
-            // res.status(422)
-            // res.redirect('back');
-            return
+            });
         });
 });
 
-
-
-// app.get('/req/*', (req, res) => {
-//     switch (req.path) {
-//         case '/req/order/:service':
-
-//             break;
-
-//         default:
-//             break;
-//     }
-//     Service.find().exec()
-//         .then((services) => {
-//             res.render('portfolio-index', { 'services': services });
-//         })
-//         .catch((error) => {
-//             console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
-//             req.session.message = {
-//                 type: 'danger',
-//                 message: 'Unexpected error. Please try again!',
-//             }
-//             // res.status(422)
-//             // res.redirect('back');
-//             return
-//         });
-// });
-
-// app.get('/admin-dashboard', (req, res) => {
-//     res.render('dashboard-index');
-// });
-
-// // Services page route
 app.get('/load-order/:service', (req, res) => {
-    let service = req.params.service;
-    // console.log('LOCALS MESSAGE: ', res.locals.message);
-    // if (res.locals.message) {
-    //     res.locals.message = null;
-    // }
-    res.render('portfolio-pages/order', { 'service': service });
+    res.render('portfolio-pages/order', { 'service': req.params.service });
 });
 
 app.get('/load-order-success/order-success', (req, res) => {
     res.render('portfolio-pages/order-success');
 });
 
-
 // Orders route
 app.post('/submit-order', (req, res) => {
     // console.log(`THE REQ BODY: ${req.body}`);
 
-    const form = new formidable.IncomingForm();
+    const form = new formidable.IncomingForm({ allowEmptyFiles: true, minFileSize: 0 });
+    // form.options.minFileSize = 0;
+    // form.options.allowEmptyFiles = true;
 
-    form.parse(req, (formidableErr, fields, files) => {
+
+    console.log('THE FORM OBJECT: ', form.options);
+
+    form.parse(req, async (formidableErr, fields, files) => {
+
+        if (formidableErr) {
+            console.log('FORM PARSE ERR:: ', formidableErr);
+            return res.status(520).send({
+                type: 'danger',
+                message: 'Unexpected error. Please try again!',
+            });
+        }
 
         const order = new Order(formidableObjectParser(fields));
         console.log('THE ORDER JUST CREATED: ', order);
 
+        console.log('THE FIeLdS: ', fields);
         console.log('THE FILES: ', files);
+        console.log('THE FILES SIZE: ', files.specifications[0].size);
         console.log('THE FILES ONE: ', files[0]);
         console.log('THE FILE: ', files.file);
-        // console.log('THE FILE DETAIL: ', files.specifications[0].filepath);
+        console.log('THE FILE DETAIL LENGTH: ', files.specifications.length);
 
-        if (Object.keys(files).length) {
+        if (files.specifications.length !== 0 && files.specifications[0].originalFilename !== "" && files.specifications[0].size !== 0) {
             console.log('There is a file');
             order.specifications = true;
         } else {
+            console.log('There is no file');
             order.specifications = false;
         }
+        console.log('THE FORM OBJECT AFTER: ', form.options);
+
+        console.log('THE ORDER JUST CREATED AFTER: ', order);
+
+        order.description = order.description.trim();
 
         let modelError = order.validateSync();
 
+        console.log('THE MODEL ERROR: ', modelError);
         console.log(1);
         if (modelError) {
             console.log(2);
             console.log(`THE ERROR::${modelError}`);
-            // req.session.message = {
-            //     type: 'danger',
-            //     message: error.errors[`${Object.keys(error.errors)[0]}`].message,
-            //     order: order,
-            // }
-
-            // console.log(`THE SERVICE: ${order.service}`);
-            // console.log('MODEL ERROR: ', Object.keys(modelError.errors));
-            // console.log('MODEL ERROR ERRORS: ', modelError.errors);
 
             /**
              * modelError = ValidationError: description: Description is required
@@ -272,14 +175,6 @@ app.post('/submit-order', (req, res) => {
             });
         }
 
-        if (formidableErr) {
-            console.log('FORM PARSE ERR:: ', formidableErr);
-            return res.status(520).send({
-                type: 'danger',
-                message: 'Unexpected error. Please try again!',
-            });
-        }
-
         console.log('THE REQ BODY: ', req.body);
         console.log('THE REQ FILE: ', req.file);
         console.log('THE FIELDS: ', fields);
@@ -288,19 +183,11 @@ app.post('/submit-order', (req, res) => {
         console.log('AFTER!!!!!!!!!!!!!!!!!');
         // // if (Object.keys(req.body).length) {
         //     console.log('ZI SERVICE: ', fields.service[0]);
-
-        Service.findOne({ value: order.service }).exec()
+        // Service.findOne({ value: order.service }).exec()
+        serviceCrud.read({ value: order.service })
             .then(async (service) => {
                 console.log(`\nSERVICE FOUND: ${service}\n`);
                 if (!service) {
-                    // req.session.message = {
-                    //     info: {
-                    //         type: 'danger',
-                    //         message: 'Unprocessable entity',
-                    //     },
-                    //     order: order,
-                    // }
-                    // res.status(422);
                     res.status(422).send({
                         type: 'danger',
                         message: 'Unprocessable entity',
@@ -311,7 +198,7 @@ app.post('/submit-order', (req, res) => {
 
                     console.log(3);
 
-                    if (files) {
+                    if (order.specifications) {
                         // writeFile(form, 'sepcs', files)
                         //     .then((result) => {
                         //         console.log('THE RESULT: ', result);
@@ -327,7 +214,6 @@ app.post('/submit-order', (req, res) => {
 
                         try {
                             console.log('THE FILE UPLOAD');
-                            // await fileHandler(req, res, files, 'specs', dbOrder._id);
                             let attr = await writeFile(form, 'sepcs', files, order._id);
                             console.log(attr);
                             console.log('END FILE UPLOAD');
@@ -347,17 +233,12 @@ app.post('/submit-order', (req, res) => {
 
                         }
                         console.log('AFTER WRITE');
-                        // fileHandler(req, res, 'specs', dbOrder._id)
-                        //     .then((result) => {})
-                        //     .catch((error) => {
-                        //         console.log('THE ERROR OF FILE HANDLER:: ', error);
-                        //         return res.status(520).send(error);
-                        //     });
                     }
 
                     console.log('BEFORE SAVE');
                     console.log(`THE Order Before Save: `, order);
-                    order.save()
+                    // order.save()
+                    orderCrud.create(order)
                         .then((dbOrder) => {
                             // req.session.message = {
                             //     type: 'success',
@@ -368,8 +249,8 @@ app.post('/submit-order', (req, res) => {
                             console.log(`\n${1}\n`);
 
 
-                    
-                            
+
+
 
                             console.log(`\n${2}\n`);
                             ejs.renderFile(__dirname + '/views/portfolio-pages/order-success.ejs', dbOrder, (err, html) => {
@@ -435,29 +316,48 @@ app.post('/submit-order', (req, res) => {
 
             });
     });
-
-    // // try {
-
-
-    console.log(9);
-    // } else {
-    //     // res.status(400).send('Bad Request');
-    //     req.session.message = {
-    //         type: 'danger',
-    //         message: 'Bad Request',
-    //     }
-    //     res.redirect('/');
-    // }
 });
 
-app.get(/^(?!\/(style|js|assets|fonts)).*$/, (req, res) => {
+// Recommendations route
+app.post('/submit-recommendation', (req, res) => {
+    
+});
+
+// Experiences route
+// app.get('/experience/ressource/:type', (req, res) => {
+//     switch (req.params.type) {
+//         case ExperienceRessourceType.WEB:
+
+//             break;
+
+//         case ExperienceRessourceType.UIDESIGN:
+
+//             break;
+
+//         case ExperienceRessourceType.LOGO:
+
+//             break;
+
+//         case ExperienceRessourceType.POSTER:
+
+//             break;
+
+//         default:
+//             break;
+//     }
+// });
+
+app.get(/^(?!\/(style|js|assets|fonts|experience)).*$/, (req, res) => {
     // res.set('Content-Type', 'application/javascript');
 
     // res.setHeader(
     //     'Content-Security-Policy',
     //     "script-src 'http://127.0.0.1:3400/js/portfolio-js/main.js https://assets2.lottiefiles.com/private_files/lf30_kecMeI.json https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js'"
     // );
+    console.log('REQ URL: ', req.url);
+    // if (!req.url.includes("/web/") && !req.url.includes("/experience/")) {
     res.render('portfolio-pages/layout');
+    // }
 });
 
 

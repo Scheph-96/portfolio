@@ -23,4 +23,7 @@ serviceSchema = new mongoose.Schema({
     }
 });
 
+// arg1: Model Name
+// arg2: Schema
+// arg3: collection name in the database
 module.exports = mongoose.model('Service', serviceSchema, 'service');

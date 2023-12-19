@@ -1,4 +1,5 @@
 import { FileLoadingError } from '../errors/load_file_error.js';
+import { alertToast } from "./util.js";
 
 /**
  *  Use FileLoader objects to load or include file content in your code
@@ -31,6 +32,8 @@ export class AjaxRequest {
                 node.innerHTML = this.#xhttp.responseText;
                 // throw a new error when the request is finished but there is a problem with the file
             } else if (this.#xhttp.readyState === 4 && this.#xhttp.status !== 200) {
+                let error = JSON.parse(this.#xhttp.responseText);
+                alertToast(error.type, error.message);
                 throw new FileLoadingError(`Unable to load ressource:: status: ${this.#xhttp.status}`);
             }
         }

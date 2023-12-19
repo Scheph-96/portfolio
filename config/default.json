@@ -2,7 +2,7 @@
     "Settings": {
         "host": "http://127.0.0.1",
         "port": 3400,
-        "dbUri": "mongodb://127.0.0.1:27017/scportfoliodb",
+        "dbUri": "mongodb://127.0.0.1:27017/scportfoliodb?maxPoolSize=100",
         "site": {
             "url": "http://localhost.com"
         }
