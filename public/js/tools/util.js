@@ -31,7 +31,31 @@ function removeCssPropertyFromRule(rule, property) {
     rule.style.removeProperty(property);
 }
 
+
+function alertToast(alertType, message) {
+    let toast = document.createElement('div');
+    toast.classList.add("alert", `alert-${alertType}`);
+    toast.innerHTML = `<p>
+                            ${message}
+                       </p>`;
+
+    document.querySelector('body').prepend(toast);
+
+    const alert = document.querySelector('.alert');
+
+    if (alert) {
+        setTimeout(() => {
+            alert.classList.add('dispose-alert');
+            setTimeout(() => {
+                alert.remove();
+            }, 2000);
+        }, 5000);
+
+    }
+}
+
 export {
     getCssRule,
     removeCssPropertyFromRule,
+    alertToast,
 }

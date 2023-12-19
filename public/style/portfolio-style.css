@@ -5,7 +5,8 @@
     --main-bg-color: #1f1f27;
     --section-bg-color: #21212a;
     --card-bg-color: #282833;
-    --primary-color: #1E90FF;
+    --primary-color: rgb(30, 144, 255, .5);
+    --primary-color-lite: #1E90FF;
     --default-text-color: #ecebeb;
     --light-text-color: #919292;
     --star-color: #FFD700;
@@ -58,7 +59,7 @@ main>div.sidebar-collapse {
 
 img {
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
 }
 
 button {
@@ -73,6 +74,11 @@ button {
 
 i {
     font-size: 1.4rem;
+}
+
+a {
+    text-decoration: none;
+    color: var(--default-text-color);
 }
 
 .title {
@@ -200,10 +206,32 @@ h3 {
     font-size: 1rem;
 }
 
-
 object {
     width: 100%;
     height: 100%;
+}
+
+.xpImgDisplayer {
+    background-color: rgba(0, 0, 0, .9);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.xpImgDisplayer img {
+    height: 90%;
+    object-fit: contain;
+}
+
+.xpImgDisplayerContainer {
+    /* width: 95%; */
+    height: 90%;
 }
 
 .profile-details-shortcut>div {
@@ -219,6 +247,18 @@ object {
     top: 1rem;
     left: 1rem;
     z-index: 10;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--default-text-color);
+}
+
+.show-all {
+    background-color: var(--primary-color-lite);
+    color: var(--default-text-color);
 }
 
 
@@ -259,8 +299,9 @@ object {
     width: 5.5rem;
     height: 5.5rem;
     border-radius: 50%;
-    background-color: var(--primary-color);
+    background-color: var(--main-bg-color);
     margin-bottom: 15px;
+    overflow: hidden;
 }
 
 /* ------------------- name ------------------- */
@@ -715,10 +756,6 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
 /* ------------------- works ------------------- */
 
 .main-content .container .body .works .works-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--default-text-color);
     position: relative;
 }
 
@@ -767,18 +804,36 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
     padding: var(--main-padding) 0 0 0;
 }
 
-.main-content .container .body .works .works-content .swiper-wrapper .swiper-slide {
+.main-content .container .body .works .works-content .swiper-wrapper .swiper-slide > ul{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    gap: 2rem;
 }
 
-.main-content .container .body .works .works-content .swiper-wrapper .swiper-slide>div {
-    height: 200px;
-    background-color: crimson;
+.main-content .container .body .works .works-content .swiper-wrapper .swiper-slide li {
+    /* height: 240px; */
+    background-color: var(--card-bg-color);
+    cursor: pointer;
 }
 
-.main-content .container .body .works .works-content .web-item-1 div {
+.main-content .container .body .works .works-content .swiper-wrapper .swiper-slide img {
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+}
+
+.main-content .container .body .works .works-content .swiper-wrapper .swiper-slide .more-work {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.main-content .container .body .works .works-content .swiper-wrapper .swiper-slide .more-work > a{
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+/* .main-content .container .body .works .works-content .web-item-1 div {
     background-color: crimson;
 }
 
@@ -786,7 +841,7 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
     display: grid;
     grid-template-rows: repeat(2, 1fr);
     gap: 1rem;
-}
+} */
 
 /* ------------------- recommendations ------------------- */
 
@@ -812,12 +867,13 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
     align-items: center;
 }
 
-.main-content .container .body .recommendations-content .swiper-wrapper .swiper-slide .recommendation-header .profile>div {
+.main-content .container .body .recommendations-content .swiper-wrapper .swiper-slide .recommendation-header .profile .profile-pic {
     width: 2.8rem;
     height: 2.8rem;
     background-color: var(--primary-color);
     border-radius: 50%;
     margin-right: .5rem;
+    background-color: var(--main-bg-color);
 }
 
 .main-content .container .body .recommendations-content .swiper-wrapper .swiper-slide .recommendation-header span {
@@ -896,6 +952,10 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
 
 
 /* ------------------- contact ------------------- */
+
+.main-content .container .body .contact .form-container {
+    margin: var(--main-padding) 0 0 0;
+}
 
 .form-container {
     padding: var(--main-padding);
@@ -1086,7 +1146,7 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
         gap: 1rem;
     }
 
-    .main-content .container .body .works .works-content .swiper-wrapper .swiper-slide {
+    .main-content .container .body .works .works-content .swiper-wrapper .swiper-slide ul {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
@@ -1096,6 +1156,10 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
 
 @media screen and (max-width: 920px) {
 
+
+    .xpImgDisplayerContainer {
+        height: 85%;
+    }
     /* main {
         background-color: red;
     } */
@@ -1168,6 +1232,7 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
         background-color: green;
     } */
 
+
     .main-content .container .body .services .services-content {
         padding: var(--main-padding) 0 0 0;
         display: grid;
@@ -1175,7 +1240,7 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
         gap: 1rem;
     }
 
-    .main-content .container .body .works .works-content .swiper-wrapper .swiper-slide {
+    .main-content .container .body .works .works-content .swiper-wrapper .swiper-slide ul {
         display: grid;
         grid-template-columns: repeat(1, 1fr);
         gap: 1rem;

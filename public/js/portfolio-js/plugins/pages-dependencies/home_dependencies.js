@@ -31,6 +31,8 @@ function workSwipe() {
   const swipeContainer = document.querySelector('.swiper-container');
   const workTitles = document.querySelectorAll('.work-filter .title');
   const workSwiperSlides = document.querySelectorAll('.works-content .swiper-slide');
+  const workFilterShortcut = document.querySelector('.work-filter-shortcut');
+  const workFilterShortcutDisplayer = document.querySelector('.work-filter ul');
 
   var swiper = new Swiper(".swiper-container", {
     cssWidthAndHeight: true,
@@ -51,39 +53,10 @@ function workSwipe() {
       e.currentTarget.classList.add('active');
       swipeContainer.swiper.slideTo(i);
 
-      // for (let j = 0; j < workSwiperSlides.length; j++) {
-      //   if (workSwiperSlides[j].classList.contains('swiper-slide-active')) {
-      //     workSwiperSlides[j].classList.remove('swiper-slide-active');
-      //   }
+      if (workFilterShortcut && workFilterShortcutDisplayer.classList.contains('show')) {
+        workFilterShortcutDisplayer.classList.remove('show');
+      }
 
-      //   if (workSwiperSlides[j].classList.contains('swiper-slide-prev')) {
-      //     workSwiperSlides[j].classList.remove('swiper-slide-prev');
-      //   }
-
-      //   if (workSwiperSlides[j].classList.contains('swiper-slide-next')) {
-      //     workSwiperSlides[j].classList.remove('swiper-slide-next');
-      //   }
-      // }
-
-      // for (let j = 0; j < workSwiperSlides.length; j++) {
-      //   console.log('THE TARGET: ', e.currentTarget);
-      //   console.log('THE SLIDE: ', workSwiperSlides[j]);
-
-      //   if (e.currentTarget.getAttribute('index') === workSwiperSlides[j].getAttribute('data-swiper-slide-index')) {
-      //     console.log('SLIDE MATCH');
-
-      //     if ((j - 1) >= 0) {
-      //       workSwiperSlides[j - 1].classList.add('swiper-slide-prev');
-      //     }
-
-      //     if ((j + 1) <= (workSwiperSlides.length - 1)) {
-      //       workSwiperSlides[j + 1].classList.add('swiper-slide-next');
-      //     }
-
-      //     workSwiperSlides[j].classList.add('swiper-slide-active');
-      //     break;
-      //   }
-      // }
     });
   }
 }
@@ -115,20 +88,55 @@ function workMenuHandler() {
   const workFilterShortcutDisplayer = document.querySelector('.work-filter ul');
   console.log('WORK MENU HANDLER', workFilterShortcut);
   if (workFilterShortcut) {
-      workFilterShortcut.addEventListener('click', () => {
-          workFilterShortcutDisplayer.classList.add('show');
-          console.log(workFilterShortcutDisplayer.classList);
-      }, false);
+    workFilterShortcut.addEventListener('click', () => {
+      workFilterShortcutDisplayer.classList.add('show');
+      console.log(workFilterShortcutDisplayer.classList);
+    }, false);
 
-      document.addEventListener('click', (event) => {
-          if (!workFilterShortcutDisplayer.contains(event.target)) {
-              workFilterShortcutDisplayer.classList.remove('show');
-          }
-      }, true);
+    document.addEventListener('click', (event) => {
+      if (!workFilterShortcutDisplayer.contains(event.target)) {
+        workFilterShortcutDisplayer.classList.remove('show');
+      }
+    }, true);
   } else {
-      console.log('DOES NOT EXIST');
+    console.log('DOES NOT EXIST');
   }
 
+}
+
+function workItemsHandler() {
+  const workItems = document.querySelectorAll('.web-item');
+
+  for (let i = 0; i < workItems.length; i++) {
+    workItems[i].addEventListener('click', (e) => {
+      e.preventDefault();
+      window.open('/web-work/clinic-website/index.html');
+      console.log('opened');
+    });
+  }
+}
+
+function openImage() {
+  const body = document.querySelector('body');
+  // The images displayed in home page. The 5 ones
+  const xpImg = document.querySelectorAll('.experience-img');
+
+  for (let i = 0; i < xpImg.length; i++) {
+
+    xpImg[i].addEventListener('click', () => {
+      let xpImgDisplayer = document.createElement('div');
+      xpImgDisplayer.classList.add('xpImgDisplayer');
+      xpImgDisplayer.innerHTML = `<img class="experience-img-displayed" src="${xpImg[i].getAttribute('src')}" alt ="${xpImg[i].getAttribute('alt')}">`;
+
+      body.appendChild(xpImgDisplayer);
+
+      xpImgDisplayer.addEventListener('click', (e) => {
+        body.removeChild(xpImgDisplayer);
+      });
+
+    });
+
+  }
 }
 
 function homeDependencieMain() {
@@ -136,6 +144,8 @@ function homeDependencieMain() {
   orderPageHandler();
   workSwipe();
   workMenuHandler();
+  openImage();
+  // workItemsHandler();
 }
 
 export {

@@ -1,344 +1,218 @@
-
 <div class="header">
-    <div class="greeting-text">
-      <h1>Looking for a services?</h1>
-      <h2>Welcome Customer.</h2>
-      <h3>Take a seat and choose the service that suit you.</h3>
+  <div class="greeting-text">
+    <h1>Looking for a services?</h1>
+    <h2>Welcome Customer.</h2>
+    <h3>Take a seat and choose the service that suit you.</h3>
+  </div>
+  <div class="coder">
+    <img src="/assets/portfolio/img/coder.png">
+  </div>
+</div>
+<div class="body">
+  <div class="status">
+    <div class="experience-year">
+      <span>5+</span>
+      <p>Years Experience</p>
     </div>
-    <div class="coder">
-      <img src="/assets/portfolio/img/coder.png">
+    <div class="completed-projects">
+      <span>75</span>
+      <p>Completed Projects</p>
+    </div>
+    <div class="happy-customers">
+      <span>60</span>
+      <p>Happy Customers</p>
     </div>
   </div>
-  <div class="body">
-    <div class="status">
-      <div class="experience-year">
-        <span>5+</span>
-        <p>Years Experience</p>
-      </div>
-      <div class="completed-projects">
-        <span>75</span>
-        <p>Completed Projects</p>
-      </div>
-      <div class="happy-customers">
-        <span>60</span>
-        <p>Happy Customers</p>
-      </div>
-    </div>
-    <div class="services">
-      <h2>Services</h2>
-      <div class="services-content">
-        <% if(services) { %>
-        <% for(let i = 0; i < services.length; i++) { %>
-        <div class="service">
-          <h3><%= services[i].title %></h3>
-          <p><%= services[i].description %></p>
-              <div class="order-now" service="<%= services[i].value %>">
-                <p>order now</p>
-                <i class='bx bx-chevron-right'></i>
-              </div>
+  <div class="services">
+    <h2>Services</h2>
+    <div class="services-content">
+      <% if(services) { %>
+      <% for(let i = 0; i < services.length; i++) { %>
+      <div class="service">
+        <h3><%= services[i].title %></h3>
+        <p><%= services[i].description %></p>
+        <div class="order-now" service="<%= services[i].value %>">
+          <p>order now</p>
+          <i class='bx bx-chevron-right'></i>
         </div>
-        <% } %>
-        <% } %>
+      </div>
+      <% } %>
+      <% } %>
+    </div>
+  </div>
+  <div class="works">
+    <div class="works-header section-header">
+      <h2>Works</h2>
+      <div class="work-filter">
+        <ul>
+          <li class="title active">web</li>
+          <li class="title">ui design</li>
+          <li class="title">logo</li>
+          <li class="title">poster</li>
+        </ul>
+      </div>
+      <div class="work-filter-shortcut">
+        <i class='bx bx-dots-vertical-rounded'></i>
       </div>
     </div>
-    <div class="works">
-      <div class="works-header">
-        <h2>Works</h2>
-        <div class="work-filter">
+    <div class="works-content swiper swiper-container">
+      <div class="swiper-wrapper">
+        <% if(experienceFavorite) { %>
+        <div class="web swiper-slide">
           <ul>
-            <li class="title active">web</li>
-            <li class="title">ui design</li>
-            <li class="title">logo</li>
-            <li class="title">poster</li>
+            <% for(let i = 0; i < experienceFavorite.length; i++) { %>
+            <% if(experienceFavorite[i].type === "web") { %>
+            <li>
+              <figure class="web-item">
+                <a href="<%= experienceFavorite[i].link %>" target="_blank">
+                  <img src="<%= experienceFavorite[i].cover %>" alt="<%= experienceFavorite[i].tagInfo %>">
+                </a>
+              </figure>
+            </li>
+            <% } %>
+            <% } %>
+            <li>
+              <figure class="web-item more-work">
+                <a href="#" target="_blank">SEE MORE</a>
+              </figure>
+            </li>
           </ul>
         </div>
-        <div class="work-filter-shortcut">
-          <i class='bx bx-dots-vertical-rounded'></i>
+        <div class="ui-design swiper-slide">
+          <ul>
+            <% for(let i = 0; i < experienceFavorite.length; i++) { %>
+            <% if(experienceFavorite[i].type === "ui-design") { %>
+            <li>
+              <firgure class="ui-design-item">
+                <div class="ui-design-pic">
+                  <img class="experience-img" src="<%= experienceFavorite[i].cover %>" alt="<%= experienceFavorite[i].tagInfo %>">
+                </div>
+              </firgure>
+            </li>
+            <% } %>
+            <% } %>
+            <li>
+              <figure class="ui-design-item more-work">
+                <a href="#" target="_blank">SEE MORE</a>
+              </figure>
+            </li>
+          </ul>
         </div>
-      </div>
-      <div class="works-content swiper swiper-container">
-        <div class="swiper-wrapper">
-          <div class="web swiper-slide">
-            <div class="web-item-1" style="background-color: transparent;">
-              <div></div>
-              <div></div>
-            </div>
-            <div class="web-item-2"></div>
-            <div class="web-item-3"></div>
-            <div class="web-item-4"></div>
-            <div class="web-item-5"></div>
-            <div class="web-item-6"></div>
-          </div>
-          <div class="ui-design swiper-slide">
-            <div class="ui-design-item-1"></div>
-            <div class="ui-design-item-2"></div>
-            <div class="ui-design-item-3"></div>
-            <div class="ui-design-item-4"></div>
-            <div class="ui-design-item-5"></div>
-            <div class="ui-design-item-6"></div>
-          </div>
-          <div class="logo swiper-slide">
-            <div class="logo-item-1"></div>
-            <div class="logo-item-2"></div>
-            <div class="logo-item-3"></div>
-            <div class="logo-item-4"></div>
-            <div class="logo-item-5"></div>
-            <div class="logo-item-6"></div>
-          </div>
-          <div class="poster swiper-slide">
-            <div class="poster-item-1"></div>
-            <div class="poster-item-2"></div>
-            <div class="poster-item-3"></div>
-            <div class="poster-item-4"></div>
-            <div class="poster-item-5"></div>
-            <div class="poster-item-6"></div>
-          </div>
+        <div class="logo swiper-slide">
+          <ul>
+            <% for(let i = 0; i < experienceFavorite.length; i++) { %>
+            <% if(experienceFavorite[i].type === "logo") { %>
+            <li class="logo-item">
+              <figure>
+                <img class="experience-img" src="<%= experienceFavorite[i].cover %>" alt="<%= experienceFavorite[i].tagInfo %>">
+              </figure>
+            </li>
+            <% } %>
+            <% } %>
+            <li class="logo-item">
+              <figure class="ui-design-item more-work">
+                <a href="#" target="_blank">SEE MORE</a>
+              </figure>
+            </li>
+          </ul>
         </div>
+        <div class="poster swiper-slide">
+          <ul>
+            <% for(let i = 0; i < experienceFavorite.length; i++) { %>
+            <% if(experienceFavorite[i].type === "poster") { %>
+            <li class="logo-item">
+              <figure>
+                <img class="experience-img" src="<%= experienceFavorite[i].cover %>" alt="<%= experienceFavorite[i].tagInfo %>">
+              </figure>
+            </li>
+            <% } %>
+            <% } %>
+            <li class="logo-item">
+              <figure class="ui-design-item more-work">
+                <a href="#" target="_blank">SEE MORE</a>
+              </figure>
+            </li>
+          </ul>
+        </div>
+        <% } %>
       </div>
     </div>
-    <div class="recommendations">
+  </div>
+  <div class="recommendations">
+    <div class="recommendations-header">
       <h2>Recommendations</h2>
-      <div class="recommendations-content">
-        <div class="swiper mySwiper">
-          <div class="swiper-wrapper">
+    </div>
+    <div class="recommendations-content">
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          <% if (recommendationFavorite) { %>
+            <% for (let i = 0; i < recommendationFavorite.length; i++) { %>
             <div class="swiper-slide">
               <div class="recommendation-header">
                 <div class="profile">
-                  <div></div>
-                  <h3>Username</h3>
+                  <div class="profile-pic">
+                    <img src="data:image/<%=recommendationFavorite[i].pic.extension%>;base64,<%=recommendationFavorite[i].pic.path%>" alt="Customer Pic">
+                  </div>
+                  <h3><%= recommendationFavorite[i].username %></h3>
                 </div>
                 <span>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
+                  <% for (let j = 1; j <= 5; j++) { %>
+                    <% if (j <= recommendationFavorite[i].rate) { %>
+                      <i class='bx bxs-star'></i>
+                    <% } else { %>
+                      <i class='bx bx-star' ></i>
+                    <% } %>
+                  <% } %>
                 </span>
               </div>
               <div class="recommendation-content">
-                <p>
-                  <!-- lorem 300 characters -->
-                  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                  Aenean commodo
-                  ligula eget dolor. Aenean massa. Cum sociis natoque
-                  penatibus et magnis
-                  dis
-                  parturient montes, nascetur ridiculus mus. Donec quam felis,
-                  ultricies
-                  nec,
-                  pellentesque eu, pretium quis, sem. Nulla consequat massa
-                  quis enim.
-                  Donec.
-                </p>
+                <p><%= recommendationFavorite[i].message %></p>
               </div>
               <div class="recommendation-footer">
-                <p>Jun 23, 2023</p>
+                <p><%= recommendationFavorite[i].date %></p>
               </div>
             </div>
-            <div class="swiper-slide">
-              <div class="recommendation-header">
-                <div class="profile">
-                  <div></div>
-                  <h3>Username</h3>
-                </div>
-                <span>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                </span>
-              </div>
-              <div class="recommendation-content">
-                <p>
-                  <!-- lorem 100 -->
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                  Tempore
-                  voluptatibus, debitis facilis nemo eveniet soluta omnis et
-                  adipisci
-                  eaque optio ex, inventore, harum aperiam nulla eos ratione
-                  laudantium?
-                  Alias consequatur velit illum nemo doloribus? Eos
-                  accusantium quos
-                  voluptatem consequuntur quis vero totam beatae aspernatur
-                  optio,
-                  inventore, est accusamus, officia sunt sit delectus dolorem
-                  doloremque
-                  harum. Sed quia dolores autem inventore eaque, enim deserunt
-                  ex! Culpa,
-                  autem dolor quam ad, qui tenetur, aliquid officia architecto
-                  maxime
-                  magni sequi aut eum. Totam, reiciendis? Aliquid, autem iure
-                  beatae
-                  itaque ipsum alias praesentium perspiciatis a corporis
-                  aliquam culpa,
-                  voluptates illum nam recusandae necessitatibus commodi!
-                </p>
-              </div>
-              <div class="recommendation-footer">
-                <p>Jun 23, 2023</p>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="recommendation-header">
-                <div class="profile">
-                  <div></div>
-                  <h3>Username</h3>
-                </div>
-                <span>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                </span>
-              </div>
-              <div class="recommendation-content">
-                <p>
-                  <!-- lorem 10 -->
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Nisi,
-                  doloribus!
-                </p>
-              </div>
-              <div class="recommendation-footer">
-                <p>Jun 23, 2023</p>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="recommendation-header">
-                <div class="profile">
-                  <div></div>
-                  <h3>Username</h3>
-                </div>
-                <span>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                </span>
-              </div>
-              <div class="recommendation-content">
-                <p>
-                  <!-- lorem 15 -->
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Laudantium,
-                  placeat
-                  dolorum
-                  modi
-                  minima porro cumque.
-                </p>
-              </div>
-              <div class="recommendation-footer">
-                <p>Jun 23, 2023</p>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="recommendation-header">
-                <div class="profile">
-                  <div></div>
-                  <h3>Username</h3>
-                </div>
-                <span>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                </span>
-              </div>
-              <div class="recommendation-content">
-                <p>
-                  <!-- lorem 40 -->
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Eos doloremque
-                  facere at
-                  aliquam! Quam
-                  corrupti alias molestiae. Aut atque, ipsam delectus eum
-                  blanditiis natus
-                  quo,
-                  debitis molestiae
-                  eligendi voluptate nulla dolorem sit explicabo repellendus
-                  qui autem
-                  voluptatibus
-                  quos itaque
-                  quibusdam.
-                </p>
-              </div>
-              <div class="recommendation-footer">
-                <p>Jun 23, 2023</p>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="recommendation-header">
-                <div class="profile">
-                  <div></div>
-                  <h3>Username</h3>
-                </div>
-                <span>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                </span>
-              </div>
-              <div class="recommendation-content">
-                <p>
-                  <!-- lorem 25 -->
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Maiores autem
-                  beatae
-                  neque, voluptatem
-                  earum odio fugiat voluptas placeat pariatur quo facilis, ex
-                  vero culpa
-                  quis.
-                </p>
-              </div>
-              <div class="recommendation-footer">
-                <p>Jun 23, 2023</p>
-              </div>
-            </div>
-          </div>
-          <div class="swipe-btns">
-            <div class="swiper-pagination"></div>
-            <div>
-              <div class="swiper-button-prev-unique"><i class='bx bx-chevron-left'></i></div>
-              <div class="swiper-button-next-unique"><i class='bx bx-chevron-right'></i></div>
-            </div>
+            <% } %>
+            <% } %>
+        </div>
+        <div class="swipe-btns">
+          <div class="swiper-pagination"></div>
+          <div>
+            <div class="swiper-button-prev-unique"><i class='bx bx-chevron-left'></i></div>
+            <div class="swiper-button-next-unique"><i class='bx bx-chevron-right'></i></div>
           </div>
         </div>
       </div>
     </div>
-    <div class="contact">
-      <h2>Contact me</h2>
-      <div class="form-container">
-        <div class="input-box">
-          <input type="text" name="customer-name" id="customer-name" placeholder="Name">
-          <label class="input-icon-box" for="customer-name"><i class='bx bxs-user'></i></label>
-        </div>
-        <div class="input-box">
-          <input type="text" name="customer-email" id="customer-email" placeholder="Email">
-          <label class="input-icon-box" for="customer-email"><i class='bx bx-at'></i></label>
-        </div>
-        <div class="input-box">
-          <textarea name="customer-message" id="customer-message" cols="30" rows="13" placeholder="Message"></textarea>
-          <label class="input-icon-box" for="customer-message"><i class='bx bxs-envelope'></i></label>
-        </div>
-        <div class="submit-box">
-          <input type="submit" value="send message">
-        </div>
+  </div>
+  <div class="contact">
+    <h2>Contact me</h2>
+    <div class="form-container">
+      <div class="input-box">
+        <input type="text" name="customer-name" id="customer-name" placeholder="Name">
+        <label class="input-icon-box" for="customer-name"><i class='bx bxs-user'></i></label>
+      </div>
+      <div class="input-box">
+        <input type="text" name="customer-email" id="customer-email" placeholder="Email">
+        <label class="input-icon-box" for="customer-email"><i class='bx bx-at'></i></label>
+      </div>
+      <div class="input-box">
+        <textarea name="customer-message" id="customer-message" cols="30" rows="13" placeholder="Message"></textarea>
+        <label class="input-icon-box" for="customer-message"><i class='bx bxs-envelope'></i></label>
+      </div>
+      <div class="submit-box">
+        <input type="submit" value="send message">
       </div>
     </div>
   </div>
-  <div class="footer">
-    <footer>
-      <div class="copyright">
-        <p>Copyright &COPY; All right reserved 2023</p>
-      </div>
-      <div class="author">
-        <p>Website author: <a href="#">Omar Scheph</a></p>
-      </div>
-    </footer>
-  </div>
+</div>
+<div class="footer">
+  <footer>
+    <div class="copyright">
+      <p>Copyright &COPY; All right reserved 2023</p>
+    </div>
+    <div class="author">
+      <p>Website author: <a href="#">Omar Scheph</a></p>
+    </div>
+  </footer>
+</div>
