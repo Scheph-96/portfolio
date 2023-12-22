@@ -12,6 +12,10 @@ function routes(param=null) {
             addressBarUrl: '/order-success',
             // pageUrl: '/load-order-success/order-success'
         },
+        moreWork: {
+            addressBarUrl: '/more-experience/'+param,
+            pageUrl: '/experience/ressource/'+param
+        },
         // webWork: {
         //     addressBarUrl: '/web-work/'+param,
         //     pageUrl: 

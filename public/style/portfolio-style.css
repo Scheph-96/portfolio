@@ -58,6 +58,7 @@ main>div.sidebar-collapse {
 }
 
 img {
+    display: block;
     width: 100%;
     /* height: 100%; */
 }
@@ -199,11 +200,11 @@ h1 {
 }
 
 h2 {
-    font-size: 1.4rem;
+    font-size: calc(1rem + .6vw);
 }
 
 h3 {
-    font-size: 1rem;
+    font-size: calc(.6rem + .5vw);
 }
 
 object {
@@ -608,7 +609,7 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
 
 /* ------------------- header ------------------- */
 
-.main-content .container .header {
+.main-content .container > .header {
     width: 100%;
     height: 350px;
     background-image: url(/assets/portfolio/img/bg.jpg);
@@ -620,7 +621,7 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
     display: flex;
 }
 
-.main-content .container .header::before {
+.main-content .container > .header::before {
     content: '';
     position: absolute;
     top: 0;
@@ -632,7 +633,7 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
 
 /* ------------------- Gretting Text ------------------- */
 
-.main-content .container .header .greeting-text {
+.main-content .container > .header .greeting-text {
     position: absolute;
     left: 3rem;
     top: 2rem;
@@ -640,28 +641,28 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
 
 /* ------------------- h1 ------------------- */
 
-.main-content .container .header h1 {
-    font-size: 2.5rem;
+.main-content .container > .header h1 {
+    font-size: calc(1.8rem + 1vw);
     color: var(--default-text-color);
 }
 
 /* ------------------- h2 ------------------- */
 
-.main-content .container .header h2 {
-    font-size: 2rem;
+.main-content .container > .header h2 {
+    font-size: calc(1.5rem + .8vw);
     color: var(--primary-color);
 }
 
 /* ------------------- h3 ------------------- */
 
-.main-content .container .header h3 {
+.main-content .container > .header h3 {
     color: var(--default-text-color);
-    font-size: 1rem;
+    font-size: calc(.9rem + .5vw);
 }
 
 /* ------------------- coder ------------------- */
 
-.main-content .container .header .coder {
+.main-content .container > .header .coder {
     width: 320px;
     /* height: 100px; */
     /* background-color: rebeccapurple; */
@@ -804,7 +805,8 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
     padding: var(--main-padding) 0 0 0;
 }
 
-.main-content .container .body .works .works-content .swiper-wrapper .swiper-slide > ul{
+.main-content .container .body .works .works-content .swiper-wrapper .swiper-slide > ul, 
+.asset-showcase ul {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
@@ -816,7 +818,8 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
     cursor: pointer;
 }
 
-.main-content .container .body .works .works-content .swiper-wrapper .swiper-slide img {
+.main-content .container .body .works .works-content .swiper-wrapper .swiper-slide img, 
+.asset-showcase ul img {
     aspect-ratio: 3 / 2;
     object-fit: cover;
 }
@@ -844,6 +847,10 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
 } */
 
 /* ------------------- recommendations ------------------- */
+
+.main-content .container .body .recommendations-header p {
+    cursor: pointer;
+}
 
 .main-content .container .body .recommendations-content {
     padding: var(--main-padding) 0 0 0;
@@ -1106,6 +1113,35 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
 
 /* ============================== END ORDER SUCCESS ============================== */
 
+/* ============================== MORE EXPERIENCE ============================== */
+
+.main-content .container .more-experience-page > .header {
+    height: 50px;
+    padding-bottom: 1.5rem;
+}
+
+.main-content .container .more-experience-page > .header h2 {
+    text-transform: capitalize;
+}
+
+.main-content .container .more-experience-page > .header h2 span {
+    color: var(--primary-color);
+    text-transform: uppercase;
+}
+
+/* .main-content .container .more-experience-page .content ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.main-content .container .more-experience-page .content ul li img {
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+} */
+
+/* ============================== END MORE EXPERIENCE ============================== */
+
 
 /* =============================== END MAIN CONTENT =============================== */
 
@@ -1146,7 +1182,8 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
         gap: 1rem;
     }
 
-    .main-content .container .body .works .works-content .swiper-wrapper .swiper-slide ul {
+    .main-content .container .body .works .works-content .swiper-wrapper .swiper-slide ul, 
+    .asset-showcase ul  {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
@@ -1240,7 +1277,8 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
         gap: 1rem;
     }
 
-    .main-content .container .body .works .works-content .swiper-wrapper .swiper-slide ul {
+    .main-content .container .body .works .works-content .swiper-wrapper .swiper-slide ul, 
+    .asset-showcase ul  {
         display: grid;
         grid-template-columns: repeat(1, 1fr);
         gap: 1rem;

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const ExperienceRessourceType = require('./experience_ressource_type');
 
 const experienceSchema = new mongoose.Schema({
     link: {
@@ -15,6 +16,7 @@ const experienceSchema = new mongoose.Schema({
     },
     type: {
         type: String,
+        enum: ExperienceRessourceType.enums,
         required: true,
     }
 });

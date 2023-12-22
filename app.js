@@ -320,32 +320,49 @@ app.post('/submit-order', (req, res) => {
 
 // Recommendations route
 app.post('/submit-recommendation', (req, res) => {
-    
+
 });
 
 // Experiences route
-// app.get('/experience/ressource/:type', (req, res) => {
-//     switch (req.params.type) {
-//         case ExperienceRessourceType.WEB:
+app.get('/experience/ressource/:type', async (req, res) => {
+    try {
+        let results;
+        switch (req.params.type) {
+            case ExperienceRessourceType.enum().web:
+                results = await experienceCrud.readAllByType(ExperienceRessourceType.enum().web);
+                res.render('portfolio-pages/more-experience', { experiences: { ressources: results, type: ExperienceRessourceType.enum().web } });
+                break;
 
-//             break;
+            case ExperienceRessourceType.enum().ui_design:
+                results = await experienceCrud.readAllByType(ExperienceRessourceType.enum().ui_design);
+                res.render('portfolio-pages/more-experience', { experiences: { ressources: results, type: "ui design" } });
+                break;
 
-//         case ExperienceRessourceType.UIDESIGN:
+            case ExperienceRessourceType.enum().logo:
+                results = await experienceCrud.readAllByType(ExperienceRessourceType.enum().logo);
+                res.render('portfolio-pages/more-experience', { experiences: { ressources: results, type: ExperienceRessourceType.enum().logo } });
 
-//             break;
+                break;
 
-//         case ExperienceRessourceType.LOGO:
+            case ExperienceRessourceType.enum().poster:
+                results = await experienceCrud.readAllByType(ExperienceRessourceType.enum().poster);
+                res.render('portfolio-pages/more-experience', { experiences: { ressources: results, type: ExperienceRessourceType.enum().poster } });
 
-//             break;
+                break;
 
-//         case ExperienceRessourceType.POSTER:
-
-//             break;
-
-//         default:
-//             break;
-//     }
-// });
+            default:
+                res.render('notfound');
+                break;
+        }
+    } catch (error) {
+        console.log('ERROR CATCHED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+        console.log(error);
+        res.status(520).send({
+            type: 'danger',
+            message: 'Unexpected error. Please try again!',
+        });
+    }
+});
 
 app.get(/^(?!\/(style|js|assets|fonts|experience)).*$/, (req, res) => {
     // res.set('Content-Type', 'application/javascript');

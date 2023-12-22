@@ -72,8 +72,8 @@
             <% } %>
             <% } %>
             <li>
-              <figure class="web-item more-work">
-                <a href="#" target="_blank">SEE MORE</a>
+              <figure class="web-item more-work" more="web">
+                <p>SEE MORE</p>
               </figure>
             </li>
           </ul>
@@ -81,7 +81,7 @@
         <div class="ui-design swiper-slide">
           <ul>
             <% for(let i = 0; i < experienceFavorite.length; i++) { %>
-            <% if(experienceFavorite[i].type === "ui-design") { %>
+            <% if(experienceFavorite[i].type === "ui_design") { %>
             <li>
               <firgure class="ui-design-item">
                 <div class="ui-design-pic">
@@ -92,8 +92,8 @@
             <% } %>
             <% } %>
             <li>
-              <figure class="ui-design-item more-work">
-                <a href="#" target="_blank">SEE MORE</a>
+              <figure class="ui-design-item more-work" more="ui_design">
+                <p>SEE MORE</p>
               </figure>
             </li>
           </ul>
@@ -110,8 +110,8 @@
             <% } %>
             <% } %>
             <li class="logo-item">
-              <figure class="ui-design-item more-work">
-                <a href="#" target="_blank">SEE MORE</a>
+              <figure class="ui-design-item more-work" more="logo">
+                <p>SEE MORE</p>
               </figure>
             </li>
           </ul>
@@ -128,8 +128,8 @@
             <% } %>
             <% } %>
             <li class="logo-item">
-              <figure class="ui-design-item more-work">
-                <a href="#" target="_blank">SEE MORE</a>
+              <figure class="ui-design-item more-work" more="poster">
+                <p>SEE MORE</p>
               </figure>
             </li>
           </ul>
@@ -139,8 +139,9 @@
     </div>
   </div>
   <div class="recommendations">
-    <div class="recommendations-header">
+    <div class="recommendations-header section-header">
       <h2>Recommendations</h2>
+      <p>see all</p>
     </div>
     <div class="recommendations-content">
       <div class="swiper mySwiper">

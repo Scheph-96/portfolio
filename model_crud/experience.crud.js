@@ -27,7 +27,7 @@ class ExperienceCrud {
         });
     }
 
-    read(id, options=null) {
+    read(id, options = null) {
         return new Promise(async (resolve, reject) => {
             try {
                 let result = await Experience.findById(id, options).exec();
@@ -38,11 +38,27 @@ class ExperienceCrud {
         });
     }
 
-    readFavorite(id, options=null) {
+    readFavorite(id, options = null) {
         return new Promise(async (resolve, reject) => {
             try {
                 let result = await ExperienceFavorite.findById(id, options).exec();
                 resolve(result);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+    /**
+     * 
+     * @param {String} type 
+     * @returns 
+     */
+    readAllByType(type) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let results = Experience.find({ type: type }).exec();
+                resolve(results);
             } catch (error) {
                 reject(error);
             }
@@ -71,7 +87,7 @@ class ExperienceCrud {
         });
     }
 
-    update(id, update, options=null) {
+    update(id, update, options = null) {
         return new Promise(async (resolve, reject) => {
             try {
                 let result = await Experience.findByIdAndUpdate(id, { $set: update }, options);
@@ -81,7 +97,7 @@ class ExperienceCrud {
         });
     }
 
-    updateFavorite(id, update, options=null) {
+    updateFavorite(id, update, options = null) {
         return new Promise(async (resolve, reject) => {
             try {
                 let result = await ExperienceFavorite.findByIdAndUpdate(id, { $set: update }, options);
@@ -91,7 +107,7 @@ class ExperienceCrud {
         });
     }
 
-    delete(id, options=null) {
+    delete(id, options = null) {
         return new Promise(async (resolve, reject) => {
             try {
                 let result = await Experience.findByIdAndDelete(id, options);
@@ -102,7 +118,7 @@ class ExperienceCrud {
         });
     }
 
-    deleteFavorite(id, options=null) {
+    deleteFavorite(id, options = null) {
         return new Promise(async (resolve, reject) => {
             try {
                 let result = await ExperienceFavorite.findByIdAndDelete(id, options);

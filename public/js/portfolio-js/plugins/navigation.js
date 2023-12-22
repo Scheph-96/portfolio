@@ -9,28 +9,21 @@ const mainContentContainer = document.querySelector('.main-content .container');
 let ajaxRequest = new AjaxRequest();
 
 /**
- * 
+ * This function is used to make the single page app possible
+ * it load all the necessary page by calling @method loadHtml
+ * which is a methos defined exclusively to render html code
  * @param {String} page 
  */
 function loadPortfolioPages(page) {
-
     ajaxRequest.loadHtml(page, mainContentContainer, null);
-
-    // ajaxRequest.loadEndPoint(page)
-    //     .then((result) => {
-    //         mainContentContainer.innerHTML = result;
-    //         mainContentContainer.scrollTop = 0;
-
-    //         if (page.includes('order')) {
-    //             execOrder();
-    //         }
-    //     })
-    //     .catch((error) => {
-    //         console.error('PAGE LOAD ERROR: ', error);
-    //     });
-    // console.log('OUT THEN');
 }
 
+/**
+ * This is used the request return a page. 
+ * Like we can directly put the code in page 
+ * without making another request to get the page
+ * @param {*} pageContent the page returned by the request
+ */
 function contentHandlerOnRawCode(pageContent) {
     mainContentContainer.innerHTML = pageContent;
     mainContentContainer.scrollTop = 0;
@@ -43,6 +36,13 @@ function contentHandlerOnRawCode(pageContent) {
     }
 }
 
+/**
+ * This function listen to event triggered when the function loadPortfolioPages is called
+ * It is in a separate function I to launch the listening at the moment the page is loaded
+ * so that i dont't that to wait every single time loadPortfolioPages is called
+ * this functioon is called in the file main.js (the first file called when the website is reload)
+ * 
+ */
 function contentHandlerOnEvent() {
     mainContentContainer.addEventListener('file-loaded', (e) => {
         const path = window.location.pathname;
