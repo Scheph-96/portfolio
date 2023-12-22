@@ -68,17 +68,6 @@ function orderPageHandler() {
     orderNow[i].addEventListener('click', (e) => {
       console.log('order now');
       customPushState('', '', `/order/${e.currentTarget.getAttribute('service')}`);
-
-      // ajaxRequest.loadEndPoint(`/order/${e.currentTarget.getAttribute('service')}`)
-      //     .then((result) => {
-      // routeLoader(e.currentTarget.getAttribute('service'));
-      //     mainContentContainer.innerHTML = result;
-      //     mainContentContainer.scrollTop = 0;
-      //     execOrder();
-      // })
-      // .catch((error) => {
-      //     console.error(`ERROR:: ${error}`);
-      // });
     });
   }
 }
@@ -104,18 +93,6 @@ function workMenuHandler() {
 
 }
 
-function workItemsHandler() {
-  const workItems = document.querySelectorAll('.web-item');
-
-  for (let i = 0; i < workItems.length; i++) {
-    workItems[i].addEventListener('click', (e) => {
-      e.preventDefault();
-      window.open('/web-work/clinic-website/index.html');
-      console.log('opened');
-    });
-  }
-}
-
 function openImage() {
   const body = document.querySelector('body');
   // The images displayed in home page. The 5 ones
@@ -139,13 +116,24 @@ function openImage() {
   }
 }
 
+function showMoreOfExperience() {
+  const moreWorks = document.querySelectorAll('.more-work');
+  console.log('MORE XP');
+  for (let i = 0; i < moreWorks.length; i++) {
+    moreWorks[i].addEventListener('click', (e) => {
+      console.log('MORE XP CLICK');
+      customPushState('', '', `/more-experience/${e.currentTarget.getAttribute('more')}`);
+    });
+  }
+}
+
 function homeDependencieMain() {
   swiper();
   orderPageHandler();
   workSwipe();
   workMenuHandler();
   openImage();
-  // workItemsHandler();
+  showMoreOfExperience();
 }
 
 export {

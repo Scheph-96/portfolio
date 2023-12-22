@@ -1,3 +1,14 @@
-const ExperienceRessourceType = { WEB: 'WEB', UIDESIGN: 'UIDESIGN', LOGO: 'LOGO', POSTER: 'POSTER' };
+class ExperienceRessourceType {
+    // static enums = ['WEB', 'UIDESIGN', 'LOGO', 'POSTER'];
+    static enums = ['web', 'ui_design', 'logo', 'poster'];
 
-module.exports = Object.freeze(ExperienceRessourceType);
+    static enum() {
+        let types = {};
+        ExperienceRessourceType.enums.forEach((type, index) => {
+            types[`${type}`] = type;
+        });
+        return types;
+    }
+}
+
+module.exports = ExperienceRessourceType;

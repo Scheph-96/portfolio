@@ -19,6 +19,11 @@ function routeLoader(path, param = null) {
             loadPortfolioPages(routes(param).order.pageUrl);
 
             break
+        case routes(param).moreWork.addressBarUrl:
+            console.log('3 for moreWork');
+            loadPortfolioPages(routes(param).moreWork.pageUrl);
+
+            break
         // case routes().orderSuccess.addressBarUrl:
         //     console.log('3 for order success');
         //     // loadPortfolioPages(routes().home.pageUrl);
@@ -52,10 +57,13 @@ function renderContentBaseOnUrl() {
     } else if (path === '/' || splittedPath.length < 3) {
         console.log('< 3');
         if (path === '/order-success') {
+            // order success page have to be shown once
             console.log('IS ORDER SUCCESS:: THE COUNT: ', count);
+            // Count how many order success page is loaded
             count+=1;
+            // if it's load once then redirect to the page
             console.log('AFTER COUNT: ', count);
-            if (count === 2) {
+            if (count === 2) { // but it's load a second time then load 404 page
                 console.log('COUNT 2');
                 routeLoader('/default');
                 return
@@ -65,6 +73,12 @@ function renderContentBaseOnUrl() {
     } 
 }
 
+/**
+ * Push to the history stack
+ * @param {*} state 
+ * @param {*} title 
+ * @param {*} url 
+ */
 function customPushState(state=null, title=null, url) {
     window.history.pushState(state, title, url);
 
@@ -77,6 +91,12 @@ function customPushState(state=null, title=null, url) {
     }));
 }
 
+/**
+ * Replace in the history stack
+ * @param {*} state 
+ * @param {*} title 
+ * @param {*} url 
+ */
 function customReplaceState(state=null, title=null, url) {
     window.history.replaceState(state, title, url);
 

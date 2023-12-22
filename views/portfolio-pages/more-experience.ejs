@@ -1,0 +1,20 @@
+<div class="more-experience-page">
+    <% if (experiences) { console.log("RESSOURCES: ", experiences.ressources) %>
+    <div class="header">
+        <h2>Work Experiences: <span><%= experiences.type %></span></h2>
+    </div>
+    <div class="content asset-showcase">
+        <ul>
+            <% for (let i = 0; i < experiences.ressources.length; i++) { %>
+            <li>
+                <figure>
+                    <a href="<%= experiences.ressources[i].link %>" target="_blank">
+                        <img src="<%= experiences.ressources[i].cover %>" alt="<%= experiences.ressources[i].tagInfo %>">
+                    </a>
+                </figure>
+            </li>
+            <% } %>
+        </ul>
+    </div>
+    <% } %>
+</div>
