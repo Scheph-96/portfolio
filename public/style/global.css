@@ -47,3 +47,16 @@
     text-transform: uppercase;
     font-weight: 500;
 }
+
+.skeleton {
+    animation: skeleton-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-color: hsl(240, 12%, 27%);
+    }
+    100% {
+        background-color: hsl(240, 12%, 20%);       
+    }
+}

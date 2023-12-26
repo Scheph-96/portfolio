@@ -118,13 +118,21 @@ function openImage() {
 
 function showMoreOfExperience() {
   const moreWorks = document.querySelectorAll('.more-work');
-  console.log('MORE XP');
+  
   for (let i = 0; i < moreWorks.length; i++) {
     moreWorks[i].addEventListener('click', (e) => {
       console.log('MORE XP CLICK');
-      customPushState('', '', `/more-experience/${e.currentTarget.getAttribute('more')}`);
+      customPushState('', '', `/works/${e.currentTarget.getAttribute('more')}`);
     });
   }
+}
+
+function showMoreOfRecommendation() {
+  const moreRecommendation = document.querySelector('.all-recommendations');
+
+  moreRecommendation.addEventListener('click', () => {
+    customPushState('', '', '/recommendations');
+  })
 }
 
 function homeDependencieMain() {
@@ -134,6 +142,7 @@ function homeDependencieMain() {
   workMenuHandler();
   openImage();
   showMoreOfExperience();
+  showMoreOfRecommendation();
 }
 
 export {

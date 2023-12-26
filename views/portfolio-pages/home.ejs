@@ -141,14 +141,14 @@
   <div class="recommendations">
     <div class="recommendations-header section-header">
       <h2>Recommendations</h2>
-      <p>see all</p>
+      <p class="all-recommendations">see all</p>
     </div>
     <div class="recommendations-content">
       <div class="swiper mySwiper">
         <div class="swiper-wrapper">
           <% if (recommendationFavorite) { %>
             <% for (let i = 0; i < recommendationFavorite.length; i++) { %>
-            <div class="swiper-slide">
+            <div class="swiper-slide recommendation-instance">
               <div class="recommendation-header">
                 <div class="profile">
                   <div class="profile-pic">
