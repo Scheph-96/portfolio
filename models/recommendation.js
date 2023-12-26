@@ -20,6 +20,7 @@ const recommendationSchema = new mongoose.Schema({
     },
     rate: {
         type: Number,
+        default: 0,
         required: true,
     },
     date: {

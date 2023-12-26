@@ -1,0 +1,31 @@
+  <div class="body">
+    <% if (recommendations) { %>
+    <% for (let i = 0; i < recommendations.length; i++) {%>
+    <div class="recommendation-instance">
+      <div class="recommendation-header">
+        <div class="profile">
+          <div class="profile-pic">
+            <img src="data:image/<%=recommendations[i].pic.extension%>;base64,<%=recommendations[i].pic.path%>" alt="Customer Pic">
+          </div>
+          <h3><%= recommendations[i].username %></h3>
+        </div>
+        <span>
+          <% for (let j = 1; j <= 5; j++) { %>
+          <% if (j <= recommendations[i].rate) { %>
+          <i class='bx bxs-star'></i>
+          <% } else { %>
+          <i class='bx bx-star'></i>
+          <% } %>
+          <% } %>
+        </span>
+      </div>
+      <div class="recommendation-content">
+        <p><%= recommendations[i].message %></p>
+      </div>
+      <div class="recommendation-footer">
+        <p><%= recommendations[i].date %></p>
+      </div>
+    </div>
+    <% } %>
+    <% } %>
+  </div>

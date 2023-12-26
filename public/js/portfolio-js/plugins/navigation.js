@@ -1,6 +1,7 @@
 import { AjaxRequest } from "../../tools/ajax_req.tool.js";
 import { homeDependencieMain } from "./pages-dependencies/home_dependencies.js";
 import { orderDependenciesMain } from "./pages-dependencies/order_dependencies.js";
+import { recommendationsDependenciesMain } from "./pages-dependencies/recommendations_dependencies.js";
 import { proceedAfterOrder } from "./website_events.js"
 
 
@@ -49,11 +50,12 @@ function contentHandlerOnEvent() {
 
         mainContentContainer.innerHTML = e.detail.data;
         mainContentContainer.scrollTop = 0;
-
-        if (path.includes('/order/')) {
-            orderDependenciesMain();
-        } else if (path === '/') {
+        if (path === '/') {
             homeDependencieMain();
+        } else if (path.includes('/order/')) {
+            orderDependenciesMain();
+        } else if (path.includes('/recommendations')) {
+            recommendationsDependenciesMain();
         }
         // if (!splittedPath) {
         //     orderPageHandler();

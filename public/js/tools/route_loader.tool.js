@@ -24,6 +24,11 @@ function routeLoader(path, param = null) {
             loadPortfolioPages(routes(param).moreWork.pageUrl);
 
             break
+        case routes(param).moreRecommendation.addressBarUrl:
+            console.log('4 for moreRecommendation');
+            loadPortfolioPages(routes().moreRecommendation.pageUrl);
+
+            break
         // case routes().orderSuccess.addressBarUrl:
         //     console.log('3 for order success');
         //     // loadPortfolioPages(routes().home.pageUrl);

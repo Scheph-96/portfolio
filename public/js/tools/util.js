@@ -42,7 +42,7 @@ function alertToast(alertType, message) {
     document.querySelector('body').prepend(toast);
 
     const alert = document.querySelector('.alert');
-
+    alert.style.zIndex = '999999';
     if (alert) {
         setTimeout(() => {
             alert.classList.add('dispose-alert');

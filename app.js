@@ -17,8 +17,7 @@ const ExperienceCrud = require('./model_crud/experience.crud.js');
 const RecommendationCrud = require('./model_crud/recommendation_crud.js');
 
 // Multiple import
-const formidableMethods = require('./tools/util.tool.js');
-const formidableObjectParser = formidableMethods.formidableFormParser;
+const { formidableObjectParser } = require('./tools/util.tool.js');
 
 
 const app = express();
@@ -66,7 +65,7 @@ app.get('/unknown-route', (req, res) => {
 app.get('/home', (req, res) => {
     Promise.all([serviceCrud.readAll(), experienceCrud.readAllFavorite(), recommendationCrud.readAllFavoriteWithPic()])
         .then((results) => {
-            res.render('portfolio-pages/home', { 'services': results[0], 'experienceFavorite': results[1], 'recommendationFavorite': results[2] });
+            res.render('portfolio-pages/home', { services: results[0], experienceFavorite: results[1], recommendationFavorite: results[2] });
         })
         .catch((error) => {
             console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
@@ -83,7 +82,7 @@ app.get('/home', (req, res) => {
 });
 
 app.get('/load-order/:service', (req, res) => {
-    res.render('portfolio-pages/order', { 'service': req.params.service });
+    res.render('portfolio-pages/order', { service: req.params.service });
 });
 
 app.get('/load-order-success/order-success', (req, res) => {
@@ -358,6 +357,66 @@ app.get('/experience/ressource/:type', async (req, res) => {
         console.log('ERROR CATCHED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
         console.log(error);
         res.status(520).send({
+            type: 'danger',
+            message: 'Unexpected error. Please try again!',
+        });
+    }
+});
+
+// Recommendationns route
+app.get('/customers/recommendations/:rate?', (req, res) => {
+    try {
+        if (!req.params.rate) {
+            console.log("NO PARAM");
+            recommendationCrud.readAllWithPic()
+                .then((result) => {
+                    res.render('portfolio-pages/more-recommendation', { recommendations: result });
+                })
+                .catch((error) => {
+                    console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+
+                    return res.status(520).send({
+                        type: 'danger',
+                        message: 'Unexpected error. Please try again!',
+                    });
+                });
+        } else {
+            if (req.params.rate === "all") {
+                console.log("ALL RESSOURCE");
+                recommendationCrud.readAllWithPic()
+                    .then((result) => {
+                        res.render('portfolio-pages/more-recommendation-body', { recommendations: result });
+                    })
+                    .catch((error) => {
+                        console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+
+                        return res.status(520).send({
+                            type: 'danger',
+                            message: 'Unexpected error. Please try again!',
+                        });
+                    });
+            } else {
+                console.log("THE PARAM: ", req.params.rate);
+                let rate = parseInt(req.params.rate);
+                // Convert the param to number
+                recommendationCrud.readAllByRateWithPic(rate)
+                    .then((result) => {
+                        res.render('portfolio-pages/more-recommendation-body', { recommendations: result });
+                    })
+                    .catch((error) => {
+                        console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+
+                        return res.status(520).send({
+                            type: 'danger',
+                            message: 'Unexpected error. Please try again!',
+                        });
+                    });
+            }
+        }
+    } catch (error) {
+        console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+
+        return res.status(520).send({
             type: 'danger',
             message: 'Unexpected error. Please try again!',
         });
