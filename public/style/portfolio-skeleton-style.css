@@ -56,7 +56,6 @@
     height: 35px;
 }
 
-
 .main-content .container .body-skeleton .works-skeleton .work-items-skeleton {
     margin-top: var(--main-padding);
     display: grid;
@@ -68,7 +67,7 @@
 /* ---------------------- Recommendations ---------------------- */
 
 .main-content .container .body-skeleton .recommendations-skeleton .recommendations-header-skeleton .all-recommendations-skeleton {
-    width: 7%;
+    width: 15%;
     height: 35px;
 }
 
@@ -81,7 +80,7 @@
 }
 
 .main-content .container .body-skeleton .recommendations-items-skeleton .recommendations-item {
-    width: 35rem ;
+    width: 35rem;
     height: 300px;
 }
 
@@ -97,5 +96,64 @@
     margin-bottom: 0;
 }
 
+@media screen and (max-width: 1100px) {
 
+    /* ---------------------- Services ---------------------- */
 
+    .main-content .container .body-skeleton .service-content-skeleton {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* ---------------------- Works ---------------------- */
+
+    .main-content .container .body-skeleton .works-skeleton .work-items-skeleton {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media screen and (max-width: 700px) {
+
+    /* ---------------------- Status ---------------------- */
+    
+    .main-content .container>.body-skeleton .status-skeleton {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    /* ---------------------- Services ---------------------- */
+
+    .main-content .container .body-skeleton .service-content-skeleton {
+        grid-template-columns: repeat(1, 1fr);
+        height: auto;
+    }
+
+    .main-content .container .body-skeleton .service-content-skeleton .service-skeleton {
+        height: 220px;
+    }
+
+    /* ---------------------- Works ---------------------- */
+
+    .main-content .container .body-skeleton .works-skeleton .work-items-skeleton {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .main-content .container .body-skeleton .works-skeleton .work-filter-shortcut-skeleton {
+        display: block;
+    }
+    
+    .main-content .container .body-skeleton .works-skeleton .work-filter-skeleton {
+        display: none;
+    }
+
+    /* ---------------------- Recommendations ---------------------- */
+
+.main-content .container .body-skeleton .recommendations-items-skeleton {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+    .main-content .container .body-skeleton .recommendations-items-skeleton .recommendations-item {
+        width: 100%;
+    }
+    
+}

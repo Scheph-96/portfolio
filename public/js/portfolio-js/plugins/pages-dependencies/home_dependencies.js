@@ -47,6 +47,7 @@ function workSwipe() {
       for (let index = 0; index < workTitles.length; index++) {
         if (workTitles[index].classList.contains('active')) {
           workTitles[index].classList.remove('active');
+          break;
         }
       }
 
@@ -118,10 +119,9 @@ function openImage() {
 
 function showMoreOfExperience() {
   const moreWorks = document.querySelectorAll('.more-work');
-  
+
   for (let i = 0; i < moreWorks.length; i++) {
     moreWorks[i].addEventListener('click', (e) => {
-      console.log('MORE XP CLICK');
       customPushState('', '', `/works/${e.currentTarget.getAttribute('more')}`);
     });
   }
