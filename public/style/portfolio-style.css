@@ -1266,17 +1266,12 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
 @media screen and (max-width: 1100px) {
 
     .main-content .container .body .services .services-content {
-        padding: var(--main-padding) 0 0 0;
-        display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
     }
 
     .main-content .container .body .works .works-content .swiper-wrapper .swiper-slide ul,
     .asset-showcase ul {
-        display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
     }
 
 }
@@ -1370,17 +1365,12 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
 
 
     .main-content .container .body .services .services-content {
-        padding: var(--main-padding) 0 0 0;
-        display: grid;
         grid-template-columns: repeat(1, 1fr);
-        gap: 1rem;
     }
 
     .main-content .container .body .works .works-content .swiper-wrapper .swiper-slide ul,
     .asset-showcase ul {
-        display: grid;
         grid-template-columns: repeat(1, 1fr);
-        gap: 1rem;
     }
 
     /* ------------------- status ------------------- */
