@@ -63,17 +63,13 @@ app.get('/unknown-route', (req, res) => {
 });
 
 app.get('/home', (req, res) => {
-    Promise.all([serviceCrud.readAll(), experienceCrud.readAllFavorite(), recommendationCrud.readAllFavoriteWithPic()])
+    Promise.all([serviceCrud.readAll(), experienceCrud.readAllFavoriteByType(ExperienceRessourceType.enum().web), recommendationCrud.readAllFavoriteWithPic()])
         .then((results) => {
-            res.render('portfolio-pages/home', { services: results[0], experienceFavorite: results[1], recommendationFavorite: results[2] });
+            res.render('portfolio-pages/home', { services: results[0], experienceFavorite: { ressources: results[1], type: ExperienceRessourceType.enum().web }, recommendationFavorite: results[2] });
         })
         .catch((error) => {
             console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
-            // req.session.message = {
-            //     type: 'danger',
-            //     message: 'Unexpected error. Please try again!',
-            // }
-            // return
+
             return res.status(520).send({
                 type: 'danger',
                 message: 'Unexpected error. Please try again!',
@@ -317,9 +313,57 @@ app.post('/submit-order', (req, res) => {
     });
 });
 
-// Recommendations route
-app.post('/submit-recommendation', (req, res) => {
+/* 
+ * Experiences route
+ * This endpoint return all work fo experience favprite by type
+ * on the work menu with web uidesign poster and logo when the
+ * user click on each menu item endpoint return the needed
+ * ressources. I use to load all the favorites at the same time
+ * causing a performance issue but now the idea is to load
+ * the ressource only when it's needed
+ * 
+*/
+app.get('/experience/favorite/ressource/:type', async (req, res) => {
+    try {
+        let results;
+        switch (req.params.type) {
+            case ExperienceRessourceType.enum().web:
+                results = await experienceCrud.readAllFavoriteByType(ExperienceRessourceType.enum().web);
+                res.render('portfolio-pages/works-body', { experienceFavorite: { ressources: results, type: ExperienceRessourceType.enum().web } });
 
+                break;
+
+            case ExperienceRessourceType.enum().ui_design:
+                results = await experienceCrud.readAllFavoriteByType(ExperienceRessourceType.enum().ui_design);
+                res.render('portfolio-pages/works-body', { experienceFavorite: { ressources: results, type: "ui design" } });
+
+                break;
+
+            case ExperienceRessourceType.enum().poster:
+                results = await experienceCrud.readAllFavoriteByType(ExperienceRessourceType.enum().poster);
+                res.render('portfolio-pages/works-body', { experienceFavorite: { ressources: results, type: ExperienceRessourceType.enum().poster } });
+
+                break;
+
+            case ExperienceRessourceType.enum().logo:
+                results = await experienceCrud.readAllFavoriteByType(ExperienceRessourceType.enum().logo);
+                res.render('portfolio-pages/works-body', { experienceFavorite: { ressources: results, type: ExperienceRessourceType.enum().logo } });
+
+                break;
+
+            default:
+                res.render('notfound');
+                break;
+        }
+    } catch (error) {
+        console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+
+        return res.status(520).send({
+            type: 'danger',
+            message: 'Unexpected error. Please try again!',
+        });
+
+    }
 });
 
 // Experiences route
@@ -337,15 +381,15 @@ app.get('/experience/ressource/:type', async (req, res) => {
                 res.render('portfolio-pages/more-experience', { experiences: { ressources: results, type: "ui design" } });
                 break;
 
-            case ExperienceRessourceType.enum().logo:
-                results = await experienceCrud.readAllByType(ExperienceRessourceType.enum().logo);
-                res.render('portfolio-pages/more-experience', { experiences: { ressources: results, type: ExperienceRessourceType.enum().logo } });
-
-                break;
-
             case ExperienceRessourceType.enum().poster:
                 results = await experienceCrud.readAllByType(ExperienceRessourceType.enum().poster);
                 res.render('portfolio-pages/more-experience', { experiences: { ressources: results, type: ExperienceRessourceType.enum().poster } });
+
+                break;
+
+            case ExperienceRessourceType.enum().logo:
+                results = await experienceCrud.readAllByType(ExperienceRessourceType.enum().logo);
+                res.render('portfolio-pages/more-experience', { experiences: { ressources: results, type: ExperienceRessourceType.enum().logo } });
 
                 break;
 
@@ -361,6 +405,11 @@ app.get('/experience/ressource/:type', async (req, res) => {
             message: 'Unexpected error. Please try again!',
         });
     }
+});
+
+// Recommendations route
+app.post('/submit-recommendation', (req, res) => {
+
 });
 
 // Recommendationns route
