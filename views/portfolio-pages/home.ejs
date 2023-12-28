@@ -45,97 +45,18 @@
       <h2>Works</h2>
       <div class="work-filter">
         <ul>
-          <li class="title active">web</li>
-          <li class="title">ui design</li>
-          <li class="title">logo</li>
-          <li class="title">poster</li>
+          <li class="title active" type="web">web</li>
+          <li class="title" type="ui_design">ui design</li>
+          <li class="title" type="poster">poster</li>
+          <li class="title" type="logo">logo</li>
         </ul>
       </div>
       <div class="work-filter-shortcut">
         <i class='bx bx-dots-vertical-rounded'></i>
       </div>
     </div>
-    <div class="works-content swiper swiper-container">
-      <div class="swiper-wrapper">
-        <% if(experienceFavorite) { %>
-        <div class="web swiper-slide">
-          <ul>
-            <% for(let i = 0; i < experienceFavorite.length; i++) { %>
-            <% if(experienceFavorite[i].type === "web") { %>
-            <li>
-              <figure class="web-item">
-                <a href="<%= experienceFavorite[i].link %>" target="_blank">
-                  <img src="<%= experienceFavorite[i].cover %>" alt="<%= experienceFavorite[i].tagInfo %>">
-                </a>
-              </figure>
-            </li>
-            <% } %>
-            <% } %>
-            <li>
-              <figure class="web-item more-work" more="web">
-                <p>SEE MORE</p>
-              </figure>
-            </li>
-          </ul>
-        </div>
-        <div class="ui-design swiper-slide">
-          <ul>
-            <% for(let i = 0; i < experienceFavorite.length; i++) { %>
-            <% if(experienceFavorite[i].type === "ui_design") { %>
-            <li>
-              <firgure class="ui-design-item">
-                <div class="ui-design-pic">
-                  <img class="experience-img" src="<%= experienceFavorite[i].cover %>" alt="<%= experienceFavorite[i].tagInfo %>">
-                </div>
-              </firgure>
-            </li>
-            <% } %>
-            <% } %>
-            <li>
-              <figure class="ui-design-item more-work" more="ui_design">
-                <p>SEE MORE</p>
-              </figure>
-            </li>
-          </ul>
-        </div>
-        <div class="logo swiper-slide">
-          <ul>
-            <% for(let i = 0; i < experienceFavorite.length; i++) { %>
-            <% if(experienceFavorite[i].type === "logo") { %>
-            <li class="logo-item">
-              <figure>
-                <img class="experience-img" src="<%= experienceFavorite[i].cover %>" alt="<%= experienceFavorite[i].tagInfo %>">
-              </figure>
-            </li>
-            <% } %>
-            <% } %>
-            <li class="logo-item">
-              <figure class="ui-design-item more-work" more="logo">
-                <p>SEE MORE</p>
-              </figure>
-            </li>
-          </ul>
-        </div>
-        <div class="poster swiper-slide">
-          <ul>
-            <% for(let i = 0; i < experienceFavorite.length; i++) { %>
-            <% if(experienceFavorite[i].type === "poster") { %>
-            <li class="logo-item">
-              <figure>
-                <img class="experience-img" src="<%= experienceFavorite[i].cover %>" alt="<%= experienceFavorite[i].tagInfo %>">
-              </figure>
-            </li>
-            <% } %>
-            <% } %>
-            <li class="logo-item">
-              <figure class="ui-design-item more-work" more="poster">
-                <p>SEE MORE</p>
-              </figure>
-            </li>
-          </ul>
-        </div>
-        <% } %>
-      </div>
+    <div class="works-content">
+      <%- include('works-body') %>
     </div>
   </div>
   <div class="recommendations">

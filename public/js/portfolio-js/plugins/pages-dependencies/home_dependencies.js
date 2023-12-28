@@ -1,4 +1,9 @@
+import { AjaxRequest } from "../../../tools/ajax_req.tool.js";
 import { customPushState, routeLoader } from "../../../tools/route_loader.tool.js";
+import { workContentSkeleton } from "../../../tools/util.js";
+
+
+let ajaxRequest = new AjaxRequest();
 
 
 function swiper() {
@@ -28,22 +33,15 @@ function swiper() {
 }
 
 function workSwipe() {
-  const swipeContainer = document.querySelector('.swiper-container');
   const workTitles = document.querySelectorAll('.work-filter .title');
-  const workSwiperSlides = document.querySelectorAll('.works-content .swiper-slide');
+  const workContent = document.querySelector('.works-content');
+  const workItem = document.querySelectorAll('.works-content .work-item');
   const workFilterShortcut = document.querySelector('.work-filter-shortcut');
   const workFilterShortcutDisplayer = document.querySelector('.work-filter ul');
 
-  var swiper = new Swiper(".swiper-container", {
-    cssWidthAndHeight: true,
-    spaceBetween: 20,
-    initialSlide: 0,
-    speed: 1000,
-  });
-
   for (let i = 0; i < workTitles.length; i++) {
-    console.log('first loop');
     workTitles[i].addEventListener('click', (e) => {
+      workContent.innerHTML = workContentSkeleton();
       for (let index = 0; index < workTitles.length; index++) {
         if (workTitles[index].classList.contains('active')) {
           workTitles[index].classList.remove('active');
@@ -52,7 +50,8 @@ function workSwipe() {
       }
 
       e.currentTarget.classList.add('active');
-      swipeContainer.swiper.slideTo(i);
+      
+      ajaxRequest.loadHtml(`/experience/favorite/ressource/${workTitles[i].getAttribute('type')}`, null, workContent);
 
       if (workFilterShortcut && workFilterShortcutDisplayer.classList.contains('show')) {
         workFilterShortcutDisplayer.classList.remove('show');

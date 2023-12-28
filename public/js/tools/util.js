@@ -31,7 +31,6 @@ function removeCssPropertyFromRule(rule, property) {
     rule.style.removeProperty(property);
 }
 
-
 function alertToast(alertType, message) {
     let toast = document.createElement('div');
     toast.classList.add("alert", `alert-${alertType}`);
@@ -54,8 +53,21 @@ function alertToast(alertType, message) {
     }
 }
 
+function workContentSkeleton() {
+    return `
+    <div class="work-items-skeleton" style="margin: 0">
+      <div class="work-item skeleton"></div>
+      <div class="work-item skeleton"></div>
+      <div class="work-item skeleton"></div>
+      <div class="work-item skeleton"></div>
+      <div class="work-item skeleton"></div>
+      <div class="work-item skeleton"></div>
+    </div>`;
+}
+
 export {
     getCssRule,
     removeCssPropertyFromRule,
     alertToast,
+    workContentSkeleton
 }

@@ -1,6 +1,6 @@
 class ExperienceRessourceType {
     // static enums = ['WEB', 'UIDESIGN', 'LOGO', 'POSTER'];
-    static enums = ['web', 'ui_design', 'logo', 'poster'];
+    static enums = ['web', 'ui_design', 'poster', 'logo'];
 
     static enum() {
         let types = {};

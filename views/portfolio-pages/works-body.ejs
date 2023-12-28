@@ -1,0 +1,22 @@
+<div class="work-body">
+    <% if(experienceFavorite) { %>
+        <div class="work-item">
+          <ul>
+            <% for(let i = 0; i < experienceFavorite.ressources.length; i++) { %>
+            <li>
+              <figure class="">
+                <a href="<%= experienceFavorite.ressources[i].link %>" target="_blank">
+                  <img src="<%= experienceFavorite.ressources[i].cover %>" alt="<%= experienceFavorite.ressources[i].tagInfo %>">
+                </a>
+              </figure>
+            </li>
+            <% } %>
+            <li>
+              <figure class="more-work" more="<%= experienceFavorite.type %>">
+                <p>SEE MORE</p>
+              </figure>
+            </li>
+          </ul>
+        </div>
+    <% } %>
+</div>
