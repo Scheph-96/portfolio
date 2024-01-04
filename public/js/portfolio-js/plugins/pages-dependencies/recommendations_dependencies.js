@@ -4,11 +4,10 @@ import { routes } from "../../routes/routes.js";
 let ajaxRequest = new AjaxRequest();
 
 function sort() {
-
     const recommendationSortBtns = document.querySelectorAll('.recommendation-sort');
-    const recommendationContent = document.querySelector('.more-recommendation-page .body');
+    const recommendationContent = document.querySelector('.more-recommendation-page .recommendation-content');
     for (let i = 0; i < recommendationSortBtns.length; i++) {
-        
+
         recommendationSortBtns[i].addEventListener('click', e => {
             for (let j = 0; j < recommendationSortBtns.length; j++) {
                 if (recommendationSortBtns[j].classList.contains('active')) {
@@ -16,10 +15,10 @@ function sort() {
                     break;
                 }
             }
-            
+
             recommendationSortBtns[i].classList.add('active');
-            
-            ajaxRequest.loadHtml(routes().moreRecommendation.pageUrl+`${e.currentTarget.getAttribute('sort-rate')}`, null, recommendationContent);
+
+            ajaxRequest.loadHtml(routes().moreRecommendation.pageUrl + `${e.currentTarget.getAttribute('sort-rate')}`, null, recommendationContent);
         })
     }
 }

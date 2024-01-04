@@ -46,6 +46,7 @@ function contentHandlerOnRawCode(pageContent) {
  */
 function contentHandlerOnEvent() {
     mainContentContainer.addEventListener('file-loaded', (e) => {
+        console.log('IN MAIN CONTAINER FILE LOADED');
         const path = window.location.pathname;
 
         mainContentContainer.innerHTML = e.detail.data;

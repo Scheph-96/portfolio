@@ -97,6 +97,71 @@
     margin-bottom: 0;
 }
 
+/* ---------------------- Order Form ---------------------- */
+
+.main-content .container .form-container-skeleton {
+    background-color: var(--card-bg-color);
+    padding: var(--main-padding);
+    display: grid;
+    gap: 1rem;
+}
+
+.main-content .container .form-container-skeleton .input-skeleton {
+    height: 60px;
+}
+
+.main-content .container .form-container-skeleton .textarea-skeleton {
+    height: 300px;
+}
+
+.main-content .container .form-container-skeleton .paragraph-skeleton{
+    display: grid;
+    grid-auto-rows: 10px;
+    gap: .5rem;
+}
+
+.main-content .container .form-container-skeleton .paragraph-skeleton.paragraph-skeleton .line-1 {
+    width: 30%;
+}
+
+.main-content .container .form-container-skeleton .paragraph-skeleton.paragraph-skeleton .line-2 {
+    width: 100%;
+}
+
+.main-content .container .form-container-skeleton .paragraph-skeleton.paragraph-skeleton .line-3 {
+    width: 60%;
+}
+
+.main-content .container .form-container-skeleton .validation-buttons-skeleton {
+    display: flex;
+    justify-content: space-between;
+}
+
+.main-content .container .form-container-skeleton .validation-buttons-skeleton .btn {
+    width: 25%;
+    height: 50px;
+}
+
+/* ---------------------- More Experience ---------------------- */
+
+.main-content .container .more-experience-page-skeleton .asset-showcase ul {
+    grid-auto-rows: 240px;
+}
+
+/* ---------------------- More Recommendation ---------------------- */
+
+.main-content .container .more-recommendation-page-skeleton .header .recommendation-sort {
+    border: none;
+    background-color: var(--card-bg-color);
+    width: 60px;
+    height: 30px;
+}
+
+.main-content .container .more-recommendation-page-skeleton .recommendation-body {
+    grid-auto-rows: 280px;
+}
+
+
 @media screen and (max-width: 1100px) {
 
     /* ---------------------- Services ---------------------- */
@@ -107,7 +172,8 @@
 
     /* ---------------------- Works ---------------------- */
 
-    .main-content .container .body-skeleton .works-skeleton .work-items-skeleton {
+    .main-content .container .body-skeleton .works-skeleton .work-items-skeleton,
+    .work-items-skeleton {
         grid-template-columns: repeat(2, 1fr);
     }
 
@@ -134,7 +200,8 @@
 
     /* ---------------------- Works ---------------------- */
 
-    .main-content .container .body-skeleton .works-skeleton .work-items-skeleton {
+    .main-content .container .body-skeleton .works-skeleton .work-items-skeleton,
+    .work-items-skeleton {
         grid-template-columns: repeat(1, 1fr);
     }
 

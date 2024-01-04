@@ -39,26 +39,35 @@ function workSwipe() {
   const workFilterShortcut = document.querySelector('.work-filter-shortcut');
   const workFilterShortcutDisplayer = document.querySelector('.work-filter ul');
 
-  for (let i = 0; i < workTitles.length; i++) {
-    workTitles[i].addEventListener('click', (e) => {
-      workContent.innerHTML = workContentSkeleton();
-      for (let index = 0; index < workTitles.length; index++) {
-        if (workTitles[index].classList.contains('active')) {
-          workTitles[index].classList.remove('active');
-          break;
+
+    for (let i = 0; i < workTitles.length; i++) {
+      workTitles[i].addEventListener('click', (e) => {
+        workContent.innerHTML = workContentSkeleton();
+        for (let index = 0; index < workTitles.length; index++) {
+          if (workTitles[index].classList.contains('active')) {
+            workTitles[index].classList.remove('active');
+            break;
+          }
         }
-      }
-
-      e.currentTarget.classList.add('active');
+  
+        e.currentTarget.classList.add('active');
+  
+        ajaxRequest.loadHtml(`/experience/favorite/ressource/${workTitles[i].getAttribute('type')}`, workContent, null);
+  
+        workContent.addEventListener('file-loaded', (e) => {
+          console.log("IN WORK CONTENT");
       
-      ajaxRequest.loadHtml(`/experience/favorite/ressource/${workTitles[i].getAttribute('type')}`, null, workContent);
-
-      if (workFilterShortcut && workFilterShortcutDisplayer.classList.contains('show')) {
-        workFilterShortcutDisplayer.classList.remove('show');
-      }
-
-    });
-  }
+          workContent.innerHTML = e.detail.data;
+      
+          showMoreOfExperience();
+        });
+  
+        if (workFilterShortcut && workFilterShortcutDisplayer.classList.contains('show')) {
+          workFilterShortcutDisplayer.classList.remove('show');
+        }
+  
+      });
+    }
 }
 
 function orderPageHandler() {
@@ -68,29 +77,25 @@ function orderPageHandler() {
     orderNow[i].addEventListener('click', (e) => {
       console.log('order now');
       customPushState('', '', `/order/${e.currentTarget.getAttribute('service')}`);
-    });
+    }, { once: true });
   }
 }
 
 function workMenuHandler() {
-  const workFilterShortcut = document.querySelector('.work-filter-shortcut');
-  const workFilterShortcutDisplayer = document.querySelector('.work-filter ul');
-  console.log('WORK MENU HANDLER', workFilterShortcut);
-  if (workFilterShortcut) {
-    workFilterShortcut.addEventListener('click', () => {
-      workFilterShortcutDisplayer.classList.add('show');
-      console.log(workFilterShortcutDisplayer.classList);
-    }, false);
-
-    document.addEventListener('click', (event) => {
-      if (!workFilterShortcutDisplayer.contains(event.target)) {
-        workFilterShortcutDisplayer.classList.remove('show');
-      }
-    }, true);
-  } else {
-    console.log('DOES NOT EXIST');
-  }
-
+    const workFilterShortcut = document.querySelector('.work-filter-shortcut');
+    const workFilterShortcutDisplayer = document.querySelector('.work-filter ul');
+    if (workFilterShortcut) {
+      workFilterShortcut.addEventListener('click', () => {
+        workFilterShortcutDisplayer.classList.add('show');
+        console.log(workFilterShortcutDisplayer.classList);
+      }, false);
+  
+      document.addEventListener('click', (event) => {
+        if (!workFilterShortcutDisplayer.contains(event.target)) {
+          workFilterShortcutDisplayer.classList.remove('show');
+        }
+      }, true);
+    }
 }
 
 function openImage() {
@@ -117,13 +122,11 @@ function openImage() {
 }
 
 function showMoreOfExperience() {
-  const moreWorks = document.querySelectorAll('.more-work');
+  const moreWork = document.querySelector('.more-work');
 
-  for (let i = 0; i < moreWorks.length; i++) {
-    moreWorks[i].addEventListener('click', (e) => {
-      customPushState('', '', `/works/${e.currentTarget.getAttribute('more')}`);
-    });
-  }
+  moreWork.addEventListener('click', (e) => {
+    customPushState('', '', `/works/${e.currentTarget.getAttribute('more')}`);
+  }, { once: true });
 }
 
 function showMoreOfRecommendation() {
@@ -131,7 +134,7 @@ function showMoreOfRecommendation() {
 
   moreRecommendation.addEventListener('click', () => {
     customPushState('', '', '/recommendations');
-  })
+  }, { once: true })
 }
 
 function homeDependencieMain() {
@@ -139,7 +142,7 @@ function homeDependencieMain() {
   orderPageHandler();
   workSwipe();
   workMenuHandler();
-  openImage();
+  // openImage();
   showMoreOfExperience();
   showMoreOfRecommendation();
 }
