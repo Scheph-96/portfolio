@@ -17,7 +17,7 @@ const ExperienceCrud = require('./model_crud/experience.crud.js');
 const RecommendationCrud = require('./model_crud/recommendation_crud.js');
 
 // Multiple import
-const { formidableObjectParser } = require('./tools/util.tool.js');
+const { formidableFormParser } = require('./tools/util.tool.js');
 
 
 const app = express();
@@ -106,7 +106,7 @@ app.post('/submit-order', (req, res) => {
             });
         }
 
-        const order = new Order(formidableObjectParser(fields));
+        const order = new Order(formidableFormParser(fields));
         console.log('THE ORDER JUST CREATED: ', order);
 
         console.log('THE FIeLdS: ', fields);
@@ -173,7 +173,7 @@ app.post('/submit-order', (req, res) => {
         console.log('THE REQ BODY: ', req.body);
         console.log('THE REQ FILE: ', req.file);
         console.log('THE FIELDS: ', fields);
-        console.log('THE BODY PARSED: ', formidableObjectParser(fields));
+        console.log('THE BODY PARSED: ', formidableFormParser(fields));
         // console.log(`\n${util.inspect(fields, { showHidden: false, depth: null, colors: true })}\n`);
         console.log('AFTER!!!!!!!!!!!!!!!!!');
         // // if (Object.keys(req.body).length) {
@@ -235,17 +235,9 @@ app.post('/submit-order', (req, res) => {
                     // order.save()
                     orderCrud.create(order)
                         .then((dbOrder) => {
-                            // req.session.message = {
-                            //     type: 'success',
-                            //     message: 'Order send successfully. Please check your emails!',
-                            // }
                             console.log(`THE Order: `, order);
                             console.log(`THE dbOrder: `, dbOrder);
                             console.log(`\n${1}\n`);
-
-
-
-
 
                             console.log(`\n${2}\n`);
                             ejs.renderFile(__dirname + '/views/portfolio-pages/order-success.ejs', dbOrder, (err, html) => {
@@ -263,12 +255,7 @@ app.post('/submit-order', (req, res) => {
                                     page: html,
                                 });
                             });
-
-                            // res.status(201).send({
-                            //     type: 'success',
-                            //     message: 'Order send successfully. Please check your emails!',
-                            // });
-                            // res.redirect('/');
+                            
                         })
                         .catch((error) => {
                             console.log(4);
@@ -335,7 +322,7 @@ app.get('/experience/favorite/ressource/:type', async (req, res) => {
 
             case ExperienceRessourceType.enum().ui_design:
                 results = await experienceCrud.readAllFavoriteByType(ExperienceRessourceType.enum().ui_design);
-                res.render('portfolio-pages/works-body', { experienceFavorite: { ressources: results, type: "ui design" } });
+                res.render('portfolio-pages/works-body', { experienceFavorite: { ressources: results, type: ExperienceRessourceType.enum().ui_design } });
 
                 break;
 
@@ -480,8 +467,19 @@ app.get(/^(?!\/(style|js|assets|fonts|experience)).*$/, (req, res) => {
     //     "script-src 'http://127.0.0.1:3400/js/portfolio-js/main.js https://assets2.lottiefiles.com/private_files/lf30_kecMeI.json https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js'"
     // );
     console.log('REQ URL: ', req.url);
-    // if (!req.url.includes("/web/") && !req.url.includes("/experience/")) {
-    res.render('portfolio-pages/layout');
+    let skeleton;
+
+    if (req.url === "/") {
+        skeleton = "skeletons/home.skeleton.ejs";
+    } else if (req.url.includes("/order/")) {
+        skeleton = 'skeletons/order.skeleton.ejs';
+    } else if (req.url.includes("/works/")) {
+        skeleton = 'skeletons/more-experience.skeleton.ejs';
+    } else if (req.url === "/recommendations") {
+        skeleton = 'skeletons/more-recommendation.skeleton.ejs';
+    }
+
+    res.render('portfolio-pages/layout', { skeleton: skeleton });
     // }
 });
 

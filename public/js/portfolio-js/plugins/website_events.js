@@ -18,27 +18,6 @@ const mainFirstDiv = document.querySelector('main > div');
 const expandCollapseButton = document.querySelector('.main-content .collapse-expand-sidebar');
 
 
-// let fileLoader = new AjaxRequest();
-
-// function hide() {
-//     document.addEventListener('click', (event) => {
-//         console.log('user clicked: ', event.target);
-//         console.log(!profileDetails.contains(event.target) && !profileDetailShortcut.isEqualNode(event.target));
-//         console.log('display: ', profileDetails.style.display !== 'none');
-//         // console.log(profileDetailShortcut);
-//         if (!profileDetails.contains(event.target) && !profileDetailShortcutIcon.isEqualNode(event.target) && profileDetails.style.display !== 'none') {
-//             console.log('HERE 1');
-//             profileDetails.style.display = 'none';
-//             profileDetailShortcut.style.display = 'block';
-//         } 
-
-//         if (!workFilterShortcutDisplayer.contains(event.target) && !workFilterShortcutIcon.isEqualNode(event.target)) {
-//             console.log('HERE 2');
-//             workFilterShortcutDisplayer.style.display = 'none';
-//         }
-//     });
-// }
-
 function profilHandler() {
     let profileDetailsRules = getCssRule('portfolio-style.css', '.profile-details');
     let expandCollapseButtonRules = getCssRule('portfolio-style.css', '.main-content .collapse-expand-sidebar')
@@ -75,6 +54,10 @@ function profilHandler() {
             removeCssPropertyFromRule(profileDetailsRules, 'position');
             removeCssPropertyFromRule(profileDetailsRules, 'top');
             removeCssPropertyFromRule(profileDetailsRules, 'left');
+            expandCollapseButton.innerHTML = `<i class='bx bx-chevron-left'></i>`;
+            removeCssPropertyFromRule(bodyRules, 'display');
+            removeCssPropertyFromRule(bodyRules, 'justify-content');
+            removeCssPropertyFromRule(bodyRules, 'align-items');
             mainRules.style['width'] = '100vw';
             expandCollapseButtonRules.style['left'] = '-40px';
             mainFirstDiv.classList.remove('sidebar-collapse');
@@ -101,7 +84,7 @@ function proceedAfterOrder() {
     console.log('IN PROCEED AFTER ORDER');
     proceedBtn.addEventListener('click', () => {
         customReplaceState(null, null, '/');
-    });
+    }, { once: true });
 }
 
 
