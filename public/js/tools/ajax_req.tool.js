@@ -66,11 +66,12 @@ export class AjaxRequest {
                 try {
                     console.log('POST: ', this.#xhttp.status);
                     if (this.#xhttp.status === 201) {
+                        console.log("THE PARSED ATTRIBUTE: ", JSON.parse(this.#xhttp.responseText));
                         resolve(JSON.parse(this.#xhttp.responseText));
                     } else if (this.#xhttp.status !== 201) {
                         console.log('REJECT!!!');
                         console.log(JSON.parse(this.#xhttp.responseText));
-                        reject({ error: `Unable to load ressource:: status: ${this.#xhttp.status}`, errorMessage: JSON.parse(this.#xhttp.responseText) });
+                        reject({ status: this.#xhttp.status, error: `Unable to load ressource:: status: ${this.#xhttp.status}`, errorMessage: JSON.parse(this.#xhttp.responseText) });
                     }
                 } catch (err) {
                     reject({ error: `Unable to load ressource::${err.message}`, errorMessage: JSON.parse({type: 'danger',

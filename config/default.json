@@ -1,6 +1,6 @@
 {
     "Settings": {
-        "host": "http://192.168.0.112",
+        "host": "http://192.168.0.113",
         "port": 3400,
         "dbUri": "mongodb://127.0.0.1:27017/scportfoliodb?maxPoolSize=100",
         "site": {

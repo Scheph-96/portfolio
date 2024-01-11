@@ -1,0 +1,38 @@
+<form method="post" id="review-form" enctype="multipart/form-data">
+    <div class="form-container my-form">
+      <h2>Leave a review</h2>
+      <div class="review-rate">
+        <label for="first-star"><i class='bx bxs-star'></i></label>
+        <input type="radio" name="rate" id="first-star" value="1">
+        <label for="second-star"><i class='bx bxs-star'></i></label>
+        <input type="radio" name="rate" id="second-star" value="2">
+        <label for="third-star"><i class='bx bxs-star'></i></label>
+        <input type="radio" name="rate" id="third-star" value="3">
+        <label for="fourth-star"><i class='bx bxs-star'></i></label>
+        <input type="radio" name="rate" id="fourth-star" value="4">
+        <label for="fifth-star"><i class='bx bxs-star'></i></label>
+        <input type="radio" name="rate" id="fifth-star" value="5">
+      </div>
+      <div class="input-box">
+        <input type="file" name="pic" id="pic" placeholder="pic">
+        <label for="pic" class="input-icon-box"><i class='bx bx-upload'></i></label>
+      </div>
+      <div class="input-box">
+        <input type="text" name="username" id="username" placeholder="username" required>
+        <label for="username" class="input-icon-box"><i class='bx bxs-user'></i></label>
+      </div>
+      <div class="input-box">
+        <textarea name="message" id="message" cols="30" rows="10" placeholder="message" required></textarea>
+        <label class="input-icon-box" for="message"><i class='bx bxs-envelope'></i></label>
+      </div>
+      <div class="submit-btn-section">
+          <div class="submit-box">
+              <a href="/"><input type="button" value="cancel"></a>
+          </div>
+          <div class="submit-box">
+            <input type="submit" value="confirm" id="submit-button">
+          </div>
+      </div>
+    </div>
+  </form>
+  

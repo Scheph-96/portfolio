@@ -10,8 +10,8 @@ const { months, toBase64 } = require('../tools/util.tool');
 class RecommendationCrud {
 
     /**
-     * 
-     * @param {Recommendation} recommendation 
+     * Create a recommendation
+     * @param {Recommendation} recommendation the new instance to be create
      * @returns promise
      */
     create(recommendation) {
@@ -26,8 +26,8 @@ class RecommendationCrud {
     }
 
     /**
-     * 
-     * @param {RecommendationFavorite} recommendationFavorite
+     * Create a favorite recommendation
+     * @param {RecommendationFavorite} recommendationFavorite the new favorite instance to be create
      * @returns promise
      */
     createFavorite(recommendationFavorite) {
@@ -42,16 +42,46 @@ class RecommendationCrud {
     }
 
     /**
-     * 
+     *  Get one recommendation
      * @param {mongoose.Schema.Types.ObjectId} id 
      * @param {Object} options 
      * @returns promise
      */
-    read(id, options=null) {
+    read(id, options = null) {
         return new Promise(async (resolve, reject) => {
             try {
                 let result = await Recommendation.findById(id, options).exec();
                 resolve(result);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+    /**
+     * Get one recommendation with the pic
+     * @param {mongoose.Schema.Types.ObjectId} id 
+     * @param {Object} options 
+     * @returns promise
+     */
+    readWithPic(id, options = null) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let recommendation = await this.read(id);
+                // get the current directory absolute path
+                let currentDir = __dirname;
+                // get the current directory parent path
+                let parentDir = path.resolve(currentDir, '..');
+                let date;
+
+                recommendation.pic.path = await toBase64(parentDir + "/" + recommendation.pic.path);
+                // get the creation date
+                date = new Date(recommendation.created);
+
+                recommendation.date = `${months[date.getMonth()]} ${date.getDate().toString().padStart(2, '0')}, ${date.getFullYear()}`;
+
+
+                resolve(recommendation);
             } catch (error) {
                 reject(error);
             }
@@ -64,7 +94,7 @@ class RecommendationCrud {
      * @param {Object} options 
      * @returns promise
      */
-    readFavorite(id, options=null) {
+    readFavorite(id, options = null) {
         return new Promise(async (resolve, reject) => {
             try {
                 let result = await RecommendationFavorite.findById(id, options).exec();
@@ -114,7 +144,7 @@ class RecommendationCrud {
     readAllByRate(rate) {
         return new Promise(async (resolve, reject) => {
             try {
-                let results = await  Recommendation.find({ rate: rate }).exec();
+                let results = await Recommendation.find({ rate: rate }).exec();
                 resolve(results)
             } catch (error) {
                 reject(error);
@@ -140,6 +170,7 @@ class RecommendationCrud {
 
                 for (let i = 0; i < recommendations.length; i++) {
                     recommendations[i].pic.path = await toBase64(parentDir + "/" + recommendations[i].pic.path);
+                    // get the creation date
                     date = new Date(recommendations[i].created);
 
                     recommendations[i].date = `${months[date.getMonth()]} ${date.getDate().toString().padStart(2, '0')}, ${date.getFullYear()}`;
@@ -169,6 +200,7 @@ class RecommendationCrud {
 
                 for (let i = 0; i < recommendations.length; i++) {
                     recommendations[i].pic.path = await toBase64(parentDir + "/" + recommendations[i].pic.path);
+                    // get the creation date
                     date = new Date(recommendations[i].created);
 
                     recommendations[i].date = `${months[date.getMonth()]} ${date.getDate().toString().padStart(2, '0')}, ${date.getFullYear()}`;
@@ -197,6 +229,7 @@ class RecommendationCrud {
 
                 for (let i = 0; i < recommendations.length; i++) {
                     recommendations[i].pic.path = await toBase64(parentDir + "/" + recommendations[i].pic.path);
+                    // get the creation date
                     date = new Date(recommendations[i].created);
 
                     recommendations[i].date = `${months[date.getMonth()]} ${date.getDate().toString().padStart(2, '0')}, ${date.getFullYear()}`;
@@ -217,7 +250,7 @@ class RecommendationCrud {
      * @param {Object} options 
      * @returns promise
      */
-    update(id, update, options=null) {
+    update(id, update, options = null) {
         return new Promise(async (resolve, reject) => {
             try {
                 let result = await Recommendation.findByIdAndUpdate(id, { $set: update }, options);
@@ -235,7 +268,7 @@ class RecommendationCrud {
      * @param {Object} options 
      * @returns promise
      */
-    updateFavorite(id, update, options=null) {
+    updateFavorite(id, update, options = null) {
         return new Promise(async (resolve, reject) => {
             try {
                 let result = await RecommendationFavorite.findByIdAndUpdate(id, { $set: update }, options);
@@ -252,7 +285,7 @@ class RecommendationCrud {
      * @param {Object} options 
      * @returns promise
      */
-    delete(id, options=null) {
+    delete(id, options = null) {
         return new Promise(async (resolve, reject) => {
             try {
                 let result = await Recommendation.findByIdAndDelete(id, options);
@@ -269,7 +302,7 @@ class RecommendationCrud {
      * @param {Object} options 
      * @returns promise
      */
-    deleteFavorite(id, options=null) {
+    deleteFavorite(id, options = null) {
         return new Promise(async (resolve, reject) => {
             try {
                 let result = await RecommendationFavorite.findByIdAndDelete(id, options);

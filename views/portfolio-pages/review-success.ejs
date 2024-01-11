@@ -1,0 +1,35 @@
+<div class="review-success-page">
+  <div>
+    <h2>Your review</h2>
+    <div class="content">
+      <div class="recommendation-instance">
+        <div class="recommendation-header">
+          <div class="profile">
+            <div class="profile-pic">
+              <img src="data:image/<%=recommendation.pic.extension%>;base64,<%=recommendation.pic.path%>" alt="Customer Pic">
+            </div>
+            <h3><%= recommendation.username %></h3>
+          </div>
+          <span>
+            <% for (let j = 1; j <= 5; j++) { %>
+            <% if (j <= recommendation.rate) { %>
+            <i class='bx bxs-star'></i>
+            <% } else { %>
+            <i class='bx bx-star'></i>
+            <% } %>
+            <% } %>
+          </span>
+        </div>
+        <div class="recommendation-content">
+          <p><%= recommendation.message %></p>
+        </div>
+        <div class="recommendation-footer">
+          <p><%= recommendation.date %></p>
+        </div>
+      </div>
+    </div>
+    <div class="bottom proceed-after-order-button">
+      <button>Proceed</button>
+    </div>
+  </div>
+</div>
