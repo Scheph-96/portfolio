@@ -1,18 +1,21 @@
 const express = require('express');
-const app = require('./app.js');
 const http = require("http");
 const mongoose = require('mongoose');
-const path = require('path');
+const cors = require('cors');
 const session = require('express-session');
 const MemoryStore = require('memorystore')(session);
+
+const app = require('./app.js');
+const path = require('path');
 const appConfig = require('./dependencies.js');
-const cors = require('cors');
 
 
 const server = http.createServer(app);
 const PORT = appConfig.port;
 
 
+
+// Mongo db connection
 mongoose.connect(appConfig.dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on('error', (error) => console.log(`DB CONNEXION ERROR::${error}`));

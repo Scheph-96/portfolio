@@ -3,8 +3,6 @@ import { contentHandlerOnEvent, contentHandlerOnRawCode } from './plugins/naviga
 import { renderContentBaseOnUrl } from "../tools/route_loader.tool.js";
 
 
-
-
 const main = () => {
     profile();
     moreProgrammingLanguage();
@@ -46,7 +44,8 @@ const main = () => {
         }
 
         renderContentBaseOnUrl();
-    })
+
+    });
 
     // window.addEventListener('resize', () => {
     //     console.log('Screen resized');

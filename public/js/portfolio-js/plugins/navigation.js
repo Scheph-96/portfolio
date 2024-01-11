@@ -3,6 +3,8 @@ import { homeDependencieMain } from "./pages-dependencies/home_dependencies.js";
 import { orderDependenciesMain } from "./pages-dependencies/order_dependencies.js";
 import { recommendationsDependenciesMain } from "./pages-dependencies/recommendations_dependencies.js";
 import { proceedAfterOrder } from "./website_events.js"
+import { routes } from "../routes/routes.js";
+import { reviewDependenciesMain } from "./pages-dependencies/review_dependencies.js";
 
 
 const mainContentContainer = document.querySelector('.main-content .container');
@@ -32,7 +34,7 @@ function contentHandlerOnRawCode(pageContent) {
     const path = window.location.pathname;
 
     console.log('THE PATH FOR RAW CODE: ', path);
-    if (path === '/order-success') {
+    if (path === routes().orderSuccess.addressBarUrl || path === routes().reviewSuccess.addressBarUrl) {
         proceedAfterOrder();
     }
 }
@@ -45,6 +47,7 @@ function contentHandlerOnRawCode(pageContent) {
  * 
  */
 function contentHandlerOnEvent() {
+    console.log("CONTENT HANDLER ON EVENT");
     mainContentContainer.addEventListener('file-loaded', (e) => {
         console.log('IN MAIN CONTAINER FILE LOADED');
         const path = window.location.pathname;
@@ -57,6 +60,8 @@ function contentHandlerOnEvent() {
             orderDependenciesMain();
         } else if (path.includes('/recommendations')) {
             recommendationsDependenciesMain();
+        } else if (path.includes('/review/')) {
+            reviewDependenciesMain();
         }
         // if (!splittedPath) {
         //     orderPageHandler();

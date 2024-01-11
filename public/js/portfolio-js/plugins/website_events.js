@@ -84,7 +84,7 @@ function proceedAfterOrder() {
     console.log('IN PROCEED AFTER ORDER');
     proceedBtn.addEventListener('click', () => {
         customReplaceState(null, null, '/');
-    }, { once: true });
+    });
 }
 
 

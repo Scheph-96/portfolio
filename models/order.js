@@ -1,5 +1,18 @@
 const mongoose = require('mongoose');
 
+/**
+ * THE LOGIC:
+ * Specifications are not mandatory but description is.
+ * By default we demand the description. That's why when none of description or specification exist
+ * we send "Description is required" back to the user because description MUST AT LEAST EXIST! 
+ * The user can provide both desciption and specifications but
+ * the important one is description.
+ * That means an order can be submitted only with specification or only with description
+ * But not without both
+ * Tha'ts why to set which one is required we chech on specification if there is no desciption
+ * if there is no description then specifications is required
+ * In the same way, when there is no specification description is required
+*/
 orderSchema = new mongoose.Schema({
     service: {
         type: String,
@@ -32,45 +45,21 @@ orderSchema = new mongoose.Schema({
     specifications: {
         type: Boolean,
         required: [function() {
-            console.log('DA Description TOP: ', this.description);
-            console.log('DA Specififcations: ', this.Specififcations);
-            console.log('CHECKIN DES TOP: ', !this.description);
+            /**
+             * if there is no description then specifications is required
+            */
             return !this.description;
             // return 1 === 1;
         }, 'Specififcations is required'],
     },
     description: {
         type: String,
-        // validate: {
-        //     validator: (data) => {
-        //         console.log('THE WAY IT IS: ', data.trim().length !== 0);
-        //         return data.trim().length !== 0;
-        //     },
-        //     message: props => `Description is required`
-        // },
         required: [function() { 
-            console.log('DA Description: ', this.description);
-            console.log('DA Specififcations BOTTOM: ', this.Specififcations);
-            console.log('CHECKIN SPEC: ', this.specifications);
-            console.log('CHECKIN SPEC LENGTH: ', this.specifications.length);
-            console.log('CHECKIN SPEC NULL CHECK: ', this.specifications == null);
-            console.log('CHECKIN DES: ', !this.description);
-            console.log('CHECKIN DES LENGTH: ', this.description.length);
-            console.log('CHECKIN BOTH: ', this.specifications == null && !this.description);
-            console.log('TRIM CHECK: ', this.description.trim().length);
-            console.log('TRIM VALID CHECK: ', this.description.trim().length === 0);
-            console.log('TRIM VALID CHECK AND DES: ', !this.description || this.description.trim().length === 0);
-            console.log('ULTIMATE CHECK: ', !this.specifications && (!this.description || this.description.trim().length === 0));
-            // return !this.specifications && !this.description;
+            /**
+             * if there is no specifications and no description then description is required
+             * if there is no specifications and the description trim return 0 the description is required
+            */
             return !this.specifications && (!this.description || this.description.trim().length === 0);
-            // if (!this.specifications && (!this.description || this.description.trim().length === 0)) {
-            //     console.log('RESTURNING TRUE');
-            //     return true;
-            // } else {
-            //     console.log('RETURNIN FALSE');
-            //     return false;
-            // }
-            // return 1 === 1;
         }, 'Description is required']
     },
     created: {

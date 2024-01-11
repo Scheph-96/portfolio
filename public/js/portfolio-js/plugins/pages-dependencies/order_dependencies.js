@@ -1,8 +1,8 @@
 import { AjaxRequest } from "../../../tools/ajax_req.tool.js";
-import { customPushState, customReplaceState } from "../../../tools/route_loader.tool.js";
 import { alertToast } from "../../../tools/util.js";
 import { contentHandlerOnRawCode } from "../navigation.js";
 import { routes } from "../../routes/routes.js";
+import { customReplaceState } from "../../../tools/route_loader.tool.js";
 
 let ajaxRequest = new AjaxRequest();
 
@@ -31,7 +31,9 @@ function execOrder() {
                         // customReplaceState(result.page, '', routes().orderSuccess.addressBarUrl);
                         window.history.replaceState('', '', routes().orderSuccess.addressBarUrl);
                         contentHandlerOnRawCode(result.page);
-                        // alertToast(result.type, result.message);
+                        if (result.message) {
+                            alertToast(result.type, result.message);
+                        }
                     })
                     .catch((error) => {
                         if (error.errorMessage) {

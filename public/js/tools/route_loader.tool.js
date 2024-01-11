@@ -20,21 +20,24 @@ function routeLoader(path, param = null) {
 
             break
         case routes(param).moreWork.addressBarUrl:
-            console.log('3 for moreWork');
+            console.log('4 for moreWork');
             loadPortfolioPages(routes(param).moreWork.pageUrl);
 
             break
         case routes(param).moreRecommendation.addressBarUrl:
-            console.log('4 for moreRecommendation');
+            console.log('5 for moreRecommendation');
             loadPortfolioPages(routes().moreRecommendation.pageUrl);
 
             break
-        // case routes().orderSuccess.addressBarUrl:
-        //     console.log('3 for order success');
-        //     // loadPortfolioPages(routes().home.pageUrl);
-        //     // customReplaceState(null, null, '/');
+        case routes(param).review.addressBarUrl:
+            console.log('6 for review');
+            loadPortfolioPages(routes(param).review.pageUrl);
+            // customReplaceState(null, null, '/');
 
-        //     break
+            break
+
+            break
+        
         default:
             // mainContentContainer.innerHTML = 'UKNOWN PATH';
             console.log('UKNOWN PATH');
@@ -61,9 +64,9 @@ function renderContentBaseOnUrl() {
         routeLoader(path, splittedPath[splittedPath.length - 1]);
     } else if (path === '/' || splittedPath.length < 3) {
         console.log('< 3');
-        if (path === '/order-success') {
+        if (path === routes().orderSuccess || path === routes().reviewSuccess) {
             // order success page have to be shown once
-            console.log('IS ORDER SUCCESS:: THE COUNT: ', count);
+            console.log('IS ORDER SUCCESS/ORDER SUCCESS:: THE COUNT: ', count);
             // Count how many order success page is loaded
             count+=1;
             // if it's load once then redirect to the page

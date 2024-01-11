@@ -5,19 +5,23 @@ const fs = require('fs');
 const ejs = require('ejs');
 const formidable = require('formidable');
 const path = require('path');
+const luxon = require('luxon');
 
 // Custom requirement
 const Order = require('./models/order');
-const Service = require('./models/service');
+const TempLink = require("./models/temp_link.js");
 const FileUploadError = require('./errors/file_upload.error.js');
 const ExperienceRessourceType = require('./models/experience_ressource_type');
 const ServiceCrud = require('./model_crud/service.crud');
 const OrderCrud = require('./model_crud/order.crud');
 const ExperienceCrud = require('./model_crud/experience.crud.js');
 const RecommendationCrud = require('./model_crud/recommendation_crud.js');
+const appConfig = require('./dependencies.js');
+
 
 // Multiple import
-const { formidableFormParser } = require('./tools/util.tool.js');
+const { formidableFormParser, generateUUID_V4, getFileExtension, writeOnDisk } = require('./tools/util.tool.js');
+const { Recommendation } = require('./models/recommendation');
 
 
 const app = express();
@@ -27,35 +31,6 @@ let orderCrud = new OrderCrud();
 let experienceCrud = new ExperienceCrud();
 let recommendationCrud = new RecommendationCrud();
 
-
-async function writeFile(form, subdir, files, orderId) {
-    return new Promise((resolve, reject) => {
-
-        form.uploadDir = `./uploads/${subdir}`;
-
-        let splitted = files.specifications[0].originalFilename.split('.');
-        let fileExtension = splitted[splitted.length - 1];
-
-        if (fileExtension !== 'pdf') {
-            reject(new FileUploadError('Only pdf files are allowed for specifications'));
-            return;
-        }
-
-        let filePath = path.join(__dirname, 'uploads') + '/specs/specs_' + orderId + '.' + fileExtension;
-
-        let oldPath = files.specifications[0].filepath;
-        let newPath = filePath;
-
-        try {
-            let rawData = fs.readFileSync(oldPath);
-
-            fs.writeFileSync(newPath, rawData);
-            resolve('done!')
-        } catch (error) {
-            reject(error);
-        }
-    });
-}
 
 
 app.get('/unknown-route', (req, res) => {
@@ -81,61 +56,40 @@ app.get('/load-order/:service', (req, res) => {
     res.render('portfolio-pages/order', { service: req.params.service });
 });
 
-app.get('/load-order-success/order-success', (req, res) => {
-    res.render('portfolio-pages/order-success');
-});
+// app.get('/load-order-success/order-success', (req, res) => {
+//     res.render('portfolio-pages/order-success');
+// });
 
 // Orders route
 app.post('/submit-order', (req, res) => {
-    // console.log(`THE REQ BODY: ${req.body}`);
 
     const form = new formidable.IncomingForm({ allowEmptyFiles: true, minFileSize: 0 });
-    // form.options.minFileSize = 0;
-    // form.options.allowEmptyFiles = true;
-
-
-    console.log('THE FORM OBJECT: ', form.options);
 
     form.parse(req, async (formidableErr, fields, files) => {
 
         if (formidableErr) {
-            console.log('FORM PARSE ERR:: ', formidableErr);
             return res.status(520).send({
                 type: 'danger',
                 message: 'Unexpected error. Please try again!',
             });
         }
 
-        const order = new Order(formidableFormParser(fields));
-        console.log('THE ORDER JUST CREATED: ', order);
+        let order = new Order(formidableFormParser(fields));
 
-        console.log('THE FIeLdS: ', fields);
-        console.log('THE FILES: ', files);
-        console.log('THE FILES SIZE: ', files.specifications[0].size);
-        console.log('THE FILES ONE: ', files[0]);
-        console.log('THE FILE: ', files.file);
-        console.log('THE FILE DETAIL LENGTH: ', files.specifications.length);
-
+        // Check if there is afile
         if (files.specifications.length !== 0 && files.specifications[0].originalFilename !== "" && files.specifications[0].size !== 0) {
-            console.log('There is a file');
+            // there is a file
             order.specifications = true;
         } else {
-            console.log('There is no file');
+            // there is no file
             order.specifications = false;
         }
-        console.log('THE FORM OBJECT AFTER: ', form.options);
-
-        console.log('THE ORDER JUST CREATED AFTER: ', order);
 
         order.description = order.description.trim();
 
         let modelError = order.validateSync();
 
-        console.log('THE MODEL ERROR: ', modelError);
-        console.log(1);
         if (modelError) {
-            console.log(2);
-            console.log(`THE ERROR::${modelError}`);
 
             /**
              * modelError = ValidationError: description: Description is required
@@ -164,57 +118,31 @@ app.post('/submit-order', (req, res) => {
              * Finally: modelError.errors[`${Object.keys(modelError.errors)[0]}`].message = 'Description is required'
              *
             */
+
+            console.log(`\n${util.inspect(modelError.errors[`${Object.keys(modelError.errors)[0]}`], { showHidden: false, depth: null, colors: true })}\n`);
             return res.status(449).send({
                 type: 'danger',
                 message: modelError.errors[`${Object.keys(modelError.errors)[0]}`].message
             });
         }
 
-        console.log('THE REQ BODY: ', req.body);
-        console.log('THE REQ FILE: ', req.file);
-        console.log('THE FIELDS: ', fields);
-        console.log('THE BODY PARSED: ', formidableFormParser(fields));
-        // console.log(`\n${util.inspect(fields, { showHidden: false, depth: null, colors: true })}\n`);
-        console.log('AFTER!!!!!!!!!!!!!!!!!');
-        // // if (Object.keys(req.body).length) {
-        //     console.log('ZI SERVICE: ', fields.service[0]);
-        // Service.findOne({ value: order.service }).exec()
+        // Check if the service exist
         serviceCrud.read({ value: order.service })
             .then(async (service) => {
-                console.log(`\nSERVICE FOUND: ${service}\n`);
                 if (!service) {
-                    res.status(422).send({
+                    return res.status(422).send({
                         type: 'danger',
                         message: 'Unprocessable entity',
                     });
-                    return
                 } else {
 
-
-                    console.log(3);
-
+                    // Write the file on tge disk is there is one
                     if (order.specifications) {
-                        // writeFile(form, 'sepcs', files)
-                        //     .then((result) => {
-                        //         console.log('THE RESULT: ', result);
-                        //     })
-                        //     .catch((error) => {
-
-                        //     console.log('THE ERROR OF FILE HANDLER:: ', error);
-                        //     return res.status(520).send({
-                        //         type: 'danger',
-                        //         message: 'Unexpected error. Please try again!',
-                        //     });
-                        //     });
-
                         try {
-                            console.log('THE FILE UPLOAD');
-                            let attr = await writeFile(form, 'sepcs', files, order._id);
-                            console.log(attr);
-                            console.log('END FILE UPLOAD');
+                            let attr = await writeOnDisk('specs', files, order._id, order.constructor.collection.name);
                         } catch (error) {
-                            console.log('THE ERROR OF FILE HANDLER:: ', error);
-                            console.log('TYPE OF: ', error.name);
+                            console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+
                             if (error.name === 'FileUploadError') {
                                 return res.status(449).send({
                                     type: 'danger',
@@ -227,22 +155,14 @@ app.post('/submit-order', (req, res) => {
                             });
 
                         }
-                        console.log('AFTER WRITE');
                     }
 
-                    console.log('BEFORE SAVE');
-                    console.log(`THE Order Before Save: `, order);
-                    // order.save()
+                    // Create the order
                     orderCrud.create(order)
                         .then((dbOrder) => {
-                            console.log(`THE Order: `, order);
-                            console.log(`THE dbOrder: `, dbOrder);
-                            console.log(`\n${1}\n`);
-
-                            console.log(`\n${2}\n`);
                             ejs.renderFile(__dirname + '/views/portfolio-pages/order-success.ejs', dbOrder, (err, html) => {
                                 if (err) {
-                                    console.log('ERR IN EJS RENDERING: ', err);
+                                    console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
                                     return res.status(520).send({
                                         type: 'danger',
                                         message: 'Unexpected error. Please try again!',
@@ -255,46 +175,23 @@ app.post('/submit-order', (req, res) => {
                                     page: html,
                                 });
                             });
-                            
+
                         })
                         .catch((error) => {
-                            console.log(4);
-                            console.log('BIG TOP ERROR!!!!!!!!!!!!!!!!');
-                            console.log(5);
                             console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
-                            console.log(6);
                             res.status(520).send({
                                 type: 'danger',
                                 message: 'Unexpected error. Please try again!',
                             });
-                            // req.session.message = {
-                            //     info: {
-                            //         type: 'danger',
-                            //         message: 'Unexpected error. Please try again!',
-                            //     }
-                            // }
-                            console.log(7);
-                            // res.redirect('/');
-                            console.log(8);
                         });
                 }
             })
             .catch((error) => {
-                console.log('ZE ERROR!!!!!!!!!!!!');
                 console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
-                // req.session.message = {
-                //     info: {
-                //         type: 'danger',
-                //         message: 'Unexpected error. Please try again!',
-                //     },
-                //     order: order,
-                // }
-                res.status(520).send({
+                return res.status(520).send({
                     type: 'danger',
                     message: 'Unexpected error. Please try again!',
-                })
-                // res.redirect('back');
-                return
+                });
 
             });
     });
@@ -394,11 +291,6 @@ app.get('/experience/ressource/:type', async (req, res) => {
     }
 });
 
-// Recommendations route
-app.post('/submit-recommendation', (req, res) => {
-
-});
-
 // Recommendationns route
 app.get('/customers/recommendations/:rate?', (req, res) => {
     try {
@@ -459,6 +351,201 @@ app.get('/customers/recommendations/:rate?', (req, res) => {
     }
 });
 
+// Generate link
+app.get('/gen/review/link', async (req, res) => {
+    try {
+        let tempLink = new TempLink({ token: generateUUID_V4() });
+
+        await tempLink.save();
+
+        res.status(201).json({ type: "success", message: `127.0.0.1:${appConfig.port}/review/${tempLink.token}` });
+
+    } catch (error) {
+        console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+
+        return res.status(520).send({
+            type: 'danger',
+            message: 'Unexpected error. Please try again!',
+        });
+    }
+
+});
+
+// Send review route
+app.get('/user/send/review/:token', async (req, res) => {
+    try {
+        let token = req.params.token;
+        console.log("THE TOKEN: ", token);
+        let result = await TempLink.findOne({ token: token }).exec();
+        console.log("THE TOKEN FIND RESULT: ", result);
+
+        if (result) {
+            console.log('VALID LINK');
+            res.render('portfolio-pages/send-review');
+            // res.render('portfolio-pages/layout', { skeleton: "send-review" });
+        } else {
+            console.log('INVALID LINK');
+            res.render('notfound');
+            // res.render('portfolio-pages/layout', { skeleton: "../notfound" });
+        }
+        console.log("END REVIEW");
+    } catch (error) {
+        console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+
+        return res.status(520).send({
+            type: 'danger',
+            message: 'Unexpected error. Please try again!',
+        });
+    }
+});
+
+// Handle review upload
+app.post('/user/review/post/:token', (req, res) => {
+    try {
+
+        TempLink.findOne({ token: req.params.token })
+            .then((tempLink) => {
+                console.log("FOUND TEMP LINK: ", tempLink);
+                if (tempLink) {
+                    const form = new formidable.IncomingForm({ allowEmptyFiles: true, minFileSize: 0 });
+            
+                    form.parse(req, async (formidableErr, fields, files) => {
+                        if (formidableErr) {
+                            console.log(`\n${util.inspect(formidableErr, { showHidden: false, depth: null, colors: true })}\n`);
+            
+                            return res.status(520).send({
+                                type: 'danger',
+                                message: 'Unexpected error. Please try again!',
+                            });
+                        }
+            
+                        let recommendation = new Recommendation(formidableFormParser(fields));
+            
+                        if (recommendation.rate === 0) {
+                            return res.status(422).send({
+                                type: 'warning',
+                                message: 'Please provide a rate',
+                            });
+                        }
+
+                        let validationError = recommendation.validateSync();
+            
+                        if (validationError) {
+                            console.log(`\n${util.inspect(validationError.errors[`${Object.keys(validationError.errors)[0]}`], { showHidden: false, depth: null, colors: true })}\n`);
+            
+                            return res.status(422).send({
+                                type: 'danger',
+                                message: 'Unprocessable entity',
+                            });
+                        };
+
+            
+                        let result;
+            
+                        if (files.pic.length !== 0 && files.pic[0].originalFilename !== "" && files.pic[0].size !== 0) {
+                            //  There is a file
+                            try {
+                                result = await writeOnDisk('recommendations_pic', files, recommendation._id, recommendation.constructor.collection.name);
+                                recommendation.pic.path = result.path;
+                                recommendation.pic.extension = result.extension;
+                            } catch (error) {
+            
+                                console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+            
+                                return res.status(520).send({
+                                    type: 'danger',
+                                    message: error.message,
+                                });
+            
+                            }
+                        }
+            
+                        recommendationCrud.create(recommendation)
+                            .then((dbRecommendation) => {
+                                recommendationCrud.readWithPic(dbRecommendation._id)
+                                    .then((recommendation) => {
+                                        ejs.renderFile(__dirname + '/views/portfolio-pages/review-success.ejs', {recommendation: recommendation}, (err, html) => {
+                                            if (err) {
+                                                console.log(`\n${util.inspect(err, { showHidden: false, depth: null, colors: true })}\n`);
+                            
+                                                return res.status(520).send({
+                                                    type: 'danger',
+                                                    message: 'Unexpected error. Please try again!',
+                                                });
+                                            }
+                                            console.log("REVIEW CREATED");
+                                            res.status(201).send({
+                                                type: "success",
+                                                message: "Review submitted successfully",
+                                                page: html
+                                            });
+                                        });
+                                    })
+                                    .catch((error) => {
+            
+                                        console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+                    
+                                        return res.status(520).send({
+                                            type: 'danger',
+                                            message: 'Unexpected error. Please try again!',
+                                        });
+
+                                    })
+            
+                            }).catch((error) => {
+            
+                                console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+            
+                                return res.status(520).send({
+                                    type: 'danger',
+                                    message: 'Unexpected error. Please try again!',
+                                });
+                            });
+            
+                    });
+                } else {
+                    ejs.renderFile(__dirname + '/views/notfound.ejs', (err, html) => {
+                        if (err) {
+                            return res.status(520).send({
+                                type: 'danger',
+                                message: 'Unexpected error. Please try again!',
+                            });
+                        }
+
+                        return res.status(404).send({
+                            type: 'danger',
+                            message: 'The link has expired!',
+                            page: html,
+                        });
+                    });
+                }
+            })
+            .catch((error) => {
+
+                console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+
+                return res.status(520).send({
+                    type: 'danger',
+                    message: 'Unexpected error. Please try again!',
+                });
+            });
+
+    } catch (error) {
+
+        console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+
+        return res.status(520).send({
+            type: 'danger',
+            message: 'Unexpected error. Please try again!',
+        });
+    }
+});
+
+// app.get('/user/review-success', (req, res) => {
+//     res.render('portfolio-pages/review-success');
+
+// })
+
 app.get(/^(?!\/(style|js|assets|fonts|experience)).*$/, (req, res) => {
     // res.set('Content-Type', 'application/javascript');
 
@@ -480,6 +567,7 @@ app.get(/^(?!\/(style|js|assets|fonts|experience)).*$/, (req, res) => {
     }
 
     res.render('portfolio-pages/layout', { skeleton: skeleton });
+    // res.render('portfolio-pages/layout');
     // }
 });
 

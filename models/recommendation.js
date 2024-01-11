@@ -8,6 +8,7 @@ const recommendationSchema = new mongoose.Schema({
         },
         extension: {
             type: String,
+            default: 'png'
         },
     },
     username: {
@@ -24,6 +25,8 @@ const recommendationSchema = new mongoose.Schema({
         required: true,
     },
     date: {
+        // This attribute will hold the formatted date that will
+        // be displated on the view
         type: String
     },
     created: {

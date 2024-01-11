@@ -20,10 +20,13 @@ function routes(param=null) {
             addressBarUrl: '/recommendations',
             pageUrl: '/customers/recommendations/',
         },
-        // webWork: {
-        //     addressBarUrl: '/web-work/'+param,
-        //     pageUrl: 
-        // }
+        review: {
+            addressBarUrl: '/review/'+param,
+            pageUrl: '/user/send/review/'+param,
+        },
+        reviewSuccess: {
+            addressBarUrl: '/review-success'
+        },
         default: {
             addressBarUrl: '/notfound',
             pageUrl: '/unknown-route'
