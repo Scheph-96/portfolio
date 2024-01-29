@@ -64,7 +64,7 @@ function renderContentBaseOnUrl() {
         routeLoader(path, splittedPath[splittedPath.length - 1]);
     } else if (path === '/' || splittedPath.length < 3) {
         console.log('< 3');
-        if (path === routes().orderSuccess || path === routes().reviewSuccess) {
+        if (path === routes().orderSuccess.addressBarUrl || path === routes().reviewSuccess.addressBarUrl) {
             // order success page have to be shown once
             console.log('IS ORDER SUCCESS/ORDER SUCCESS:: THE COUNT: ', count);
             // Count how many order success page is loaded

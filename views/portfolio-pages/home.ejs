@@ -109,23 +109,29 @@
   </div>
   <div class="contact">
     <h2>Contact me</h2>
-    <div class="form-container">
-      <div class="input-box">
-        <input type="text" name="customer-name" id="customer-name" placeholder="Name">
-        <label class="input-icon-box" for="customer-name"><i class='bx bxs-user'></i></label>
+    <form method="post" id="contact-form" enctype="multipart/form-data">
+      <div class="form-container">
+        <div class="input-box">
+          <input type="text" name="customer-name" id="customer-name" placeholder="Name" required>
+          <label class="input-icon-box" for="customer-name"><i class='bx bxs-user'></i></label>
+        </div>
+        <div class="input-box">
+          <input type="text" name="to" id="customer-email" placeholder="Email" required>
+          <label class="input-icon-box" for="customer-email"><i class='bx bx-at'></i></label>
+        </div>
+        <div class="input-box">
+          <input type="text" name="subject" id="customer-name" placeholder="Name" required>
+          <label class="input-icon-box" for="customer-name"><i class='bx bxs-user'></i></label>
+        </div>
+        <div class="input-box">
+          <textarea name="text" id="customer-message" cols="30" rows="13" placeholder="Message"></textarea>
+          <label class="input-icon-box" for="customer-message"><i class='bx bxs-envelope'></i></label>
+        </div>
+        <div class="submit-box">
+          <input type="submit" class="submit-button" value="send message">
+        </div>
       </div>
-      <div class="input-box">
-        <input type="text" name="customer-email" id="customer-email" placeholder="Email">
-        <label class="input-icon-box" for="customer-email"><i class='bx bx-at'></i></label>
-      </div>
-      <div class="input-box">
-        <textarea name="customer-message" id="customer-message" cols="30" rows="13" placeholder="Message"></textarea>
-        <label class="input-icon-box" for="customer-message"><i class='bx bxs-envelope'></i></label>
-      </div>
-      <div class="submit-box">
-        <input type="submit" value="send message">
-      </div>
-    </div>
+    </form>
   </div>
 </div>
 <div class="footer">

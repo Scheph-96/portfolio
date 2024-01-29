@@ -236,6 +236,7 @@ h3 {
 }
 
 object {
+    display: block;
     width: 100%;
     height: 100%;
 }
@@ -290,6 +291,46 @@ object {
     color: var(--default-text-color);
 }
 
+/* =============================== ERROR PAGE =============================== */
+
+body.error {
+    height: 100vh;
+}
+
+body.error .error-page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.error .error-page .content {
+    width: 60%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+body.error .error-page .content .illustrations {
+    width: 20rem;
+    height: fit-content;
+    text-align: center;
+}
+
+body.error .error-page .content h1 {
+    color: var(--primary-color);
+    font-size: 3rem;
+    line-height: 3rem;
+    margin: 2rem 0;
+}
+
+body.error .error-page .content p span{
+    color: var(--primary-color);
+}
+
+/* =============================== END ERROR PAGE =============================== */
 
 /* =============================== PROFILE DETAILS =============================== */
 

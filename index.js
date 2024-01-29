@@ -1,13 +1,17 @@
+// Build-in requirement
 const express = require('express');
 const http = require("http");
 const mongoose = require('mongoose');
 const cors = require('cors');
 const session = require('express-session');
 const MemoryStore = require('memorystore')(session);
+const util = require('util');
 
+// Custom requirement
 const app = require('./app.js');
 const path = require('path');
 const appConfig = require('./dependencies.js');
+const { ErrorLogger } = require('./tools/util.tool.js');
 
 
 const server = http.createServer(app);
@@ -63,6 +67,12 @@ app.use(session(sess));
 //     // console.log('\nRES LOCALS MESSAGE TOP:', res.locals.message,'\n');
 //     next();
 // });
+//   });
+
+app.use((err, req, res, next) => {
+    ErrorLogger.error(err.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(err, { showHidden: false, depth: null, colors: true }) });
+    return res.render('portfolio-pages/error');
+});
 
 
 // set template engine
@@ -75,71 +85,11 @@ app.use(express.static(path.join(__dirname, "public"), { index: false }));
 app.use(express.static('uploads'));
 
 // app.use((req, res, next) => {
-//     let hostname = req.headers.host;
-//     let options = domainMap[hostname];
-//     console.log('HOSTNAME: ', hostname);
-//     console.log('OPTIONS: ', options);
-
-//     if (options && options.publicDir) {
-//         let middleware = express.static(path.join(__dirname), 'public', options.publicDir);
-//         middleware(req, res, next);
-//     } else {
-//         next();
-//     }
-// })
-
-// Web work static files
-// app.use('/experience', express.static(path.join(__dirname, '/web-work')));
-
-// Debugging middleware to log request URLs
-app.use((req, res, next) => {
-    console.log('Requested URL:', req.url);
-    next();
-});
-
-
-app.use((err, req, res, next) => {
-    console.log('do');
-    console.error('MID ERR: ', err.stack);
-    console.log('re');
-    // req.session.message = {
-    //     info: {
-    //         type: 'danger',
-    //         message: 'Unexpected error. Please try again!',
-    //     }
-    // };
-    console.log('mi');
-    // console.log('\nREQ SESSION:', req.session);
-    // console.log('\nRES LOCALS:', res.locals);
-    // console.log('\nRES LOCALS MESSAGE:', res.locals.message,'\n');
-    console.log('mi 2');
-    res.status(520).send({
-        type: 'danger',
-        message: 'Unexpected error. Please try again!',
-    });
-    // res.status(204).send();
-    // res.redirect('back');
-    console.log('fa');
-    // res.locals.message = null;
-    console.log('sol');
-    // console.log('\nREQ SESSION:', req.session);
-    // console.log('\nRES LOCALS:', res.locals);
-    // console.log('\nRES LOCALS MESSAGE:', res.locals.message,'\n');
-    console.log('la');
-});
-
-// app.use((err, req, res, next) => {
-//     console.error(err.stack);
-
-//     if (!Object.keys(req.body).length) {
-//         req.session.message = {
-//             type: 'danger',
-//             message: 'Bad Request',
-//         }
-//         res.redirect('/');
-//         res.locals.message = null;
-//     }
-// });
+//     // Log IP and URL for each request
+//     req.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+//     console.log("THA IP: ", req.ip);
+  
+//     next();
 
 
 

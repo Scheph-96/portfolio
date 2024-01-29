@@ -137,6 +137,66 @@ function showMoreOfRecommendation() {
   }, { once: true })
 }
 
+function contactFormHandler() {
+  const contactForm = document.getElementById('contact-form');
+    const submitButton = document.getElementById('submit-button');
+    let isSubmit = false;
+    console.log('EXECUTE CONTACT');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            if (!isSubmit) {
+
+                isSubmit = true;
+                submitButton.disabled = true;
+                submitButton.value = "submitting...";
+
+                let contact = new FormData(contactForm);
+
+                console.log('THE CONTACT: ', contact.get("rate"));
+                console.log('THE CONTACT: ', ...contact);
+
+                ajaxRequest.submitForm(`/user/contact`, contact)
+                    .then((result) => {
+                        console.log(result);
+                        // contentHandlerOnRawCode(result.page);
+                        // customReplaceState(result.page, '', routes().reviewSuccess.addressBarUrl);
+                        // window.history.replaceState('', '', routes().reviewSuccess.addressBarUrl);
+                        // contentHandlerOnRawCode(result.page);
+                        // alertToast(result.type, result.message);
+                        if (result.message) {
+                            alertToast(result.type, result.message);
+                        }
+                    })
+                    .catch((error) => {
+                        if (error.status === 404) {
+                            alertToast(error.errorMessage.type, error.errorMessage.message);
+                            contentHandlerOnRawCode(error.errorMessage.page);
+                        } else {
+                            if (error.errorMessage) {
+                                alertToast(error.errorMessage.type, error.errorMessage.message);
+                            }
+                        }
+                        console.log(`ERR::::::::::::`);
+                        console.error(`ERROR:: ${error.error}`);
+                    })
+                    .finally(() => {
+                        isSubmit = false;
+                        submitButton.disabled = false;
+                        submitButton.value = "confirm";
+
+                    });
+                // }, 5000);
+
+            }
+
+        });
+    }
+
+}
+
+
 function homeDependencieMain() {
   swiper();
   orderPageHandler();
@@ -145,6 +205,7 @@ function homeDependencieMain() {
   // openImage();
   showMoreOfExperience();
   showMoreOfRecommendation();
+  contactFormHandler();
 }
 
 export {
