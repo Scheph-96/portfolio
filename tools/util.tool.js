@@ -1,12 +1,15 @@
+// Build-in requirement
 const fs = require('fs').promises;
+const winston = require('winston');
 const formidable = require('formidable');
 const { default: mongoose } = require('mongoose');
 const uuid = require('uuid');
-const util = require('util');
 const path = require('path');
 const fileSys = require('fs');
-const order = require('../models/order');
+
+// Custom requirement
 const FileUploadError = require('../errors/file_upload.error');
+const Log = require('../models/log.js');
 
 
 /**
@@ -16,6 +19,43 @@ const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
 ];
+
+let currentDir = __dirname;
+let parentDir = path.resolve(currentDir, '..');
+
+// Define log format
+const errorLogFormat = winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.printf(({ timestamp,level, ip, url, method, message, stacktrace }) => {
+        let log = new Log(timestamp, level, ip, url, method, message, stacktrace);
+        return log.errorToString();
+    })
+);
+
+const activityLogFormat = winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.printf(({ timestamp,level, ip, url, method}) => {
+        let log = new Log(timestamp, level, ip, url, method);
+        return log.activityToString();
+    })
+);
+
+// Create a logger with console and file transports
+const ErrorLogger = winston.createLogger({
+    format: errorLogFormat,
+    transports: [
+        // new winston.transports.Console(),
+        new winston.transports.File({ filename: parentDir+'/logs/error.log' }),
+    ],
+});
+
+const ActivityLogger = winston.createLogger({
+    format: activityLogFormat,
+    transports: [
+        // new winston.transports.Console(),
+        new winston.transports.File({ filename: parentDir+'/logs/activity.log' }),
+    ],
+});
 
 /**
  * Return key-value of an object each value is a list of unique value
@@ -137,21 +177,28 @@ async function writeOnDisk(destination, files, objectId, objectType) {
                     return;
                 }
                 prefix = "pic_";
-            } 
+            } else {
+                prefix = null;
+            }
 
-            let filePath = 'uploads' + '/' + destination + "/" + prefix + objectId + '.' + fileExtension;
-            let fullpath = path.resolve(__dirname, '..') + "/" + 'uploads' + '/' + destination + "/" + prefix + objectId + '.' + fileExtension;
+            if (prefix) {
 
-            // get the file temporary location path
-            let oldPath = files[Object.keys(files)[0]][0].filepath;
-            // set the new location path on disk
-            let newPath = fullpath;
-            // read the file data from the temporary location
-            let rawData = fileSys.readFileSync(oldPath);
+                let filePath = 'uploads' + '/' + destination + "/" + prefix + objectId + '.' + fileExtension;
+                let fullpath = path.resolve(__dirname, '..') + "/" + 'uploads' + '/' + destination + "/" + prefix + objectId + '.' + fileExtension;
 
-            // write the file on disk
-            fileSys.writeFileSync(newPath, rawData);
-            resolve({path: filePath, extension: fileExtension});
+                // get the file temporary location path
+                let oldPath = files[Object.keys(files)[0]][0].filepath;
+                // set the new location path on disk
+                let newPath = fullpath;
+                // read the file data from the temporary location
+                let rawData = fileSys.readFileSync(oldPath);
+
+                // write the file on disk
+                fileSys.writeFileSync(newPath, rawData);
+                resolve({ path: filePath, extension: fileExtension });
+            } else {
+                reject(new FileUploadError('Unknown error'));
+            }
         } catch (error) {
             reject(error);
         }
@@ -166,4 +213,6 @@ module.exports = {
     getFileExtension: getFileExtension,
     writeOnDisk: writeOnDisk,
     months: months,
+    ErrorLogger: ErrorLogger,
+    ActivityLogger: ActivityLogger,
 }

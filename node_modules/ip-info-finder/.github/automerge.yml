@@ -1,0 +1,26 @@
+name: Automerge and Version
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  automerge:
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16.x"
+      - run: npm install
+      - run: npm test
+      - name: Bump version and publish to NPM
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        run: |
+          git config user.name 'dependabot[bot]'
+          git config user.email 'dependabot[bot]@users.noreply.github.com'
+          npm version patch
+          npm publish
+          git push origin HEAD:main

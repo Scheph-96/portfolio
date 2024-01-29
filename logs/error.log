@@ -1,0 +1,16 @@
+2024-01-24T12:28:53.071Z [error] ::ffff:127.0.0.1:/submit-order | POST::Only pdf files are allowed for specifications
+FileUploadError: Only pdf files are allowed for specifications
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mtools/util.tool.js:170:28
+    at new Promise (<anonymous>)
+    at writeOnDisk [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mtools/util.tool.js:131:12[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp.js:142:46
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+
+2024-01-24T12:29:01.141Z [error] ::ffff:127.0.0.1:/submit-order | POST::Only pdf files are allowed for specifications
+FileUploadError: Only pdf files are allowed for specifications
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mtools/util.tool.js:170:28
+    at new Promise (<anonymous>)
+    at writeOnDisk [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mtools/util.tool.js:131:12[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp.js:142:46
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+

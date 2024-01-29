@@ -1,11 +1,9 @@
 // Build-in requirement
 const express = require('express');
 const util = require('util');
-const fs = require('fs');
 const ejs = require('ejs');
 const formidable = require('formidable');
-const path = require('path');
-const luxon = require('luxon');
+const nodemailer = require('nodemailer');
 
 // Custom requirement
 const Order = require('./models/order');
@@ -20,8 +18,9 @@ const appConfig = require('./dependencies.js');
 
 
 // Multiple import
-const { formidableFormParser, generateUUID_V4, getFileExtension, writeOnDisk } = require('./tools/util.tool.js');
+const { formidableFormParser, generateUUID_V4, getFileExtension, writeOnDisk, ErrorLogger, ActivityLogger } = require('./tools/util.tool.js');
 const { Recommendation } = require('./models/recommendation');
+const Email = require('./models/email.js');
 
 
 const app = express();
@@ -31,6 +30,16 @@ let orderCrud = new OrderCrud();
 let experienceCrud = new ExperienceCrud();
 let recommendationCrud = new RecommendationCrud();
 
+// Create a transporter using custom SMTP settings
+const transporter = nodemailer.createTransport({
+    host: 'your_hosting_smtp_server.com',  // hosting provider's SMTP server
+    port: 587,  // the appropriate port (587 is a common one for secure connections)
+    secure: false,  // Set to true if using a secure connection (TLS)
+    auth: {
+        user: 'your_email@your_domain.com',  // email address on the hosting domain
+        pass: 'your_email_password'   // email password
+    }
+});
 
 
 app.get('/unknown-route', (req, res) => {
@@ -43,7 +52,8 @@ app.get('/home', (req, res) => {
             res.render('portfolio-pages/home', { services: results[0], experienceFavorite: { ressources: results[1], type: ExperienceRessourceType.enum().web }, recommendationFavorite: results[2] });
         })
         .catch((error) => {
-            console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+
+            ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
 
             return res.status(520).send({
                 type: 'danger',
@@ -56,10 +66,6 @@ app.get('/load-order/:service', (req, res) => {
     res.render('portfolio-pages/order', { service: req.params.service });
 });
 
-// app.get('/load-order-success/order-success', (req, res) => {
-//     res.render('portfolio-pages/order-success');
-// });
-
 // Orders route
 app.post('/submit-order', (req, res) => {
 
@@ -68,6 +74,7 @@ app.post('/submit-order', (req, res) => {
     form.parse(req, async (formidableErr, fields, files) => {
 
         if (formidableErr) {
+
             return res.status(520).send({
                 type: 'danger',
                 message: 'Unexpected error. Please try again!',
@@ -119,7 +126,7 @@ app.post('/submit-order', (req, res) => {
              *
             */
 
-            console.log(`\n${util.inspect(modelError.errors[`${Object.keys(modelError.errors)[0]}`], { showHidden: false, depth: null, colors: true })}\n`);
+            ErrorLogger.error(modelError.errors[`${Object.keys(modelError.errors)[0]}`].message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(modelError.errors[`${Object.keys(modelError.errors)[0]}`], { showHidden: false, depth: null, colors: true }) });
             return res.status(449).send({
                 type: 'danger',
                 message: modelError.errors[`${Object.keys(modelError.errors)[0]}`].message
@@ -141,8 +148,7 @@ app.post('/submit-order', (req, res) => {
                         try {
                             let attr = await writeOnDisk('specs', files, order._id, order.constructor.collection.name);
                         } catch (error) {
-                            console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
-
+                            ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
                             if (error.name === 'FileUploadError') {
                                 return res.status(449).send({
                                     type: 'danger',
@@ -162,7 +168,7 @@ app.post('/submit-order', (req, res) => {
                         .then((dbOrder) => {
                             ejs.renderFile(__dirname + '/views/portfolio-pages/order-success.ejs', dbOrder, (err, html) => {
                                 if (err) {
-                                    console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+                                    ErrorLogger.error(err.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(err, { showHidden: false, depth: null, colors: true }) });
                                     return res.status(520).send({
                                         type: 'danger',
                                         message: 'Unexpected error. Please try again!',
@@ -178,7 +184,7 @@ app.post('/submit-order', (req, res) => {
 
                         })
                         .catch((error) => {
-                            console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+                            ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
                             res.status(520).send({
                                 type: 'danger',
                                 message: 'Unexpected error. Please try again!',
@@ -187,7 +193,7 @@ app.post('/submit-order', (req, res) => {
                 }
             })
             .catch((error) => {
-                console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+                ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
                 return res.status(520).send({
                     type: 'danger',
                     message: 'Unexpected error. Please try again!',
@@ -240,7 +246,7 @@ app.get('/experience/favorite/ressource/:type', async (req, res) => {
                 break;
         }
     } catch (error) {
-        console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+        ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
 
         return res.status(520).send({
             type: 'danger',
@@ -282,8 +288,8 @@ app.get('/experience/ressource/:type', async (req, res) => {
                 break;
         }
     } catch (error) {
-        console.log('ERROR CATCHED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-        console.log(error);
+
+        ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
         res.status(520).send({
             type: 'danger',
             message: 'Unexpected error. Please try again!',
@@ -295,13 +301,12 @@ app.get('/experience/ressource/:type', async (req, res) => {
 app.get('/customers/recommendations/:rate?', (req, res) => {
     try {
         if (!req.params.rate) {
-            console.log("NO PARAM");
             recommendationCrud.readAllWithPic()
                 .then((result) => {
                     res.render('portfolio-pages/more-recommendation', { recommendations: result });
                 })
                 .catch((error) => {
-                    console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+                    ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
 
                     return res.status(520).send({
                         type: 'danger',
@@ -310,13 +315,12 @@ app.get('/customers/recommendations/:rate?', (req, res) => {
                 });
         } else {
             if (req.params.rate === "all") {
-                console.log("ALL RESSOURCE");
                 recommendationCrud.readAllWithPic()
                     .then((result) => {
                         res.render('portfolio-pages/more-recommendation-body', { recommendations: result });
                     })
                     .catch((error) => {
-                        console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+                        ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
 
                         return res.status(520).send({
                             type: 'danger',
@@ -324,7 +328,6 @@ app.get('/customers/recommendations/:rate?', (req, res) => {
                         });
                     });
             } else {
-                console.log("THE PARAM: ", req.params.rate);
                 let rate = parseInt(req.params.rate);
                 // Convert the param to number
                 recommendationCrud.readAllByRateWithPic(rate)
@@ -332,7 +335,7 @@ app.get('/customers/recommendations/:rate?', (req, res) => {
                         res.render('portfolio-pages/more-recommendation-body', { recommendations: result });
                     })
                     .catch((error) => {
-                        console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+                        ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
 
                         return res.status(520).send({
                             type: 'danger',
@@ -342,7 +345,7 @@ app.get('/customers/recommendations/:rate?', (req, res) => {
             }
         }
     } catch (error) {
-        console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+        ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
 
         return res.status(520).send({
             type: 'danger',
@@ -361,7 +364,7 @@ app.get('/gen/review/link', async (req, res) => {
         res.status(201).json({ type: "success", message: `127.0.0.1:${appConfig.port}/review/${tempLink.token}` });
 
     } catch (error) {
-        console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+        ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
 
         return res.status(520).send({
             type: 'danger',
@@ -375,22 +378,16 @@ app.get('/gen/review/link', async (req, res) => {
 app.get('/user/send/review/:token', async (req, res) => {
     try {
         let token = req.params.token;
-        console.log("THE TOKEN: ", token);
         let result = await TempLink.findOne({ token: token }).exec();
-        console.log("THE TOKEN FIND RESULT: ", result);
 
         if (result) {
-            console.log('VALID LINK');
             res.render('portfolio-pages/send-review');
-            // res.render('portfolio-pages/layout', { skeleton: "send-review" });
         } else {
-            console.log('INVALID LINK');
             res.render('notfound');
-            // res.render('portfolio-pages/layout', { skeleton: "../notfound" });
         }
-        console.log("END REVIEW");
+
     } catch (error) {
-        console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+        ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
 
         return res.status(520).send({
             type: 'danger',
@@ -405,22 +402,21 @@ app.post('/user/review/post/:token', (req, res) => {
 
         TempLink.findOne({ token: req.params.token })
             .then((tempLink) => {
-                console.log("FOUND TEMP LINK: ", tempLink);
                 if (tempLink) {
                     const form = new formidable.IncomingForm({ allowEmptyFiles: true, minFileSize: 0 });
-            
+
                     form.parse(req, async (formidableErr, fields, files) => {
                         if (formidableErr) {
-                            console.log(`\n${util.inspect(formidableErr, { showHidden: false, depth: null, colors: true })}\n`);
-            
+                            ErrorLogger.error("FORMIDABLE ERROR", { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(formidableErr, { showHidden: false, depth: null, colors: true }) });
+
                             return res.status(520).send({
                                 type: 'danger',
                                 message: 'Unexpected error. Please try again!',
                             });
                         }
-            
+
                         let recommendation = new Recommendation(formidableFormParser(fields));
-            
+
                         if (recommendation.rate === 0) {
                             return res.status(422).send({
                                 type: 'warning',
@@ -429,19 +425,19 @@ app.post('/user/review/post/:token', (req, res) => {
                         }
 
                         let validationError = recommendation.validateSync();
-            
+
                         if (validationError) {
-                            console.log(`\n${util.inspect(validationError.errors[`${Object.keys(validationError.errors)[0]}`], { showHidden: false, depth: null, colors: true })}\n`);
-            
+                            ErrorLogger.error("VALIDATION ERROR", { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(validationError.errors[`${Object.keys(validationError.errors)[0]}`], { showHidden: false, depth: null, colors: true }) });
+
                             return res.status(422).send({
                                 type: 'danger',
                                 message: 'Unprocessable entity',
                             });
                         };
 
-            
+
                         let result;
-            
+
                         if (files.pic.length !== 0 && files.pic[0].originalFilename !== "" && files.pic[0].size !== 0) {
                             //  There is a file
                             try {
@@ -449,31 +445,31 @@ app.post('/user/review/post/:token', (req, res) => {
                                 recommendation.pic.path = result.path;
                                 recommendation.pic.extension = result.extension;
                             } catch (error) {
-            
-                                console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
-            
+
+                                ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
+
                                 return res.status(520).send({
                                     type: 'danger',
                                     message: error.message,
                                 });
-            
+
                             }
                         }
-            
+
                         recommendationCrud.create(recommendation)
                             .then((dbRecommendation) => {
                                 recommendationCrud.readWithPic(dbRecommendation._id)
                                     .then((recommendation) => {
-                                        ejs.renderFile(__dirname + '/views/portfolio-pages/review-success.ejs', {recommendation: recommendation}, (err, html) => {
+                                        ejs.renderFile(__dirname + '/views/portfolio-pages/review-success.ejs', { recommendation: recommendation }, (err, html) => {
                                             if (err) {
-                                                console.log(`\n${util.inspect(err, { showHidden: false, depth: null, colors: true })}\n`);
-                            
+                                                ErrorLogger.error(err.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(err, { showHidden: false, depth: null, colors: true }) });
+
                                                 return res.status(520).send({
                                                     type: 'danger',
                                                     message: 'Unexpected error. Please try again!',
                                                 });
                                             }
-                                            console.log("REVIEW CREATED");
+
                                             res.status(201).send({
                                                 type: "success",
                                                 message: "Review submitted successfully",
@@ -482,26 +478,26 @@ app.post('/user/review/post/:token', (req, res) => {
                                         });
                                     })
                                     .catch((error) => {
-            
-                                        console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
-                    
+
+                                        ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
+
                                         return res.status(520).send({
                                             type: 'danger',
                                             message: 'Unexpected error. Please try again!',
                                         });
 
                                     })
-            
+
                             }).catch((error) => {
-            
-                                console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
-            
+
+                                ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
+
                                 return res.status(520).send({
                                     type: 'danger',
                                     message: 'Unexpected error. Please try again!',
                                 });
                             });
-            
+
                     });
                 } else {
                     ejs.renderFile(__dirname + '/views/notfound.ejs', (err, html) => {
@@ -522,7 +518,7 @@ app.post('/user/review/post/:token', (req, res) => {
             })
             .catch((error) => {
 
-                console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+                ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
 
                 return res.status(520).send({
                     type: 'danger',
@@ -532,7 +528,7 @@ app.post('/user/review/post/:token', (req, res) => {
 
     } catch (error) {
 
-        console.log(`\n${util.inspect(error, { showHidden: false, depth: null, colors: true })}\n`);
+        ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
 
         return res.status(520).send({
             type: 'danger',
@@ -541,23 +537,99 @@ app.post('/user/review/post/:token', (req, res) => {
     }
 });
 
-// app.get('/user/review-success', (req, res) => {
-//     res.render('portfolio-pages/review-success');
+app.post('/user/contact', (req, res) => {
+    try {
 
-// })
+        const form = new formidable.IncomingForm({ allowEmptyFiles: true, minFileSize: 0 });
+
+        form.parse(req, async (formidableErr, fields, files) => {
+            if (formidableErr) {
+                ErrorLogger.error("FORMIDABLE ERROR", { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(formidableErr, { showHidden: false, depth: null, colors: true }) });
+
+                return res.status(520).send({
+                    type: 'danger',
+                    message: 'Unexpected error. Please try again!',
+                });
+            }
+
+            let email = new Email(formidableFormParser(fields));
+
+            // Email options
+            const mailOptions = {
+                from: 'your_email@your_domain.com',  // Sender's email address
+                to: email.data.to, // Recipient's email address
+                subject: email.data.subject,  // Email subject
+                text: email.data.text  // Email body
+            };
+
+            // Send email
+            transporter.sendMail(mailOptions, (error, info) => {
+                /**
+                 * The 'info' object has the following attributes:
+                 * - messageId: String, the unique identifier assigned to the message by the mail server.
+                 * - envelope: Object, the envelope information for the message.
+                 * - accepted: Array, an array of recipient addresses that were accepted by the server.
+                 * - rejected: Array, an array of recipient addresses that were rejected by the server.
+                 * - pending: Array, an array of recipient addresses for which the delivery is still pending.
+                 * - response: String, the entire raw response message from the mail server.
+                 * - envelopeTime: Number, the time taken to send the envelope.
+                 * - messageTime: Number, the time taken to send the message.
+                 * - messageSize: Number, the size of the message in bytes.
+                 * - responseCode: Number, the response code received from the mail server.
+                 * - command: String, the last command sent by Nodemailer to the mail server.
+                 * - rejectedErrors: Array, an array of error messages for rejected recipients.
+                 * - rejectedRecipientStatus: Object, detailed status information for rejected recipients.
+                 * - envelope: Object, the envelope information for the message.
+                */
+
+                if (error) {
+                    ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
+                    return res.status(520).send({
+                        type: 'danger',
+                        message: 'Unexpected error. Please try again!',
+                    });
+                } else {
+                    ActivityLogger.info(`Name: ${email.data.name}, From: ${email.data.to}, Subject: ${email.data.subject}:|:Response: ${info.response}`, { ip: req.ip, url: req.url, method: req.method });
+                }
+
+                // Close the transporter
+                transporter.close();
+            });
+
+        });
+    } catch (error) {
+        ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
+
+
+    }
+});
+
+app.get('/sc-admin', (req, res) => {
+    res.render('dashboard-index');
+});
 
 app.get(/^(?!\/(style|js|assets|fonts|experience)).*$/, (req, res) => {
+    // logger.info(`[${req.method}] ${req.url}`);
+    // logger.info({ip: req.ip, message: 'Request successful'});
+    ActivityLogger.info('', { ip: req.ip, url: req.url, method: req.method });
+
+    // try {
+    //     throw new Error("BRUUUUUUUUHHHHHHHH")
+    // } catch (error) {
+    //     ErrorLogger.error(`${error.message}`, { ip: req.ip, url: req.url, method: req.method })   
+    // }
+
     // res.set('Content-Type', 'application/javascript');
 
     // res.setHeader(
     //     'Content-Security-Policy',
     //     "script-src 'http://127.0.0.1:3400/js/portfolio-js/main.js https://assets2.lottiefiles.com/private_files/lf30_kecMeI.json https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js'"
     // );
-    console.log('REQ URL: ', req.url);
-    let skeleton;
+    // console.log('REQ URL: ', req.url);
+    // let skeleton;
 
     if (req.url === "/") {
-        skeleton = "skeletons/home.skeleton.ejs";
+        skeleton = 'skeletons/home.skeleton.ejs';
     } else if (req.url.includes("/order/")) {
         skeleton = 'skeletons/order.skeleton.ejs';
     } else if (req.url.includes("/works/")) {
