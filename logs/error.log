@@ -14,3 +14,107 @@ FileUploadError: Only pdf files are allowed for specifications
     at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp.js:142:46
 [90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
 
+2024-01-29T19:41:16.876Z [error] ::ffff:127.0.0.1:/favicon.ico | GET::skeleton is not defined
+ReferenceError: skeleton is not defined
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp.js:641:54
+    at Layer.handle [as handle_request] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/layer.js:95:5[90m)[39m
+    at next [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/route.js:144:13[90m)[39m
+    at Route.dispatch [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/route.js:114:3[90m)[39m
+    at Layer.handle [as handle_request] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/layer.js:95:5[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:284:15
+    at param [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:365:14[90m)[39m
+    at param [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:376:14[90m)[39m
+    at Function.process_params [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:421:3[90m)[39m
+    at next [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:280:10[90m)[39m
+
+2024-01-29T19:43:37.005Z [error] ::ffff:127.0.0.1:/favicon.ico | GET::skeleton is not defined
+ReferenceError: skeleton is not defined
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp.js:641:54
+    at Layer.handle [as handle_request] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/layer.js:95:5[90m)[39m
+    at next [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/route.js:144:13[90m)[39m
+    at Route.dispatch [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/route.js:114:3[90m)[39m
+    at Layer.handle [as handle_request] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/layer.js:95:5[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:284:15
+    at param [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:365:14[90m)[39m
+    at param [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:376:14[90m)[39m
+    at Function.process_params [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:421:3[90m)[39m
+    at next [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:280:10[90m)[39m
+
+2024-01-29T19:46:07.484Z [error] ::ffff:127.0.0.1:/favicon.ico | GET::skeleton is not defined
+ReferenceError: skeleton is not defined
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp.js:641:54
+    at Layer.handle [as handle_request] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/layer.js:95:5[90m)[39m
+    at next [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/route.js:144:13[90m)[39m
+    at Route.dispatch [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/route.js:114:3[90m)[39m
+    at Layer.handle [as handle_request] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/layer.js:95:5[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:284:15
+    at param [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:365:14[90m)[39m
+    at param [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:376:14[90m)[39m
+    at Function.process_params [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:421:3[90m)[39m
+    at next [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:280:10[90m)[39m
+
+2024-01-30T20:25:05.554Z [error] ::ffff:127.0.0.1:/favicon.ico | GET::skeleton is not defined
+ReferenceError: skeleton is not defined
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp.js:641:54
+    at Layer.handle [as handle_request] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/layer.js:95:5[90m)[39m
+    at next [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/route.js:144:13[90m)[39m
+    at Route.dispatch [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/route.js:114:3[90m)[39m
+    at Layer.handle [as handle_request] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/layer.js:95:5[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:284:15
+    at param [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:365:14[90m)[39m
+    at param [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:376:14[90m)[39m
+    at Function.process_params [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:421:3[90m)[39m
+    at next [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:280:10[90m)[39m
+
+2024-02-26T11:46:23.395Z [error] ::ffff:127.0.0.1:/favicon.ico | GET::skeleton is not defined
+ReferenceError: skeleton is not defined
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp.js:646:54
+    at Layer.handle [as handle_request] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/layer.js:95:5[90m)[39m
+    at next [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/route.js:144:13[90m)[39m
+    at Route.dispatch [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/route.js:114:3[90m)[39m
+    at Layer.handle [as handle_request] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/layer.js:95:5[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:284:15
+    at param [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:365:14[90m)[39m
+    at param [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:376:14[90m)[39m
+    at Function.process_params [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:421:3[90m)[39m
+    at next [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:280:10[90m)[39m
+
+2024-02-26T11:47:25.710Z [error] ::ffff:127.0.0.1:/sc-admin/dashboard | GET::skeleton is not defined
+ReferenceError: skeleton is not defined
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp.js:646:54
+    at Layer.handle [as handle_request] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/layer.js:95:5[90m)[39m
+    at next [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/route.js:144:13[90m)[39m
+    at Route.dispatch [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/route.js:114:3[90m)[39m
+    at Layer.handle [as handle_request] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/layer.js:95:5[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:284:15
+    at param [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:365:14[90m)[39m
+    at param [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:376:14[90m)[39m
+    at Function.process_params [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:421:3[90m)[39m
+    at next [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:280:10[90m)[39m
+
+2024-02-26T11:54:11.499Z [error] ::ffff:127.0.0.1:/sc-admin/dashboard | GET::skeleton is not defined
+ReferenceError: skeleton is not defined
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp.js:646:54
+    at Layer.handle [as handle_request] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/layer.js:95:5[90m)[39m
+    at next [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/route.js:144:13[90m)[39m
+    at Route.dispatch [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/route.js:114:3[90m)[39m
+    at Layer.handle [as handle_request] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/layer.js:95:5[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:284:15
+    at param [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:365:14[90m)[39m
+    at param [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:376:14[90m)[39m
+    at Function.process_params [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:421:3[90m)[39m
+    at next [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:280:10[90m)[39m
+
+2024-02-29T21:03:15.328Z [error] ::ffff:127.0.0.1:/sc-admin/ | GET::skeleton is not defined
+ReferenceError: skeleton is not defined
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp.js:647:58
+    at Layer.handle [as handle_request] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/layer.js:95:5[90m)[39m
+    at next [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/route.js:144:13[90m)[39m
+    at Route.dispatch [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/route.js:114:3[90m)[39m
+    at Layer.handle [as handle_request] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/layer.js:95:5[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:284:15
+    at param [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:365:14[90m)[39m
+    at param [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:376:14[90m)[39m
+    at Function.process_params [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:421:3[90m)[39m
+    at next [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:280:10[90m)[39m
+

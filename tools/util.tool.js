@@ -44,7 +44,7 @@ const activityLogFormat = winston.format.combine(
 const ErrorLogger = winston.createLogger({
     format: errorLogFormat,
     transports: [
-        // new winston.transports.Console(),
+        new winston.transports.Console(),
         new winston.transports.File({ filename: parentDir+'/logs/error.log' }),
     ],
 });
@@ -52,7 +52,7 @@ const ErrorLogger = winston.createLogger({
 const ActivityLogger = winston.createLogger({
     format: activityLogFormat,
     transports: [
-        // new winston.transports.Console(),
+        new winston.transports.Console(),
         new winston.transports.File({ filename: parentDir+'/logs/activity.log' }),
     ],
 });

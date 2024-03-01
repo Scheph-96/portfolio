@@ -450,11 +450,13 @@ main .menu-side-bar .menu-item-title {
     white-space: nowrap;
     opacity: 1;
     transition: opacity .3s ease;
+    display: block;
 }
 
 main .menu-side-bar.collapse .menu-item-title,
 main .menu-side-bar.collapse .menu-side-bar-footer .theme i {
     opacity: 0 !important;
+    display: none;
 }
 
 main .menu-side-bar.collapse .menu-side-bar-content ul li::before {
@@ -594,9 +596,9 @@ main .main-content {
     padding: var(--default-padding);
 }
 
-main .main-content>div {
-    /* padding: var(--default-padding); */
-}
+/* main .main-content>div {
+    padding: var(--default-padding);
+} */
 
 main .main-content .global-overview {
     display: flex;
@@ -610,6 +612,29 @@ main .main-content .global-overview>div p:first-child {
 main .main-content .global-overview .details-title {
     font-size: .9rem;
     margin-bottom: 5px;
+}
+
+main .main-content .grid-container.order .icon-container {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(30, 144, 255, .18);
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: var(--default-margin);
+}
+
+main .main-content .grid-container.order .icon-container.warning{
+    background-color: rgba(255, 217, 80, .18) !important;
+}
+
+main .main-content .grid-container.order .icon-container.success{
+    background-color: rgb(2, 188, 119, .18) !important;
+}
+
+main .main-content .grid-container.order .icon-container.danger{
+    background-color: rgba(255, 35, 102, .18) !important;
 }
 
 main .main-content .new-mails .content>div {
@@ -701,7 +726,8 @@ main .main-content .table .title-section {
 
 main .main-content .table .project-id,
 main .main-content .table .customer-id,
-main .main-content .table .projects-number {
+main .main-content .table .projects-number,
+main .main-content .table .service {
     color: #e67e38;
 }
 
@@ -713,7 +739,8 @@ main .main-content .table .total-achieved {
 
 main .main-content .table .project-price,
 main .main-content .table .total-income,
-main .main-content .table .money-spend {
+main .main-content .table .money-spend,
+main .main-content .table .time {
     color: var(--primary-color);
 }
 

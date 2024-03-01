@@ -72,10 +72,8 @@ function workSwipe() {
 
 function orderPageHandler() {
   const orderNow = document.querySelectorAll('.order-now');
-  console.log('ORDER', orderNow);
   for (let i = 0; i < orderNow.length; i++) {
     orderNow[i].addEventListener('click', (e) => {
-      console.log('order now');
       customPushState('', '', `/order/${e.currentTarget.getAttribute('service')}`);
     }, { once: true });
   }
