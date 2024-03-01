@@ -15,7 +15,7 @@ let ajaxRequest = new AjaxRequest();
  * This function is used to make the single page app possible
  * it load all the necessary page by calling @method loadHtml
  * which is a methos defined exclusively to render html code
- * @param {String} page 
+ * @param {String} page the page to load
  */
 function loadPortfolioPages(page) {
     ajaxRequest.loadHtml(page, mainContentContainer, null);

@@ -604,8 +604,13 @@ app.post('/user/contact', (req, res) => {
     }
 });
 
-app.get('/sc-admin', (req, res) => {
-    res.render('dashboard-index');
+
+// app.get('/sc-admin', (req, res) => {
+//     res.render('dashboard-index');
+// });
+
+app.get('/load-admin-pages/:page', (req, res) => {
+    res.render(`dashboard-pages/${req.params.page}`);
 });
 
 app.get(/^(?!\/(style|js|assets|fonts|experience)).*$/, (req, res) => {
@@ -626,19 +631,23 @@ app.get(/^(?!\/(style|js|assets|fonts|experience)).*$/, (req, res) => {
     //     "script-src 'http://127.0.0.1:3400/js/portfolio-js/main.js https://assets2.lottiefiles.com/private_files/lf30_kecMeI.json https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js'"
     // );
     // console.log('REQ URL: ', req.url);
-    // let skeleton;
+    let skeleton;
 
-    if (req.url === "/") {
-        skeleton = 'skeletons/home.skeleton.ejs';
-    } else if (req.url.includes("/order/")) {
-        skeleton = 'skeletons/order.skeleton.ejs';
-    } else if (req.url.includes("/works/")) {
-        skeleton = 'skeletons/more-experience.skeleton.ejs';
-    } else if (req.url === "/recommendations") {
-        skeleton = 'skeletons/more-recommendation.skeleton.ejs';
+    if (!req.url.includes("/sc-admin")) {
+        if (req.url === "/") {
+            skeleton = 'skeletons/home.skeleton.ejs';
+        } else if (req.url.includes("/order/")) {
+            skeleton = 'skeletons/order.skeleton.ejs';
+        } else if (req.url.includes("/works/")) {
+            skeleton = 'skeletons/more-experience.skeleton.ejs';
+        } else if (req.url === "/recommendations") {
+            skeleton = 'skeletons/more-recommendation.skeleton.ejs';
+        }
+    
+        res.render('portfolio-pages/layout', { skeleton: skeleton });
+    } else if (req.url.includes("/sc-admin")) {
+        res.render('dashboard-index');        
     }
-
-    res.render('portfolio-pages/layout', { skeleton: skeleton });
     // res.render('portfolio-pages/layout');
     // }
 });

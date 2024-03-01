@@ -1,2 +1,324 @@
 2024-01-24T11:25:09.710Z [info] ::ffff:127.0.0.1:/ | GET
 2024-01-24T12:16:23.230Z [info] ::ffff:127.0.0.1:/ | GET
+2024-01-29T19:41:16.845Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-01-29T19:43:36.990Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-01-29T19:46:07.482Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-01-30T20:25:05.553Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-22T19:49:36.138Z [info] ::ffff:127.0.0.1:/ | GET
+
+2024-02-22T19:49:36.476Z [info] ::ffff:127.0.0.1:/ | GET
+
+2024-02-22T19:49:44.101Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-26T11:46:23.379Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-26T11:47:25.709Z [info] ::ffff:127.0.0.1:/sc-admin/dashboard | GET
+
+2024-02-26T11:54:11.480Z [info] ::ffff:127.0.0.1:/sc-admin/dashboard | GET
+
+2024-02-26T12:10:56.582Z [info] ::ffff:127.0.0.1:/sc-admin/dashboard | GET
+
+2024-02-26T12:11:43.175Z [info] ::ffff:127.0.0.1:/sc-admin/dashboard | GET
+
+2024-02-26T12:11:48.308Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-26T12:19:20.656Z [info] ::ffff:127.0.0.1:/sc-admin/dashboard | GET
+
+2024-02-26T12:19:24.797Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-26T12:22:10.461Z [info] ::ffff:127.0.0.1:/sc-admin/dashboard | GET
+
+2024-02-26T12:22:16.609Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T11:02:29.674Z [info] ::ffff:127.0.0.1:/sc-admin/dashboard | GET
+
+2024-02-27T11:02:32.357Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T11:03:17.164Z [info] ::ffff:127.0.0.1:/sc-admin/dashboard | GET
+
+2024-02-27T11:03:22.005Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T11:03:42.516Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T11:03:47.173Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T11:04:33.113Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T11:04:37.573Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T11:07:19.507Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T11:07:24.483Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T11:07:41.718Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T11:07:42.188Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T17:15:00.118Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T17:15:00.981Z [info] ::ffff:127.0.0.1:/load-admin-pages//js/dashboard-js/pages/dashboard.ejs | GET
+
+2024-02-27T17:15:01.067Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T17:15:53.312Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T17:15:55.472Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T17:16:00.703Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T17:16:03.534Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T17:24:05.785Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T17:24:07.767Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T17:24:56.001Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T17:24:58.160Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T17:28:04.597Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T17:28:07.160Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T17:28:14.951Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T17:28:15.753Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T17:31:46.825Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T17:31:47.716Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T17:31:50.206Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T17:31:50.849Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T17:32:22.190Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T17:32:23.736Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T17:32:27.251Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T17:32:28.253Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T17:41:12.403Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T17:41:13.527Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T17:41:15.193Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T17:41:15.829Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T17:42:27.277Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T17:42:28.042Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T17:43:08.469Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T17:43:09.324Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T18:02:38.330Z [info] ::ffff:127.0.0.1:/ | GET
+
+2024-02-27T18:11:30.367Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T18:11:34.214Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T18:21:23.889Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T18:21:28.129Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T18:22:14.899Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T18:22:18.629Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T18:23:26.774Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T18:23:31.100Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T18:34:53.512Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T18:34:56.393Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-27T18:35:33.284Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-27T18:35:37.400Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T20:26:01.854Z [info] ::ffff:127.0.0.1:/order/web-development | GET
+
+2024-02-29T20:26:36.379Z [info] ::ffff:127.0.0.1:/order/web-development | GET
+
+2024-02-29T20:26:50.144Z [info] ::ffff:127.0.0.1:/order/web-development | GET
+
+2024-02-29T20:26:50.184Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T20:26:52.587Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T20:28:49.478Z [info] ::ffff:127.0.0.1:/order/web-development | GET
+
+2024-02-29T20:28:55.714Z [info] ::ffff:127.0.0.1:/order/web-development | GET
+
+2024-02-29T20:30:00.317Z [info] ::ffff:127.0.0.1:/ | GET
+
+2024-02-29T20:30:08.431Z [info] ::ffff:127.0.0.1:/order/web-development | GET
+
+2024-02-29T20:30:45.644Z [info] ::ffff:127.0.0.1:/order/web-development | GET
+
+2024-02-29T20:31:18.573Z [info] ::ffff:127.0.0.1:/order/web-development | GET
+
+2024-02-29T20:32:26.640Z [info] ::ffff:127.0.0.1:/order/web-development | GET
+
+2024-02-29T20:32:46.544Z [info] ::ffff:127.0.0.1:/order/web-development | GET
+
+2024-02-29T20:32:50.269Z [info] ::ffff:127.0.0.1:/order/web-development | GET
+
+2024-02-29T20:34:41.374Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T21:03:15.308Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T21:03:52.579Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T21:04:29.611Z [info] ::ffff:127.0.0.1:/order/web-development | GET
+
+2024-02-29T21:04:35.273Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T21:04:35.788Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T21:08:07.628Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T21:08:08.832Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T21:10:10.514Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T21:10:11.415Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T21:10:27.640Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T21:10:28.763Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T21:14:33.575Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T21:14:35.509Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T21:15:37.461Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T21:15:38.900Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T21:16:24.435Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T21:16:26.677Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T21:16:54.181Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T21:16:58.564Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T22:19:57.880Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T22:19:59.196Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T22:26:09.757Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T22:26:15.174Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T22:27:57.685Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T22:27:58.347Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T22:56:36.633Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T22:56:38.355Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T22:56:48.550Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T22:56:49.844Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T22:57:20.248Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T22:57:21.702Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T22:57:23.079Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T22:57:24.561Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T22:57:58.971Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T22:58:00.433Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T23:01:48.938Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T23:01:50.427Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T23:03:15.690Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T23:03:17.192Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T23:03:28.477Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T23:03:29.894Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T23:04:36.073Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T23:04:38.214Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T23:08:48.444Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T23:08:49.732Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T23:09:07.970Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T23:09:09.990Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T23:10:07.655Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T23:10:09.102Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T23:11:33.932Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T23:11:35.433Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T23:11:42.628Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T23:11:43.899Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T23:15:22.278Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T23:15:23.607Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T23:19:06.942Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T23:19:08.794Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T23:19:31.115Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T23:19:32.571Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T23:19:58.337Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T23:19:59.700Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T23:22:11.033Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T23:22:12.420Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T23:24:22.797Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T23:24:23.670Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T23:44:48.498Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T23:44:50.537Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T23:53:22.720Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T23:53:23.661Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T23:57:04.631Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T23:57:05.257Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+
+2024-02-29T23:58:18.056Z [info] ::ffff:127.0.0.1:/sc-admin/ | GET
+
+2024-02-29T23:58:18.912Z [info] ::ffff:127.0.0.1:/favicon.ico | GET
+

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const ProjectType = require('./project-type');
+const ProjectType = require('./project_type');
 
 projectSchema = new mongoose.Schema({
     name: {
@@ -27,6 +27,10 @@ projectSchema = new mongoose.Schema({
             type: String,
             required: true,
         }
+    },
+    info: {
+        type: String,
+        required: true,
     },
     type: {
         type: String,

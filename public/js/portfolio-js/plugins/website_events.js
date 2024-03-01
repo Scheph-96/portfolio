@@ -81,7 +81,6 @@ function programmingLanguageHandler() {
 
 function proceedAfterOrder() {
     const proceedBtn = document.querySelector('.proceed-after-order-button');
-    console.log('IN PROCEED AFTER ORDER');
     proceedBtn.addEventListener('click', () => {
         customReplaceState(null, null, '/');
     });

@@ -35,8 +35,6 @@ function routeLoader(path, param = null) {
             // customReplaceState(null, null, '/');
 
             break
-
-            break
         
         default:
             // mainContentContainer.innerHTML = 'UKNOWN PATH';
@@ -60,6 +58,7 @@ function renderContentBaseOnUrl() {
      * we get ["", "path", "param"]
     */
     if (path !== '/' && splittedPath.length > 2) {
+        console.log("THE ONGOING URL");
         // pass the parameter to routeLoader
         routeLoader(path, splittedPath[splittedPath.length - 1]);
     } else if (path === '/' || splittedPath.length < 3) {

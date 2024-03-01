@@ -1,7 +1,8 @@
+import { AjaxRequest } from '../../tools/ajax_req.tool.js';
 import { themeEvent, getCssRule, getFilename } from '../tools/util.js';
-import { AjaxRequest } from '../../services/load_file.service.js';
 import { lineChart, barChart, pieChart } from './charts.js';
 import { MyLocalStorage } from "./persistent_data/local_storage.js";
+import { customPushState, customReplaceState } from "../../tools/route_loader.tool.js";
 // import { emailClick } from "../pages_features/mailbox_features.js";
 
 
@@ -25,12 +26,13 @@ let ajaxRequest = new AjaxRequest();
 
 // All available pages in the pages folder
 const pages = {
-    dashboard: '/js/dashboard-js/pages/dashboard.ejs',
-    projects: '/js/dashboard-js/pages/projects.ejs',
-    customers: '/js/dashboard-js/pages/customers.ejs',
-    mailbox: '/js/dashboard-js/pages/mailbox.ejs',
-    income: '/js/dashboard-js/pages/income.ejs',
-    analytics: '/js/dashboard-js/pages/analytics.ejs',
+    dashboard: 'dashboard',
+    order: 'order',
+    projects: 'projects',
+    customers: 'customers',
+    mailbox: 'mailbox',
+    income: 'income',
+    analytics: 'analytics',
 }
 
 // All localStorage keys used in this file (I can't remember them)
@@ -92,8 +94,8 @@ function __init__() {
 
         // if there is a page stored restore it
         if (localStorage.getData(localStorageKeys.currentPageLoaded)) {
-            ajaxRequest.loadHtml(localStorage.getData(localStorageKeys.currentPageLoaded), mainContent, null);
-            navigation(true);
+            ajaxRequest.loadHtml("/load-admin-pages/" + localStorage.getData(localStorageKeys.currentPageLoaded), mainContent, null);
+            loadRequirements(true);
         }
     } catch (error) {
         proceedWithoutLocalStorageFoo(proceedWithoutLocalStorage, error);
@@ -126,7 +128,7 @@ function switchTheme() {
             }
         }
 
-        
+
     });
 }
 
@@ -138,44 +140,49 @@ function switchPage() {
     for (let i = 0; i < menuItems.length; i++) {
         menuItems[i].addEventListener('click', (e) => {
             const clickedElement = e.currentTarget;
-            navigation(true, clickedElement);
+            loadRequirements(true, clickedElement);
 
             try {
                 // load page for each menu item clicked
                 switch (e.currentTarget.getAttribute('menu-item-type')) {
                     case 'dashboard':
+                        ajaxRequest.loadHtml("/load-admin-pages/" + e.currentTarget.getAttribute('menu-item-type'), mainContent, null);
 
-                        ajaxRequest.loadHtml(pages.dashboard, mainContent, null);
+                        break;
+
+                    case 'order':
+
+                        ajaxRequest.loadHtml("/load-admin-pages/" + e.currentTarget.getAttribute('menu-item-type'), mainContent, null);
 
                         break;
 
                     case 'projects':
 
-                        ajaxRequest.loadHtml(pages.projects, mainContent, null);
+                        ajaxRequest.loadHtml("/load-admin-pages/" + e.currentTarget.getAttribute('menu-item-type'), mainContent, null);
 
                         break;
 
                     case 'customers':
 
-                        ajaxRequest.loadHtml(pages.customers, mainContent, null);
+                        ajaxRequest.loadHtml("/load-admin-pages/" + e.currentTarget.getAttribute('menu-item-type'), mainContent, null);
 
                         break;
 
                     case 'mailbox':
 
-                        ajaxRequest.loadHtml(pages.mailbox, mainContent, null);
+                        ajaxRequest.loadHtml("/load-admin-pages/" + e.currentTarget.getAttribute('menu-item-type'), mainContent, null);
 
                         break;
 
                     case 'income':
 
-                        ajaxRequest.loadHtml(pages.income, mainContent, null);
+                        ajaxRequest.loadHtml("/load-admin-pages/" + e.currentTarget.getAttribute('menu-item-type'), mainContent, null);
 
                         break;
 
                     case 'analytics':
 
-                        ajaxRequest.loadHtml(pages.analytics, mainContent, null);
+                        ajaxRequest.loadHtml("/load-admin-pages/" + e.currentTarget.getAttribute('menu-item-type'), mainContent, null);
 
                         break;
 
@@ -194,12 +201,12 @@ function switchPage() {
 }
 
 /**
- * Method that load the needed page
+ * Method that load the each page requirements
  * 
  * @param {boolean} once execute the vent listener once
  * @param {Node} clickedElement the menu clicked in the sidebar menu
  */
-function navigation(once, clickedElement = null) {
+function loadRequirements(once, clickedElement = null) {
 
     // the name of the page load from localStorage
     let pageName;
@@ -210,7 +217,7 @@ function navigation(once, clickedElement = null) {
             // in case clickedElement doesn't exist it means that the event is listening from the __init__ function
             // in that case we just load from localStorage the page stored
             if (!clickedElement) {
-                pageName = getFilename(localStorage.getData(localStorageKeys.currentPageLoaded));
+                pageName = localStorage.getData(localStorageKeys.currentPageLoaded);
             }
 
             for (let j = 0; j < menuItems.length; j++) {
@@ -242,11 +249,13 @@ function navigation(once, clickedElement = null) {
              * if it's from switchPage(the user click on a menu item on the side bar) clickedElement exist,
                we check the menu-item-type attribute to return the needed dependency
              *
-             * if it's from __init__(the page just load) clickedElement doesn't exist, we check the pageName 
+             * if it's from __init__(the page just reload) clickedElement doesn't exist, we check the pageName 
                that we get from localStorage above to return the needed dependency
             */
             if ((clickedElement && clickedElement.getAttribute('menu-item-type') === 'dashboard') || pageName === 'dashboard') {
                 dashboardPageRequirements();
+            } else if ((clickedElement && clickedElement.getAttribute('menu-item-type') === 'order') || pageName === 'order') {
+                orderRequirements();
             } else if ((clickedElement && clickedElement.getAttribute('menu-item-type') === 'projects') || pageName === 'projects') {
                 projectsPageRequirements();
             } else if ((clickedElement && clickedElement.getAttribute('menu-item-type') === 'customers') || pageName === 'customers') {
@@ -261,14 +270,14 @@ function navigation(once, clickedElement = null) {
 
         } catch (error) {
             proceedWithoutLocalStorageFoo(proceedWithoutLocalStorage, error);
-            console.log(`NAVIGATION ERROR: ${error}`);
+            console.log(`loadRequirements ERROR: ${error}`);
         }
 
     }, { once: once });
 }
 
 /**
- * Method to handle the dropdown
+ * Method to handle the dropdown in the chart
  */
 function dropdownHandler() {
     dropdown = document.querySelector('.dropdown');
@@ -325,6 +334,9 @@ function dashboardPageRequirements() {
     dropdownHandler();
     localStorage.setData(localStorageKeys.currentPageLoaded, pages.dashboard);
 }
+function orderRequirements() { 
+    localStorage.setData(localStorageKeys.currentPageLoaded, pages.order);
+}
 function projectsPageRequirements() {
     barChart(false);
     dropdownHandler();
@@ -348,7 +360,6 @@ function incomePageRequirements() {
 function analyticsPageRequirements() {
     localStorage.setData(localStorageKeys.currentPageLoaded, pages.analytics);
 }
-function logoutRequirements() { }
 
 /**
  * Do not raise an error when the user know that localStorage in unavailable
@@ -366,7 +377,7 @@ function proceedWithoutLocalStorageFoo(proceedWithoutLocalStorage, error) {
         error.name === 'TypeError' &&
         // other browsers
         (error.message.includes('Cannot read properties of undefined')
-        // firefox
+            // firefox
             || error.message === 'localStorage is undefined')) { console.log('Authorized'); }
 }
 
