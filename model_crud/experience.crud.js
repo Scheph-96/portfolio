@@ -1,5 +1,5 @@
 const { default: mongoose } = require('mongoose');
-const ExperienceMethods = require('../models/experience');
+const ExperienceMethods = require('../models/Schema/experience');
 const ExperienceFavorite = ExperienceMethods.ExperienceFavorite;
 const Experience = ExperienceMethods.Experience;
 

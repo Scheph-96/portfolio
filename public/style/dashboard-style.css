@@ -8,10 +8,11 @@
     --transparent-primary-color: rgba(30, 144, 255, .2);
     --secondary-color: #e6edfa;
     --default-bg-color: #F2F6FB;
-    --default-text-color: #5C7894;
+    --default-text-color: #435d77;
     --default-text-color-transparent: rgba(92, 120, 148, .5);
     --chart-grid-line-color: rgb(235, 235, 235, .6);
-    --table-header-bg-color: #cdd5dd27;
+    --table-header-bg-color: #e4ecf3;
+    --table-row-hover-color: #e4ecf3;
     --line-color: #EFEFEF;
     --default-box-shadow: 0 15px 20px rgba(0, 0, 0, .1);
     --default-border-radius: 12px;
@@ -28,17 +29,7 @@
     --default-text-color-transparent: rgb(239, 243, 248, .5);
     --line-color: rgba(94, 94, 94, .5);
     --chart-grid-line-color: rgba(94, 94, 94, .3);
-}
-
-*,
-*::after,
-*::before {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    list-style: none;
-    scroll-behavior: smooth;
+    --table-header-bg-color: #393b3c;
 }
 
 body {
@@ -207,6 +198,12 @@ body .ls-error-content button {
     grid-row: 3;
 }
 
+/* GRID: Start from the first column and occupy 4 columns on the third row */
+.col1-2-row4 {
+    grid-column: 1 / span 2;
+    grid-row: 4;
+}
+
 /* GRID: Start from the first column and occupy 4 columns on the fourth row */
 .col1-4-row4 {
     grid-column: 1 / span 4;
@@ -337,14 +334,16 @@ header {
     padding: 0 var(--default-padding);
 }
 
-header .menu-side-bar-header {
+header .menu-side-bar-header,
+.admin-logo-container {
     display: flex;
     align-items: center;
     font-family: 'Bulletto Killa¬', sans-serif;
     position: relative;
 }
 
-header .menu-side-bar-header .logo {
+header .menu-side-bar-header .logo,
+.admin-logo {
     width: 40px;
     height: 40px;
     background-color: var(--primary-color);
@@ -357,7 +356,8 @@ header .menu-side-bar-header .logo {
     cursor: pointer;
 }
 
-header .menu-side-bar-header .logo p {
+header .menu-side-bar-header .logo p,
+.admin-logo p {
     font-size: 1.4rem;
 }
 
@@ -637,6 +637,10 @@ main .main-content .grid-container.order .icon-container.danger{
     background-color: rgba(255, 35, 102, .18) !important;
 }
 
+main .main-content .grid-container.order .icon-container.new{
+    background-color: rgba(192, 192, 192, .18);
+}
+
 main .main-content .new-mails .content>div {
     display: flex;
     align-items: center;
@@ -686,15 +690,64 @@ main .main-content .project-offers .content .project-offer-date {
     right: 0;
 }
 
+main .main-content .data-details-table {
+    height: 500px;
+    overflow: auto;
+}
+
+main .main-content div.content:has(> .small-table) {
+    height: 340px;
+    overflow: auto;
+}
+
+main .main-content .data-details-table thead,
+main .main-content div.content:has(> .small-table) thead  {
+    width: 100%;
+    position: sticky;
+    top: 0;
+}
+
 main .main-content .table {
     width: 100%;
     border-collapse: collapse;
 }
 
+main .main-content .table tr:has(> td) {
+    position: relative;
+    cursor: pointer;
+}
+
+main .main-content .table tr:has(> td)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--table-row-hover-color);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .5s ease;
+}
+
+main .main-content .table tr:has(> td):hover::after {
+    transform: scaleX(1);
+}
+
+/* main .main-content .table tr:has(> td):hover {
+    border-bottom: 4px solid var(--table-row-hover-color);
+    border-width: 4px;
+    background-color: var(--table-row-hover-color);
+} */
+
+main .main-content .table thead {
+    background-color: var(--table-header-bg-color);
+    z-index: 2;
+}
+
 main .main-content .table th {
     padding: 10px;
     text-align: left;
-    background-color: var(--table-header-bg-color);
     font-size: .9rem;
 }
 
@@ -723,24 +776,31 @@ main .main-content .table .title-section {
     display: flex;
     align-items: center;
 }
+main .main-content .table i {
+    cursor: pointer;
+}
 
 main .main-content .table .project-id,
 main .main-content .table .customer-id,
 main .main-content .table .projects-number,
-main .main-content .table .service {
+main .main-content .table .service,
+main .main-content .table .order-id {
     color: #e67e38;
 }
 
 main .main-content .table .project-start-date,
 main .main-content .table .registration-date,
-main .main-content .table .total-achieved {
+main .main-content .table .total-achieved,
+main .main-content .table .order-receipt-date {
     color: #02BC77;
 }
 
 main .main-content .table .project-price,
 main .main-content .table .total-income,
 main .main-content .table .money-spend,
-main .main-content .table .time {
+main .main-content .table .time,
+main .main-content .table .order-specifications,
+main .main-content .table .order-specifications i {
     color: var(--primary-color);
 }
 
@@ -749,13 +809,13 @@ main .main-content .table .leaving-date {
     color: rgb(245, 37, 79);
 }
 
-main .main-content .projects-details .head>div,
-main .main-content .projects-details .head .search-bar {
+main .main-content .data-details .head>div,
+main .main-content .data-details .head .search-bar {
     display: flex;
     align-items: center;
 }
 
-main .main-content .projects-details .head .search-bar {
+main .main-content .data-details .head .search-bar {
     width: 20rem;
     margin-right: var(--default-margin);
     background-color: var(--line-color);
@@ -763,13 +823,13 @@ main .main-content .projects-details .head .search-bar {
     padding: 5px;
 }
 
-main .main-content .projects-details .head .search-bar input {
+main .main-content .data-details .head .search-bar input {
     background: none;
     font-size: .9rem;
     margin-left: 5px;
 }
 
-main .main-content .projects-details .head .iconify {
+main .main-content .data-details .head .iconify {
     font-size: 1.2rem;
 }
 

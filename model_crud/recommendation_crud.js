@@ -1,4 +1,4 @@
-const recommendationMethods = require('../models/recommendation');
+const recommendationMethods = require('../models/Schema/recommendation');
 const Recommendation = recommendationMethods.Recommendation;
 const RecommendationFavorite = recommendationMethods.RecommendationFavorite;
 const mongoose = require('mongoose');

@@ -118,3 +118,703 @@ ReferenceError: skeleton is not defined
     at Function.process_params [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:421:3[90m)[39m
     at next [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:280:10[90m)[39m
 
+2024-03-01T15:03:17.379Z [error] ::ffff:127.0.0.1:/load-admin-pages/order | GET::/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/views/dashboard-pages/order.ejs:35
+    33|       </div>
+    34|     </div>
+ >> 35|     <%- include('') %>
+    36|     <div class="card current-year-accepted-orders global-overview cell-4">
+    37|       <div class="icon-container success">
+    38|           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
+
+Could not find the include file ""
+Error: /media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/views/dashboard-pages/order.ejs:35
+    33|       </div>
+    34|     </div>
+ >> 35|     <%- include('') %>
+    36|     <div class="card current-year-accepted-orders global-overview cell-4">
+    37|       <div class="icon-container success">
+    38|           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
+
+Could not find the include file ""
+    at getIncludePath [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:185:13[90m)[39m
+    at includeFile [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:311:19[90m)[39m
+    at include [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:701:16[90m)[39m
+    at eval ("[90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mviews/dashboard-pages/order.ejs":12:17)
+    at order [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:703:17[90m)[39m
+    at tryHandleCache [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:274:36[90m)[39m
+    at exports.renderFile [as engine] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:491:10[90m)[39m
+    at View.render [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/view.js:135:8[90m)[39m
+    at tryRender [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/application.js:657:10[90m)[39m
+    at Function.render [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/application.js:609:3[90m)[39m {
+  path: [32m'/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/views/dashboard-pages/order.ejs'[39m
+}
+
+2024-03-13T16:18:09.168Z [error] ::ffff:127.0.0.1:/load-admin-pages/order | GET::/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/views/dashboard-pages/order.ejs:104
+    102|         </div>
+    103|         <hr>
+ >> 104|         <% if(orders) {
+    105|             console.log(orders);
+    106|         } %>
+    107|         <div class="body">
+
+orders is not defined
+ReferenceError: /media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/views/dashboard-pages/order.ejs:104
+    102|         </div>
+    103|         <hr>
+ >> 104|         <% if(orders) {
+    105|             console.log(orders);
+    106|         } %>
+    107|         <div class="body">
+
+orders is not defined
+    at eval ("[90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mviews/dashboard-pages/order.ejs":36:8)
+    at order [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:703:17[90m)[39m
+    at tryHandleCache [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:274:36[90m)[39m
+    at exports.renderFile [as engine] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:491:10[90m)[39m
+    at View.render [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/view.js:135:8[90m)[39m
+    at tryRender [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/application.js:657:10[90m)[39m
+    at Function.render [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/application.js:609:3[90m)[39m
+    at ServerResponse.render [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/response.js:1039:7[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp.js:620:29
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m {
+  path: [32m'/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/views/dashboard-pages/order.ejs'[39m
+}
+
+2024-03-16T17:03:47.922Z [error] ::ffff:127.0.0.1:/load-admin-pages/order | GET::missing ) after argument list in /media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/views/dashboard-pages/order.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+SyntaxError: missing ) after argument list in /media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/views/dashboard-pages/order.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+    at new Function (<anonymous>)
+    at Template.compile [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:673:12[90m)[39m
+    at Object.compile [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:398:16[90m)[39m
+    at handleCache [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:235:18[90m)[39m
+    at tryHandleCache [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:274:16[90m)[39m
+    at exports.renderFile [as engine] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:491:10[90m)[39m
+    at View.render [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/view.js:135:8[90m)[39m
+    at tryRender [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/application.js:657:10[90m)[39m
+    at Function.render [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/application.js:609:3[90m)[39m
+    at ServerResponse.render [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/response.js:1039:7[90m)[39m
+
+2024-03-16T17:06:56.497Z [error] ::ffff:127.0.0.1:/load-admin-pages/order | GET::missing ) after argument list in /media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/views/dashboard-pages/order.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+SyntaxError: missing ) after argument list in /media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/views/dashboard-pages/order.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+    at new Function (<anonymous>)
+    at Template.compile [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:673:12[90m)[39m
+    at Object.compile [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:398:16[90m)[39m
+    at handleCache [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:235:18[90m)[39m
+    at tryHandleCache [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:274:16[90m)[39m
+    at exports.renderFile [as engine] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:491:10[90m)[39m
+    at View.render [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/view.js:135:8[90m)[39m
+    at tryRender [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/application.js:657:10[90m)[39m
+    at Function.render [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/application.js:609:3[90m)[39m
+    at ServerResponse.render [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/response.js:1039:7[90m)[39m
+
+2024-03-16T17:20:45.311Z [error] ::ffff:127.0.0.1:/load-admin-pages/order | GET::missing ) after argument list in /media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/views/dashboard-pages/order.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+SyntaxError: missing ) after argument list in /media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/views/dashboard-pages/order.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+    at new Function (<anonymous>)
+    at Template.compile [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:673:12[90m)[39m
+    at Object.compile [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:398:16[90m)[39m
+    at handleCache [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:235:18[90m)[39m
+    at tryHandleCache [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:274:16[90m)[39m
+    at exports.renderFile [as engine] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:491:10[90m)[39m
+    at View.render [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/view.js:135:8[90m)[39m
+    at tryRender [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/application.js:657:10[90m)[39m
+    at Function.render [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/application.js:609:3[90m)[39m
+    at ServerResponse.render [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/response.js:1039:7[90m)[39m
+
+2024-03-16T17:33:28.831Z [error] ::ffff:127.0.0.1:/load-admin-pages/order | GET::/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/views/dashboard-pages/order.ejs:121
+    119|                         <tr>
+    120|                             <td class="order-id">
+ >> 121|                                 <p><%= orders[i]._id.substring(orders[i]._id.length - 5) %></p>
+    122|                             </td>
+    123|                             <td class="order-service title-section">
+    124|                                 <% switch (orders[i].status) { 
+
+orders[i]._id.substring is not a function
+TypeError: /media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/views/dashboard-pages/order.ejs:121
+    119|                         <tr>
+    120|                             <td class="order-id">
+ >> 121|                                 <p><%= orders[i]._id.substring(orders[i]._id.length - 5) %></p>
+    122|                             </td>
+    123|                             <td class="order-service title-section">
+    124|                                 <% switch (orders[i].status) { 
+
+orders[i]._id.substring is not a function
+    at eval ("[90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mviews/dashboard-pages/order.ejs":42:40)
+    at order [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:703:17[90m)[39m
+    at tryHandleCache [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:274:36[90m)[39m
+    at exports.renderFile [as engine] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:491:10[90m)[39m
+    at View.render [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/view.js:135:8[90m)[39m
+    at tryRender [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/application.js:657:10[90m)[39m
+    at Function.render [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/application.js:609:3[90m)[39m
+    at ServerResponse.render [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/response.js:1039:7[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp.js:622:29
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m {
+  path: [32m'/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/views/dashboard-pages/order.ejs'[39m
+}
+
+2024-03-16T17:33:59.950Z [error] ::ffff:127.0.0.1:/load-admin-pages/order | GET::missing ) after argument list in /media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/views/dashboard-pages/order.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+SyntaxError: missing ) after argument list in /media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/views/dashboard-pages/order.ejs while compiling ejs
+
+If the above error is not helpful, you may want to try EJS-Lint:
+https://github.com/RyanZim/EJS-Lint
+Or, if you meant to create an async function, pass `async: true` as an option.
+    at new Function (<anonymous>)
+    at Template.compile [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:673:12[90m)[39m
+    at Object.compile [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:398:16[90m)[39m
+    at handleCache [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:235:18[90m)[39m
+    at tryHandleCache [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:274:16[90m)[39m
+    at exports.renderFile [as engine] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mejs[24m/lib/ejs.js:491:10[90m)[39m
+    at View.render [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/view.js:135:8[90m)[39m
+    at tryRender [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/application.js:657:10[90m)[39m
+    at Function.render [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/application.js:609:3[90m)[39m
+    at ServerResponse.render [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/response.js:1039:7[90m)[39m
+
+2024-03-17T19:16:38.634Z [error] ::ffff:127.0.0.1:/submit-order | POST::Path `status` is required.
+ValidatorError: Path `status` is required.
+    at _validate [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mmongoose[24m/lib/schematype.js:1377:17[90m)[39m
+    at SchemaType.doValidateSync [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mmongoose[24m/lib/schematype.js:1463:11[90m)[39m
+    at Document.validateSync [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mmongoose[24m/lib/document.js:3107:19[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp.js:97:32
+    at zalgoSafe [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mdezalgo[24m/dezalgo.js:20:10[90m)[39m
+    at f [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4monce[24m/once.js:25:25[90m)[39m
+    at IncomingForm.<anonymous> [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mformidable[24m/dist/index.cjs:1210:7[90m)[39m
+[90m    at IncomingForm.emit (node:events:517:28)[39m
+    at IncomingForm._maybeEnd [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mformidable[24m/dist/index.cjs:1661:10[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mformidable[24m/dist/index.cjs:1420:14 {
+  properties: {
+    validator: [36m[Function (anonymous)][39m,
+    message: [32m'Path `status` is required.'[39m,
+    type: [32m'required'[39m,
+    path: [32m'status'[39m,
+    value: [90mundefined[39m
+  },
+  kind: [32m'required'[39m,
+  path: [32m'status'[39m,
+  value: [90mundefined[39m,
+  reason: [90mundefined[39m,
+  [[32mSymbol(mongoose:validatorError)[39m]: [33mtrue[39m
+}
+
+2024-03-17T19:16:54.143Z [error] ::ffff:127.0.0.1:/submit-order | POST::Path `status` is required.
+ValidatorError: Path `status` is required.
+    at _validate [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mmongoose[24m/lib/schematype.js:1377:17[90m)[39m
+    at SchemaType.doValidateSync [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mmongoose[24m/lib/schematype.js:1463:11[90m)[39m
+    at Document.validateSync [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mmongoose[24m/lib/document.js:3107:19[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp.js:97:32
+    at zalgoSafe [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mdezalgo[24m/dezalgo.js:20:10[90m)[39m
+    at f [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4monce[24m/once.js:25:25[90m)[39m
+    at IncomingForm.<anonymous> [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mformidable[24m/dist/index.cjs:1210:7[90m)[39m
+[90m    at IncomingForm.emit (node:events:517:28)[39m
+    at IncomingForm._maybeEnd [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mformidable[24m/dist/index.cjs:1661:10[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mformidable[24m/dist/index.cjs:1420:14 {
+  properties: {
+    validator: [36m[Function (anonymous)][39m,
+    message: [32m'Path `status` is required.'[39m,
+    type: [32m'required'[39m,
+    path: [32m'status'[39m,
+    value: [90mundefined[39m
+  },
+  kind: [32m'required'[39m,
+  path: [32m'status'[39m,
+  value: [90mundefined[39m,
+  reason: [90mundefined[39m,
+  [[32mSymbol(mongoose:validatorError)[39m]: [33mtrue[39m
+}
+
+2024-03-17T19:19:47.897Z [error] ::ffff:127.0.0.1:/submit-order | POST::Path `status` is required.
+ValidatorError: Path `status` is required.
+    at _validate [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mmongoose[24m/lib/schematype.js:1377:17[90m)[39m
+    at SchemaType.doValidateSync [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mmongoose[24m/lib/schematype.js:1463:11[90m)[39m
+    at Document.validateSync [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mmongoose[24m/lib/document.js:3107:19[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp.js:97:32
+    at zalgoSafe [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mdezalgo[24m/dezalgo.js:20:10[90m)[39m
+    at f [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4monce[24m/once.js:25:25[90m)[39m
+    at IncomingForm.<anonymous> [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mformidable[24m/dist/index.cjs:1210:7[90m)[39m
+[90m    at IncomingForm.emit (node:events:517:28)[39m
+    at IncomingForm._maybeEnd [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mformidable[24m/dist/index.cjs:1661:10[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mformidable[24m/dist/index.cjs:1420:14 {
+  properties: {
+    validator: [36m[Function (anonymous)][39m,
+    message: [32m'Path `status` is required.'[39m,
+    type: [32m'required'[39m,
+    path: [32m'status'[39m,
+    value: [90mundefined[39m
+  },
+  kind: [32m'required'[39m,
+  path: [32m'status'[39m,
+  value: [90mundefined[39m,
+  reason: [90mundefined[39m,
+  [[32mSymbol(mongoose:validatorError)[39m]: [33mtrue[39m
+}
+
+2024-03-17T19:28:42.940Z [error] ::ffff:127.0.0.1:/submit-order | POST::Description is required
+ValidatorError: Description is required
+    at _validate [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mmongoose[24m/lib/schematype.js:1377:17[90m)[39m
+    at SchemaType.doValidateSync [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mmongoose[24m/lib/schematype.js:1463:11[90m)[39m
+    at Document.validateSync [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mmongoose[24m/lib/document.js:3107:19[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp.js:97:32
+    at zalgoSafe [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mdezalgo[24m/dezalgo.js:20:10[90m)[39m
+    at f [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4monce[24m/once.js:25:25[90m)[39m
+    at IncomingForm.<anonymous> [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mformidable[24m/dist/index.cjs:1210:7[90m)[39m
+[90m    at IncomingForm.emit (node:events:517:28)[39m
+    at IncomingForm._maybeEnd [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mformidable[24m/dist/index.cjs:1661:10[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mformidable[24m/dist/index.cjs:1420:14 {
+  properties: {
+    validator: [36m[Function (anonymous)][39m,
+    message: [32m'Description is required'[39m,
+    type: [32m'required'[39m,
+    path: [32m'description'[39m,
+    value: [32m''[39m
+  },
+  kind: [32m'required'[39m,
+  path: [32m'description'[39m,
+  value: [32m''[39m,
+  reason: [90mundefined[39m,
+  [[32mSymbol(mongoose:validatorError)[39m]: [33mtrue[39m
+}
+
+2024-03-17T20:38:40.005Z [error] ::ffff:127.0.0.1:/submit-order | POST::change is not defined
+ReferenceError: change is not defined
+    at model.<anonymous> [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mmodels/order.js:84:37[90m)[39m
+    at next [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mkareem[24m/index.js:268:35[90m)[39m
+    at Kareem.execPost [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mkareem[24m/index.js:296:3[90m)[39m
+    at _cb [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mkareem[24m/index.js:420:15[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mmongoose[24m/lib/model.js:447:5
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mmongoose[24m/lib/model.js:312:14
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+
+2024-03-20T16:06:05.023Z [error] ::ffff:127.0.0.1:/submit-order | POST::Description is required
+ValidatorError: Description is required
+    at _validate [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mmongoose[24m/lib/schematype.js:1377:17[90m)[39m
+    at SchemaType.doValidateSync [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mmongoose[24m/lib/schematype.js:1463:11[90m)[39m
+    at Document.validateSync [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mmongoose[24m/lib/document.js:3107:19[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp.js:97:32
+    at zalgoSafe [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mdezalgo[24m/dezalgo.js:20:10[90m)[39m
+    at f [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4monce[24m/once.js:25:25[90m)[39m
+    at IncomingForm.<anonymous> [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mformidable[24m/dist/index.cjs:1210:7[90m)[39m
+[90m    at IncomingForm.emit (node:events:517:28)[39m
+    at IncomingForm._maybeEnd [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mformidable[24m/dist/index.cjs:1661:10[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mformidable[24m/dist/index.cjs:1420:14 {
+  properties: {
+    validator: [36m[Function (anonymous)][39m,
+    message: [32m'Description is required'[39m,
+    type: [32m'required'[39m,
+    path: [32m'description'[39m,
+    value: [32m''[39m
+  },
+  kind: [32m'required'[39m,
+  path: [32m'description'[39m,
+  value: [32m''[39m,
+  reason: [90mundefined[39m,
+  [[32mSymbol(mongoose:validatorError)[39m]: [33mtrue[39m
+}
+
+2024-03-20T19:22:56.742Z [error] ::ffff:127.0.0.1:/load-admin-pages/order | GET::object is not iterable (cannot read property Symbol(Symbol.iterator))
+TypeError: object is not iterable (cannot read property Symbol(Symbol.iterator))
+    at Function.all (<anonymous>)
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp.js:620:25
+    at Layer.handle [as handle_request] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/layer.js:95:5[90m)[39m
+    at next [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/route.js:144:13[90m)[39m
+    at Route.dispatch [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/route.js:114:3[90m)[39m
+    at Layer.handle [as handle_request] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/layer.js:95:5[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:284:15
+    at param [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:365:14[90m)[39m
+    at param [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:376:14[90m)[39m
+    at Function.process_params [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:421:3[90m)[39m
+
+2024-03-20T19:23:09.213Z [error] ::ffff:127.0.0.1:/load-admin-pages/order | GET::object is not iterable (cannot read property Symbol(Symbol.iterator))
+TypeError: object is not iterable (cannot read property Symbol(Symbol.iterator))
+    at Function.all (<anonymous>)
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp.js:620:25
+    at Layer.handle [as handle_request] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/layer.js:95:5[90m)[39m
+    at next [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/route.js:144:13[90m)[39m
+    at Route.dispatch [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/route.js:114:3[90m)[39m
+    at Layer.handle [as handle_request] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/layer.js:95:5[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:284:15
+    at param [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:365:14[90m)[39m
+    at param [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:376:14[90m)[39m
+    at Function.process_params [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:421:3[90m)[39m
+
+2024-03-20T19:37:23.055Z [error] ::ffff:127.0.0.1:/load-admin-pages/order | GET::object is not iterable (cannot read property Symbol(Symbol.iterator))
+TypeError: object is not iterable (cannot read property Symbol(Symbol.iterator))
+    at Function.all (<anonymous>)
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp.js:620:25
+    at Layer.handle [as handle_request] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/layer.js:95:5[90m)[39m
+    at next [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/route.js:144:13[90m)[39m
+    at Route.dispatch [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/route.js:114:3[90m)[39m
+    at Layer.handle [as handle_request] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/layer.js:95:5[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:284:15
+    at param [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:365:14[90m)[39m
+    at param [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:376:14[90m)[39m
+    at Function.process_params [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:421:3[90m)[39m
+
+2024-03-21T10:51:17.581Z [error] ::ffff:127.0.0.1:/load-admin-pages/order | GET::NewOrder is not a constructor
+TypeError: NewOrder is not a constructor
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mtools/util.tool.js:219:34
+    at new Promise (<anonymous>)
+    at parseNewOrder [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mtools/util.tool.js:217:12[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mmodel_crud/order.crud.js:128:47
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+
+2024-03-21T10:52:15.745Z [error] ::ffff:127.0.0.1:/load-admin-pages/order | GET::parseNewOrder.push is not a function
+TypeError: parseNewOrder.push is not a function
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mmodel_crud/order.crud.js:128:35
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+
+2024-03-21T10:58:13.283Z [error] ::ffff:127.0.0.1:/load-admin-pages/order | GET::parseNewOrder.push is not a function
+TypeError: parseNewOrder.push is not a function
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mmodel_crud/order.crud.js:128:35
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+
+2024-03-25T21:40:00.886Z [error] undefined:undefined | undefined::Maximum number of authorized users reached!
+null
+
+2024-03-25T22:31:33.541Z [error] undefined:undefined | undefined::Maximum number of authorized users reached!
+null
+
+2024-03-25T22:32:39.917Z [error] undefined:undefined | undefined::Maximum number of authorized users reached!
+null
+
+2024-03-25T22:34:09.162Z [error] undefined:undefined | undefined::Maximum number of authorized users reached!
+null
+
+2024-03-25T22:37:41.665Z [error] undefined:undefined | undefined::Maximum number of authorized users reached!
+null
+
+2024-03-26T18:51:15.320Z [error] ::ffff:127.0.0.1:/order-success | GET::path is not defined
+ReferenceError: path is not defined
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:689:32
+    at Layer.handle [as handle_request] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/layer.js:95:5[90m)[39m
+    at next [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/route.js:144:13[90m)[39m
+    at Route.dispatch [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/route.js:114:3[90m)[39m
+    at Layer.handle [as handle_request] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/layer.js:95:5[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:284:15
+    at param [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:365:14[90m)[39m
+    at param [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:376:14[90m)[39m
+    at Function.process_params [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:421:3[90m)[39m
+    at next [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mexpress[24m/lib/router/index.js:280:10[90m)[39m
+
+2024-03-26T19:07:13.492Z [error] ::ffff:192.168.0.114:/ | GET::Maximum number of authorized users reached!
+WebSocketMaxUserError: Maximum number of authorized users reached!
+    at WebSocketServer.webSocketController [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-websocket.js:51:19[90m)[39m
+[90m    at WebSocketServer.emit (node:events:517:28)[39m
+    at WebSocketServer.completeUpgrade [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mws[24m/lib/websocket-server.js:435:5[90m)[39m
+    at WebSocketServer.handleUpgrade [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mws[24m/lib/websocket-server.js:343:10[90m)[39m
+    at Server.upgrade [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mws[24m/lib/websocket-server.js:119:16[90m)[39m
+[90m    at Server.emit (node:events:517:28)[39m
+[90m    at onParserExecuteCommon (node:_http_server:931:14)[39m
+[90m    at onParserExecute (node:_http_server:825:3)[39m
+
+2024-04-01T00:11:43.866Z [error] ::ffff:127.0.0.1:/sc-admin/login | POST::Path `username` is required.
+ValidatorError: Path `username` is required.
+    at _validate [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mmongoose[24m/lib/schematype.js:1377:17[90m)[39m
+    at SchemaType.doValidateSync [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mmongoose[24m/lib/schematype.js:1463:11[90m)[39m
+    at Document.validateSync [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mmongoose[24m/lib/document.js:3107:19[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:658:36
+    at zalgoSafe [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mdezalgo[24m/dezalgo.js:20:10[90m)[39m
+    at f [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4monce[24m/once.js:25:25[90m)[39m
+    at IncomingForm.<anonymous> [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mformidable[24m/dist/index.cjs:1210:7[90m)[39m
+[90m    at IncomingForm.emit (node:events:517:28)[39m
+    at IncomingForm._maybeEnd [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mformidable[24m/dist/index.cjs:1661:10[90m)[39m
+    at MultipartParser.<anonymous> [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mformidable[24m/dist/index.cjs:907:14[90m)[39m {
+  properties: {
+    validator: [36m[Function (anonymous)][39m,
+    message: [32m'Path `username` is required.'[39m,
+    type: [32m'required'[39m,
+    path: [32m'username'[39m,
+    value: [90mundefined[39m
+  },
+  kind: [32m'required'[39m,
+  path: [32m'username'[39m,
+  value: [90mundefined[39m,
+  reason: [90mundefined[39m,
+  [[32mSymbol(mongoose:validatorError)[39m]: [33mtrue[39m
+}
+
+2024-04-01T00:13:08.775Z [error] ::ffff:127.0.0.1:/sc-admin/login | POST::Path `password` is required.
+ValidatorError: Path `password` is required.
+    at _validate [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mmongoose[24m/lib/schematype.js:1377:17[90m)[39m
+    at SchemaType.doValidateSync [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mmongoose[24m/lib/schematype.js:1463:11[90m)[39m
+    at Document.validateSync [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mmongoose[24m/lib/document.js:3107:19[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:658:36
+    at zalgoSafe [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mdezalgo[24m/dezalgo.js:20:10[90m)[39m
+    at f [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4monce[24m/once.js:25:25[90m)[39m
+    at IncomingForm.<anonymous> [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mformidable[24m/dist/index.cjs:1210:7[90m)[39m
+[90m    at IncomingForm.emit (node:events:517:28)[39m
+    at IncomingForm._maybeEnd [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mformidable[24m/dist/index.cjs:1661:10[90m)[39m
+    at MultipartParser.<anonymous> [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mformidable[24m/dist/index.cjs:907:14[90m)[39m {
+  properties: {
+    validator: [36m[Function (anonymous)][39m,
+    message: [32m'Path `password` is required.'[39m,
+    type: [32m'required'[39m,
+    path: [32m'password'[39m,
+    value: [90mundefined[39m
+  },
+  kind: [32m'required'[39m,
+  path: [32m'password'[39m,
+  value: [90mundefined[39m,
+  reason: [90mundefined[39m,
+  [[32mSymbol(mongoose:validatorError)[39m]: [33mtrue[39m
+}
+
+2024-04-01T00:14:00.391Z [error] ::ffff:127.0.0.1:/sc-admin/login | POST::NO ADMIN FOUND
+null
+
+2024-04-01T00:17:40.160Z [error] ::ffff:127.0.0.1:/sc-admin/login | POST::fs.readFileSync is not a function
+TypeError: fs.readFileSync is not a function
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mtools/util.tool.js:232:30
+    at new Promise (<anonymous>)
+    at readOnDisk [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mtools/util.tool.js:230:12[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:710:86
+
+2024-04-03T02:16:27.184Z [error] ::ffff:192.168.0.114:/sc-admin | GET::token is not defined
+ReferenceError: token is not defined
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:896:28
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+
+2024-04-03T02:18:42.363Z [error] ::ffff:192.168.0.114:/sc-admin | GET::token is not defined
+ReferenceError: token is not defined
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:875:28
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+
+2024-04-03T02:19:21.609Z [error] ::ffff:192.168.0.114:/sc-admin | GET::token is not defined
+ReferenceError: token is not defined
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:875:28
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+
+2024-04-03T02:19:44.979Z [error] ::ffff:192.168.0.114:/sc-admin | GET::token is not defined
+ReferenceError: token is not defined
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:875:28
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+
+2024-04-03T02:20:22.229Z [error] ::ffff:192.168.0.114:/sc-admin | GET::BRUUUUUUUUHHHHHHHH
+null
+
+2024-04-03T02:21:36.137Z [error] ::ffff:192.168.0.114:/sc-admin | GET::token is not defined
+ReferenceError: token is not defined
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:875:28
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+
+2024-04-03T02:25:56.071Z [error] ::ffff:192.168.0.114:/sc-admin | GET::token is not defined
+ReferenceError: token is not defined
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:875:28
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+
+2024-04-03T03:26:20.296Z [error] ::ffff:192.168.0.114:/sc-admin/login | POST::NO ADMIN FOUND
+null
+
+2024-04-03T03:27:00.879Z [error] ::ffff:192.168.0.114:/sc-admin | GET::token is not defined
+ReferenceError: token is not defined
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:880:28
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+
+2024-04-03T03:27:48.888Z [error] ::ffff:192.168.0.114:/sc-admin | GET::token is not defined
+ReferenceError: token is not defined
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:880:28
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+
+2024-04-03T04:24:01.545Z [error] ::ffff:192.168.0.114:/sc-admin/login | POST::NO ADMIN FOUND
+null
+
+2024-04-03T04:31:42.506Z [error] ::ffff:192.168.0.114:/sc-admin | GET::Expected a string but received a Object
+TypeError: Expected a string but received a Object
+    at assertString [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mvalidator[24m/lib/util/assertString.js:17:11[90m)[39m
+    at Object.escape [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mvalidator[24m/lib/escape.js:13:29[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:892:45
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:261:12
+    at getSecret [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:97:14[90m)[39m
+    at module.exports [as verify] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:101:10[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:883:25
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+
+2024-04-03T04:49:51.328Z [error] ::ffff:192.168.0.114:/ | GET::Maximum number of authorized users reached!
+WebSocketMaxUserError: Maximum number of authorized users reached!
+    at WebSocketServer.webSocketController [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-websocket.js:51:19[90m)[39m
+[90m    at WebSocketServer.emit (node:events:517:28)[39m
+    at WebSocketServer.completeUpgrade [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mws[24m/lib/websocket-server.js:435:5[90m)[39m
+    at WebSocketServer.handleUpgrade [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mws[24m/lib/websocket-server.js:343:10[90m)[39m
+    at Server.upgrade [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mws[24m/lib/websocket-server.js:119:16[90m)[39m
+[90m    at Server.emit (node:events:517:28)[39m
+[90m    at onParserExecuteCommon (node:_http_server:931:14)[39m
+[90m    at onParserExecute (node:_http_server:825:3)[39m
+
+2024-04-03T04:53:10.225Z [error] ::ffff:192.168.0.114:/ | GET::Maximum number of authorized users reached!
+WebSocketMaxUserError: Maximum number of authorized users reached!
+    at WebSocketServer.webSocketController [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-websocket.js:51:19[90m)[39m
+[90m    at WebSocketServer.emit (node:events:517:28)[39m
+    at WebSocketServer.completeUpgrade [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mws[24m/lib/websocket-server.js:435:5[90m)[39m
+    at WebSocketServer.handleUpgrade [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mws[24m/lib/websocket-server.js:343:10[90m)[39m
+    at Server.upgrade [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mws[24m/lib/websocket-server.js:119:16[90m)[39m
+[90m    at Server.emit (node:events:517:28)[39m
+[90m    at onParserExecuteCommon (node:_http_server:931:14)[39m
+[90m    at onParserExecute (node:_http_server:825:3)[39m
+
+2024-04-03T04:54:23.532Z [error] ::ffff:192.168.0.114:/ | GET::Maximum number of authorized users reached!
+WebSocketMaxUserError: Maximum number of authorized users reached!
+    at WebSocketServer.webSocketController [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-websocket.js:51:19[90m)[39m
+[90m    at WebSocketServer.emit (node:events:517:28)[39m
+    at WebSocketServer.completeUpgrade [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mws[24m/lib/websocket-server.js:435:5[90m)[39m
+    at WebSocketServer.handleUpgrade [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mws[24m/lib/websocket-server.js:343:10[90m)[39m
+    at Server.upgrade [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mws[24m/lib/websocket-server.js:119:16[90m)[39m
+[90m    at Server.emit (node:events:517:28)[39m
+[90m    at onParserExecuteCommon (node:_http_server:931:14)[39m
+[90m    at onParserExecute (node:_http_server:825:3)[39m
+
+2024-04-03T04:55:00.098Z [error] ::ffff:192.168.0.114:/ | GET::Maximum number of authorized users reached!
+WebSocketMaxUserError: Maximum number of authorized users reached!
+    at WebSocketServer.webSocketController [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-websocket.js:51:19[90m)[39m
+[90m    at WebSocketServer.emit (node:events:517:28)[39m
+    at WebSocketServer.completeUpgrade [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mws[24m/lib/websocket-server.js:435:5[90m)[39m
+    at WebSocketServer.handleUpgrade [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mws[24m/lib/websocket-server.js:343:10[90m)[39m
+    at Server.upgrade [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mws[24m/lib/websocket-server.js:119:16[90m)[39m
+[90m    at Server.emit (node:events:517:28)[39m
+[90m    at onParserExecuteCommon (node:_http_server:931:14)[39m
+[90m    at onParserExecute (node:_http_server:825:3)[39m
+
+2024-04-03T04:55:38.426Z [error] ::ffff:192.168.0.114:/ | GET::Maximum number of authorized users reached!
+WebSocketMaxUserError: Maximum number of authorized users reached!
+    at WebSocketServer.webSocketController [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-websocket.js:51:19[90m)[39m
+[90m    at WebSocketServer.emit (node:events:517:28)[39m
+    at WebSocketServer.completeUpgrade [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mws[24m/lib/websocket-server.js:435:5[90m)[39m
+    at WebSocketServer.handleUpgrade [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mws[24m/lib/websocket-server.js:343:10[90m)[39m
+    at Server.upgrade [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mws[24m/lib/websocket-server.js:119:16[90m)[39m
+[90m    at Server.emit (node:events:517:28)[39m
+[90m    at onParserExecuteCommon (node:_http_server:931:14)[39m
+[90m    at onParserExecute (node:_http_server:825:3)[39m
+
+2024-04-03T05:20:59.580Z [error] ::ffff:127.0.0.1:/sc-admin | GET::jwt expired
+TokenExpiredError: jwt expired
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:190:21
+    at getSecret [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:97:14[90m)[39m
+    at module.exports [as verify] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:101:10[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:883:25
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m {
+  expiredAt: [35m2024-04-03T05:12:46.000Z[39m
+}
+
+2024-04-03T05:27:20.921Z [error] ::ffff:127.0.0.1:/sc-admin | GET::jwt expired
+TokenExpiredError: jwt expired
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:190:21
+    at getSecret [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:97:14[90m)[39m
+    at module.exports [as verify] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:101:10[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:884:25
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m {
+  expiredAt: [35m2024-04-03T05:12:46.000Z[39m
+}
+
+2024-04-03T05:27:32.094Z [error] ::ffff:127.0.0.1:/sc-admin | GET::jwt expired
+TokenExpiredError: jwt expired
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:190:21
+    at getSecret [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:97:14[90m)[39m
+    at module.exports [as verify] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:101:10[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:884:25
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m {
+  expiredAt: [35m2024-04-03T05:12:46.000Z[39m
+}
+
+2024-04-03T05:28:25.544Z [error] ::ffff:127.0.0.1:/sc-admin | GET::jwt expired
+TokenExpiredError: jwt expired
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:190:21
+    at getSecret [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:97:14[90m)[39m
+    at module.exports [as verify] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:101:10[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:884:25
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m {
+  expiredAt: [35m2024-04-03T05:12:46.000Z[39m
+}
+
+2024-04-03T05:28:25.559Z [error] ::ffff:127.0.0.1:/sc-admin | GET::jwt expired
+TokenExpiredError: jwt expired
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:190:21
+    at getSecret [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:97:14[90m)[39m
+    at module.exports [as verify] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:101:10[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:884:25
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m {
+  expiredAt: [35m2024-04-03T05:12:46.000Z[39m
+}
+
+2024-04-03T05:29:58.018Z [error] ::ffff:127.0.0.1:/sc-admin | GET::jwt expired
+TokenExpiredError: jwt expired
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:190:21
+    at getSecret [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:97:14[90m)[39m
+    at module.exports [as verify] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:101:10[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:884:25
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m {
+  expiredAt: [35m2024-04-03T05:12:46.000Z[39m
+}
+
+2024-04-03T05:29:58.024Z [error] ::ffff:127.0.0.1:/sc-admin | GET::jwt expired
+TokenExpiredError: jwt expired
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:190:21
+    at getSecret [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:97:14[90m)[39m
+    at module.exports [as verify] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:101:10[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:884:25
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m {
+  expiredAt: [35m2024-04-03T05:12:46.000Z[39m
+}
+
+2024-04-03T05:30:44.792Z [error] ::ffff:127.0.0.1:/sc-admin | GET::jwt expired
+TokenExpiredError: jwt expired
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:190:21
+    at getSecret [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:97:14[90m)[39m
+    at module.exports [as verify] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:101:10[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:884:25
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m {
+  expiredAt: [35m2024-04-03T05:12:46.000Z[39m
+}
+
+2024-04-03T05:30:44.799Z [error] ::ffff:127.0.0.1:/sc-admin | GET::jwt expired
+TokenExpiredError: jwt expired
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:190:21
+    at getSecret [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:97:14[90m)[39m
+    at module.exports [as verify] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:101:10[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:884:25
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m {
+  expiredAt: [35m2024-04-03T05:12:46.000Z[39m
+}
+
+2024-04-03T05:31:31.663Z [error] ::ffff:127.0.0.1:/sc-admin | GET::jwt expired
+TokenExpiredError: jwt expired
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:190:21
+    at getSecret [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:97:14[90m)[39m
+    at module.exports [as verify] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:101:10[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:884:25
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m {
+  expiredAt: [35m2024-04-03T05:12:46.000Z[39m
+}
+
+2024-04-03T05:34:07.769Z [error] ::ffff:127.0.0.1:/sc-admin | GET::jwt expired
+TokenExpiredError: jwt expired
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:190:21
+    at getSecret [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:97:14[90m)[39m
+    at module.exports [as verify] [90m(/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mnode_modules/[4mjsonwebtoken[24m/verify.js:101:10[90m)[39m
+    at [90m/media/ancomputer/Programs/MEGA/Source-Code/NodeJs/portfolio/[39mapp-http.js:884:25
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m {
+  expiredAt: [35m2024-04-03T05:12:46.000Z[39m
+}
+
