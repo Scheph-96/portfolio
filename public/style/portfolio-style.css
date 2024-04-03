@@ -10,24 +10,10 @@
     --default-text-color: #ecebeb;
     --light-text-color: #919292;
     --star-color: #FFD700;
-    --success-color: #019425;
-    --danger-color: #bb0202;
-    --warning-color: #db8505;
-    --info-color: #0936c9;
     --main-padding: 17px;
     --x-shadow: 2px 0 5px rgba(0, 0, 0, 0.12);
     --y-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
     --linear-transition: cubic-bezier(0.25, 0.24, 0.61, 0.66);
-}
-
-*,
-*::after,
-*::before {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    list-style: none;
 }
 
 /* html, body {
@@ -40,7 +26,7 @@ body {
     color: var(--default-text-color);
     height: fit-content;
     /* 
-        I have to remove the overflow property to be able
+        I had to remove the overflow property to be able
         to reach the bottom of the website on mobile phone
         Why? 
         I F** DON'T KNOW
@@ -157,70 +143,6 @@ span {
     align-items: center;
     justify-content: center;
     font-size: .8rem;
-}
-
-.alert {
-    position: absolute;
-    top: 7%;
-    left: 50%;
-    transform: translateX(-50%);
-    color: #fff;
-    padding: 20px;
-    z-index: 5;
-    height: fit-content;
-    width: auto;
-    max-width: 50%;
-    word-wrap: break-word;
-    animation: appeared .5s;
-    border-radius: 10px;
-}
-
-@keyframes appeared {
-    0% {
-        top: 0%;
-    }
-
-    100% {
-        top: 7%;
-    }
-}
-
-.alert-success {
-    background-color: var(--success-color);
-}
-
-.alert-danger {
-    background-color: var(--danger-color);
-}
-
-.alert-warning {
-    background-color: var(--warning-color);
-}
-
-.alert-info {
-    background-color: var(--info-color);
-}
-
-.alert .btn-close {
-    position: absolute;
-    top: 4%;
-    right: 1%;
-    color: #fff;
-}
-
-.dispose-alert {
-    opacity: 0;
-    animation: fadeOut 1s;
-}
-
-@keyframes fadeOut {
-    0% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0;
-    }
 }
 
 h1 {
@@ -1040,78 +962,6 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
 
 .main-content .container .body .contact .form-container {
     margin: var(--main-padding) 0 0 0;
-}
-
-.form-container {
-    padding: var(--main-padding);
-    background-color: var(--card-bg-color);
-    color: var(--default-text-color);
-    display: grid;
-    grid-template-rows: auto;
-    row-gap: 1rem;
-}
-
-.input-box {
-    display: flex;
-    flex-direction: row-reverse;
-}
-
-.input-box .input-icon-box {
-    padding: var(--main-padding);
-    background-color: var(--section-bg-color);
-    transition: .3s ease-in;
-}
-
-.input-box .input-icon-box i {
-    font-size: 1.3rem;
-
-}
-
-.input-box input,
-.input-box textarea {
-    width: 100%;
-    background-color: var(--main-bg-color);
-    border: none;
-    outline: none;
-    font-size: 1rem;
-    color: var(--default-text-color);
-    padding: var(--main-padding);
-}
-
-.input-box input:focus~.input-icon-box,
-.input-box textarea:focus~.input-icon-box {
-    background-color: var(--primary-color);
-}
-
-.input-box textarea {
-    resize: vertical;
-}
-
-.input-box textarea::placeholder,
-.input-box textarea {
-    font-family: 'Poppins' !important;
-}
-
-.submit-btn-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.submit-box input[type="button"] {
-    background-color: #98a5b1;
-}
-
-.submit-box input {
-    border: none;
-    outline: none;
-    background-color: var(--primary-color);
-    padding: var(--main-padding) calc(var(--main-padding) + 20px);
-    margin: var(--main-padding) 0 0 0;
-    text-transform: uppercase;
-    font-size: .8rem;
-    letter-spacing: 1px;
-    cursor: pointer;
 }
 
 /* ------------------- footer ------------------- */

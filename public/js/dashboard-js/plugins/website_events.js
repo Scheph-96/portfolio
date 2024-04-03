@@ -188,7 +188,7 @@ function switchPage() {
 
                     default:
 
-                        console.log('default');
+                    ajaxRequest.loadHtml("/load-admin-pages/" + "default", mainContent, null);
 
                         break;
                 }
@@ -329,7 +329,7 @@ function extendMenu(cssMainRule, gridContainerRule, mainContentRule) {
 }
 
 function dashboardPageRequirements() {
-    lineChart();
+    // lineChart();
     barChart(true);
     dropdownHandler();
     localStorage.setData(localStorageKeys.currentPageLoaded, pages.dashboard);

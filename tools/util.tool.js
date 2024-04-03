@@ -6,10 +6,14 @@ const { default: mongoose } = require('mongoose');
 const uuid = require('uuid');
 const path = require('path');
 const fileSys = require('fs');
+const timeago = require("timeago-simple");
+const bcrypt = require('bcrypt');
 
 // Custom requirement
 const FileUploadError = require('../errors/file_upload.error');
-const Log = require('../models/log.js');
+const Log = require('../models/class/log.js');
+const NewOrder = require('../models/class/new_order.js');
+const OrderSchema = require('../models/Schema/order.js');
 
 
 /**
@@ -26,7 +30,7 @@ let parentDir = path.resolve(currentDir, '..');
 // Define log format
 const errorLogFormat = winston.format.combine(
     winston.format.timestamp(),
-    winston.format.printf(({ timestamp,level, ip, url, method, message, stacktrace }) => {
+    winston.format.printf(({ timestamp, level, ip, url, method, message, stacktrace }) => {
         let log = new Log(timestamp, level, ip, url, method, message, stacktrace);
         return log.errorToString();
     })
@@ -34,8 +38,8 @@ const errorLogFormat = winston.format.combine(
 
 const activityLogFormat = winston.format.combine(
     winston.format.timestamp(),
-    winston.format.printf(({ timestamp,level, ip, url, method}) => {
-        let log = new Log(timestamp, level, ip, url, method);
+    winston.format.printf(({ timestamp, level, ip, url, method, message}) => {
+        let log = new Log(timestamp, level, ip, url, method, message);
         return log.activityToString();
     })
 );
@@ -58,8 +62,20 @@ const ActivityLogger = winston.createLogger({
 });
 
 /**
- * Return key-value of an object each value is a list of unique value
- * { key: [value] }
+ * Return key-value representation of an object where 
+ * each value is a list of unique value
+ * {
+    key: [ 'value' ],
+    key: [ 'value' ],
+    key: [ 'value' ],
+   } 
+   ==========>
+   {
+    key: 'value',
+    key: 'value',
+    key: 'value'
+   }
+
  * @param {Object} object  
  * @returns the new object { key: value }
  */
@@ -205,6 +221,90 @@ async function writeOnDisk(destination, files, objectId, objectType) {
     });
 }
 
+/**
+ * 
+ * @param {String} path 
+ * @returns promise
+ */
+async function readOnDisk(path) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let content = fileSys.readFileSync(path);
+            resolve(content);
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
+/**
+ * 
+ * @param {OrderSchema.NewOrder} newOrder 
+ * @returns 
+ * 
+ */
+async function parseNewOrder(newOrder) {
+    return new Promise((resolve, reject) => {
+        try {
+            let newOrderParsed = new NewOrder(newOrder.lastname+" "+newOrder.firstname, newOrder.service, timeago.simple(newOrder.created));
+            resolve(newOrderParsed);
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
+/**
+ * Validate BCrypt password
+ * 
+ * @param {String} password the clear password
+ * @param {String} hash the hashed password
+ * @returns 
+ */
+async function validatePassword(password, hash) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let result = await bcrypt.compare(password, hash);
+            resolve(result);
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
+/**
+ * Get a value
+ * 
+ * @param {String} cookies the cookie string
+ * @param {String} cookieName the target cookie name
+ */
+function getCookie(cookies, cookieName) {
+    return new Promise((resolve, reject) => {
+        try {
+            // Convert the cookie string into an array
+            let allCookies = cookies.split(';');
+    
+            // loop throw all the cookies in the list
+            for (let i = 0; i < allCookies.length; i++) {
+                // check if the current cookie has the right cookieName
+                if (allCookies[i].includes(cookieName)) {
+                    // if that's the right cookieName then get the cookie
+                    let targetCookie = allCookies[i];
+                    // now split the cookie on '=' to retrieve the value
+                    // Cookie syntax: CookieName=Value
+                    let cookieValue = targetCookie.split('=');
+
+                    resolve(cookieValue[1]);
+                    break;
+                }         
+            }
+    
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
 
 module.exports = {
     formidableFormParser: formidableFormParser,
@@ -212,6 +312,10 @@ module.exports = {
     generateUUID_V4: generateUUID_V4,
     getFileExtension: getFileExtension,
     writeOnDisk: writeOnDisk,
+    readOnDisk: readOnDisk,
+    parseNewOrder: parseNewOrder,
+    validatePassword: validatePassword,
+    getCookie: getCookie,
     months: months,
     ErrorLogger: ErrorLogger,
     ActivityLogger: ActivityLogger,

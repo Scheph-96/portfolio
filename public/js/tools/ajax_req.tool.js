@@ -7,7 +7,7 @@ import { alertToast } from "./util.js";
 export class AjaxRequest {
 
     #xhttp = new XMLHttpRequest();
-
+    
     /**
      * Load html snippets from file
      * @param {String} filename The file containing the snippet
@@ -65,10 +65,11 @@ export class AjaxRequest {
             this.#query('POST', data, url, this.#xhttp, () => {
                 try {
                     console.log('POST: ', this.#xhttp.status);
-                    if (this.#xhttp.status === 201) {
+                    if (this.#xhttp.status.toString().includes(20)) {
+                        console.log("THA RESPONSE: ", this.#xhttp.responseText);
                         console.log("THE PARSED ATTRIBUTE: ", JSON.parse(this.#xhttp.responseText));
-                        resolve(JSON.parse(this.#xhttp.responseText));
-                    } else if (this.#xhttp.status !== 201) {
+                        resolve(JSON.parse(this.#xhttp.responseText));                        
+                    } else {
                         console.log('REJECT!!!');
                         console.log(JSON.parse(this.#xhttp.responseText));
                         reject({ status: this.#xhttp.status, error: `Unable to load ressource:: status: ${this.#xhttp.status}`, errorMessage: JSON.parse(this.#xhttp.responseText) });
@@ -85,7 +86,7 @@ export class AjaxRequest {
 
 
     #query(method, data, url, xhttp, logics) {
-
+        // this.#xhttp.setRequestHeader('Content-Type', "")
         xhttp.onload = logics;
         console.log(2);
 

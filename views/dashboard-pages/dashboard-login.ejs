@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login | SC</title>
+        <link rel="stylesheet" href="/style/dashboard-login-style.css">
+        <link rel="stylesheet" href="/style/dashboard-style.css">
+        <link rel="stylesheet" href="/style/global.css">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    </head>
+    <body>
+        <div class="login-container">
+            <form method="post" id="login-form">
+                <div class="form-container">
+                    <div class="login-form-header">
+                        <h1>Login</h1>
+                        <h1>|</h1>
+                        <div class="admin-logo-container">
+                            <div class="admin-logo">
+                              <p>SA</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-container">
+                    <div class="input-box">
+                        <input type="email" name="email" id="email" placeholder="Email" required>
+                        <label class="input-icon-box" for="email"><i class='bx bx-at'></i></label>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" name="password" id="password" placeholder="Password" required>
+                        <label class="input-icon-box" for="password"><i class='bx bxs-lock-alt'></i></label>
+                    </div>
+                    <div class="submit-box">
+                        <input type="submit" style="color: white;" id="submit-button" class="submit-button" value="login">
+                    </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <script src="/js/login-js/main.js" type="module"></script>
+    </body>
+</html>

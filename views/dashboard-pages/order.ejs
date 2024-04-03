@@ -1,68 +1,221 @@
 <div class="grid-container-wrapper">
   <div class="grid-container order">
     <div class="card current-year-total-orders global-overview cell-1">
-      <div class="icon-container">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
-          <path fill="#1e90ff" d="m17.275 20.25l3.475-3.45l-1.05-1.05l-2.425 2.375l-.975-.975l-1.05 
-                1.075zM6 9h12V7H6zm12 14q-2.075 0-3.537-1.463T13 18q0-2.075 1.463-3.537T18 13q2.075 0 3.538 
-                1.463T23 18q0 2.075-1.463 3.538T18 23M3 22V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 
-                5v6.675q-.7-.35-1.463-.513T18 11H6v2h7.1q-.425.425-.787.925T11.675 
-                15H6v2h5.075q-.05.25-.062.488T11 18q0 1.05.288 2.013t.862 1.837L12 22l-1.5-1.5L9 
-                22l-1.5-1.5L6 22l-1.5-1.5z" />
-        </svg>
-      </div>
+      <%- include('order-icons/order.ico.ejs') %>
       <div class="details">
         <p class="details-title">Total Order</p>
         <p id="current-year-total-orders">1364</p>
       </div>
     </div>
     <div class="card current-year-pending-orders global-overview cell-2">
-      <div class="icon-container warning">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
-          <path fill="#ffd950" d="m17.275 20.25l3.475-3.45l-1.05-1.05l-2.425 2.375l-.975-.975l-1.05 
-            1.075zM6 9h12V7H6zm12 14q-2.075 0-3.537-1.463T13 18q0-2.075 1.463-3.537T18 13q2.075 0 3.538 
-            1.463T23 18q0 2.075-1.463 3.538T18 23M3 22V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 
-            5v6.675q-.7-.35-1.463-.513T18 11H6v2h7.1q-.425.425-.787.925T11.675 
-            15H6v2h5.075q-.05.25-.062.488T11 18q0 1.05.288 2.013t.862 1.837L12 22l-1.5-1.5L9 
-            22l-1.5-1.5L6 22l-1.5-1.5z" />
-        </svg>
-      </div>
+      <%- include('order-icons/pending-order.ico.ejs') %>
       <div class="details">
         <p class="details-title">Pending Order</p>
         <p id="current-year-pending-orders">1364</p>
       </div>
     </div>
-    <div class="card current-year-accepted-orders global-overview cell-3">
-        <div class="icon-container danger">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
-              <path fill="#ff2366" d="m17.275 20.25l3.475-3.45l-1.05-1.05l-2.425 2.375l-.975-.975l-1.05 
-                1.075zM6 9h12V7H6zm12 14q-2.075 0-3.537-1.463T13 18q0-2.075 1.463-3.537T18 13q2.075 0 3.538 
-                1.463T23 18q0 2.075-1.463 3.538T18 23M3 22V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 
-                5v6.675q-.7-.35-1.463-.513T18 11H6v2h7.1q-.425.425-.787.925T11.675 
-                15H6v2h5.075q-.05.25-.062.488T11 18q0 1.05.288 2.013t.862 1.837L12 22l-1.5-1.5L9 
-                22l-1.5-1.5L6 22l-1.5-1.5z" />
-            </svg>
-          </div>
+    <div class="card current-year-rejected-orders global-overview cell-3">
+      <%- include('order-icons/rejected-order.ico.ejs') %>
       <div class="details">
         <p class="details-title">Rejected Order</p>
-        <p id="current-year-accepted-orders">136</p>
+        <p id="current-year-rejected-orders">136</p>
       </div>
     </div>
     <div class="card current-year-accepted-orders global-overview cell-4">
-      <div class="icon-container success">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
-            <path fill="#02bc77" d="m17.275 20.25l3.475-3.45l-1.05-1.05l-2.425 2.375l-.975-.975l-1.05 
-              1.075zM6 9h12V7H6zm12 14q-2.075 0-3.537-1.463T13 18q0-2.075 1.463-3.537T18 13q2.075 0 3.538 
-              1.463T23 18q0 2.075-1.463 3.538T18 23M3 22V5q0-.825.588-1.412T5 3h14q.825 0 1.413.588T21 
-              5v6.675q-.7-.35-1.463-.513T18 11H6v2h7.1q-.425.425-.787.925T11.675 
-              15H6v2h5.075q-.05.25-.062.488T11 18q0 1.05.288 2.013t.862 1.837L12 22l-1.5-1.5L9 
-              22l-1.5-1.5L6 22l-1.5-1.5z" />
-          </svg>
-        </div>
+      <%- include('order-icons/accepted-order.ico.ejs') %>
       <div class="details">
         <p class="details-title">Accepted Order</p>
         <p id="current-year-accepted-orders">136</p>
       </div>
+    </div>
+    <div class="card col1-2-row2">
+      <p class="card-title">New Order</p>
+      <hr>
+      <div class="content s">
+        <% console.log(newOrders) %>
+          <table class="table order-table small-table">
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Service</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="title-section">
+                      <%- include('order-icons/new-order.ico.ejs') %>
+                        <p>Tommy Delware</p>
+                    </td>
+                    <td class="service">
+                        <p>Web Development</p>
+                    </td>
+                    <td class="time">
+                        <p>1 hour ago</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title-section">
+                      <%- include('order-icons/new-order.ico.ejs') %>
+                        <p>Peter Orangatan</p>
+                    </td>
+                    <td class="service">
+                        <p>Logo</p>
+                    </td>
+                    <td class="time">
+                        <p>3 hour ago</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title-section">
+                      <%- include('order-icons/new-order.ico.ejs') %>
+                        <p>John Dale</p>
+                    </td>
+                    <td class="service">
+                        <p>UI Design</p>
+                    </td>
+                    <td class="time">
+                        <p>6 hour ago</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title-section">
+                      <%- include('order-icons/new-order.ico.ejs') %>
+                        <p>Jim Halpert</p>
+                    </td>
+                    <td class="service">
+                        <p>Poster</p>
+                    </td>
+                    <td class="time">
+                        <p>7 hour ago</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title-section">
+                      <%- include('order-icons/new-order.ico.ejs') %>
+                        <p>Tommy Delware</p>
+                    </td>
+                    <td class="service">
+                        <p>Web Development</p>
+                    </td>
+                    <td class="time">
+                        <p>1 hour ago</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title-section">
+                      <%- include('order-icons/new-order.ico.ejs') %>
+                        <p>Peter Orangatan</p>
+                    </td>
+                    <td class="service">
+                        <p>Logo</p>
+                    </td>
+                    <td class="time">
+                        <p>3 hour ago</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title-section">
+                      <%- include('order-icons/new-order.ico.ejs') %>
+                        <p>John Dale</p>
+                    </td>
+                    <td class="service">
+                        <p>UI Design</p>
+                    </td>
+                    <td class="time">
+                        <p>6 hour ago</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="title-section">
+                      <%- include('order-icons/new-order.ico.ejs') %>
+                        <p>Jim Halpert</p>
+                    </td>
+                    <td class="service">
+                        <p>Poster</p>
+                    </td>
+                    <td class="time">
+                        <p>7 hour ago</p>
+                    </td>
+                </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+    <div class="card order-details data-details col1-4-row3">
+        <div class="head">
+            <p class="card-title">Order Details</p>
+            <div>
+                <div class="search-bar">
+                    <button type="submit"><i class='bx bx-search'></i></button>
+                    <input type="search" placeholder="Search...">
+                </div>
+                <button><span class="iconify" data-icon="solar:sort-linear"></span></button>
+            </div>
+        </div>
+        <hr>
+        <div class="body data-details-table">
+            <table class="table order-details-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Service</th>
+                        <th>Receipt Date</th>
+                        <th>Specifications</th>
+                        <th>Description</th>
+                        <th>Customer</th>
+                    </tr>
+                </thead>
+                <tbody class="">
+                    <% if (orders) { %>
+                        <% for (let i=0; i < orders.length; i++) { %>
+                        <tr order-number=<%= orders[i].orderNumber %>>
+                            <td class="order-id">
+                                <p><%= orders[i]._id.toString().substring(orders[i]._id.toString().length - 5) %></p>
+                            </td>
+                            <td class="order-service title-section">
+                                <% switch (orders[i].status) { 
+                                        case "new": %>
+                                            <%- include('order-icons/new-order.ico.ejs') %>
+                                        <%  break; 
+                                        case "accepted": %>
+                                            <%- include('order-icons/accepted-order.ico.ejs') %>
+                                        <%  break; 
+                                        case "pending": %>
+                                            <%- include('order-icons/pending-order.ico.ejs') %>
+                                        <%  break; 
+                                        case "rejected": %>
+                                            <%- include('order-icons/rejected-order.ico.ejs') %>
+                                        <%  break; 
+                                        case "default": %>
+                                            <%- include('order-icons/order.ico.ejs') %>
+                                        <%  break; %>
+                                <% } %>                          
+                                <p><%= orders[i].service %></p>
+                            </td>
+                            <td class="order-receipt-date">
+                                <p><%= orders[i].created.toDateString() %></p>
+                            </td>
+                            <td class="order-specifications">
+                                <p>
+                                    <%= orders[i].specifications %> 
+                                    <% if (orders[i].specifications) { %>
+                                        <i class='bx bx-link-external'></i>
+                                    <% } %>
+                                </p>
+                            </td>
+                            <td class="order-description">
+                            <i class='bx bx-link-external'></i>
+                            </td>
+                            <td class="order-customer">
+                                <p><%= orders[i].lastname %> <%= orders[i].firstname %></p>
+                            </td>
+                        </tr>
+                        <% } %>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
     </div>
   </div>
 </div>
