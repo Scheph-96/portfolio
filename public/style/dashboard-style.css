@@ -13,6 +13,7 @@
     --chart-grid-line-color: rgb(235, 235, 235, .6);
     --table-header-bg-color: #e4ecf3;
     --table-row-hover-color: #e4ecf3;
+    --profile-info-inner-color: #2c3c4e;
     --line-color: #EFEFEF;
     --default-box-shadow: 0 15px 20px rgba(0, 0, 0, .1);
     --default-border-radius: 12px;
@@ -411,6 +412,10 @@ header .header-tools {
     align-items: center;
 }
 
+header .header-tools .profile-info {
+    position: relative;
+}
+
 header .header-tools i {
     font-size: 1.3rem;
     color: var(--default-text-color);
@@ -422,6 +427,30 @@ header .header-tools .profile {
     width: 40px;
     border-radius: 50%;
     background-color: var(--primary-color);
+}
+
+header .header-tools .profile-info-inner {
+    /* background-color: var(--primary-bg-color); */
+    background-color: var(--profile-info-inner-color);
+    padding: calc(var(--card-padding) * 2);
+    border-radius: var(--default-border-radius);
+    position: absolute;
+    top: 120%;
+    right: 0;
+    width: 220px;
+}
+
+header .header-tools .profile-info-inner p:nth-of-type(1),
+header .header-tools .profile-info-inner p:nth-of-type(2) {
+    margin-bottom: var(--default-margin);
+}
+
+header .header-tools .profile-info-inner hr:first-of-type {
+    margin: var(--default-margin) 0;
+}
+
+header .header-tools .profile-info-inner hr:last-of-type {
+    margin-bottom: var(--default-margin);
 }
 
 main .menu-side-bar {
@@ -450,13 +479,11 @@ main .menu-side-bar .menu-item-title {
     white-space: nowrap;
     opacity: 1;
     transition: opacity .3s ease;
-    display: block;
 }
 
 main .menu-side-bar.collapse .menu-item-title,
 main .menu-side-bar.collapse .menu-side-bar-footer .theme i {
     opacity: 0 !important;
-    display: none;
 }
 
 main .menu-side-bar.collapse .menu-side-bar-content ul li::before {
@@ -571,7 +598,7 @@ main .menu-side-bar .menu-side-bar-footer .theme .theme-switcher {
     transform: translateY(-50%);
     width: 45px;
     height: 25px;
-    background-color: var(--secondary-color);
+    background-color: var(--default-text-color);
     border-radius: 30px;
     padding: 0 5px;
     display: flex;

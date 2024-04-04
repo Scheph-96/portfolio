@@ -85,6 +85,7 @@ function __init__() {
         // if theme was dark re-enable it
         if (localStorage.getData(localStorageKeys.theme) === 'dark') {
             body.classList.add('dark');
+            switchBtn.style.transform = 'translateX(100%)';
         }
 
         // if the sidebar menu is collapse keep it like that (true is store as a string not a bool)
