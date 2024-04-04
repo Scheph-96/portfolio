@@ -698,7 +698,7 @@ app.post('/sc-admin/login', (req, res) => {
                                     });
                                 }
 
-                                jwt.sign({ username: adminUser.username }, await readOnDisk(__dirname + '/keys/jwtRS256.key'), { algorithm: 'RS256', expiresIn: 300 }, (err, token) => {
+                                jwt.sign({ username: adminUser.username }, await readOnDisk(__dirname + '/keys/jwtRS256.key'), { algorithm: 'RS256', expiresIn: "30 days" }, (err, token) => {
 
                                     if (err) {
                                         ErrorLogger.error(err.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(err, { showHidden: false, depth: null, colors: true }) });
@@ -714,8 +714,7 @@ app.post('/sc-admin/login', (req, res) => {
                                         httpOnly: true,
                                         secure: app.get('env') === 'production',
                                         sameSite: 'strict',
-                                        // maxAge: 60 * 60 * 24 * 30,
-                                        maxAge: 3600,
+                                        maxAge: 60 * 60 * 24 * 30,
                                         path: '/sc-admin'
                                     });
 
