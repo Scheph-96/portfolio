@@ -765,6 +765,49 @@ app.post('/sc-admin/login', (req, res) => {
     }
 });
 
+// Admin profile actions
+app.get('/sc-admin/profile/actions/:action', (req, res) => {
+    try {
+        switch (req.params.action) {
+            case "my-profile":
+                
+                break;
+        
+            case "settings":
+                
+                break;
+        
+            case "logout":
+                const serializedCookie = serialize('authToken', null, {
+                    httpOnly: true,
+                    secure: app.get('env') === 'production',
+                    sameSite: 'strict',
+                    maxAge: -1,
+                    path: '/sc-admin'
+                });
+                
+                res.setHeader('Set-Cookie', serializedCookie);
+                return res.status(200).send({
+                    type: 'success',
+                    message: `Logged Out`,
+                    redirectionUrl: '/sc-admin'
+                });
+                
+                break;
+        
+            default:
+                break;
+        }
+    } catch (error) {
+        ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
+
+        return res.status(520).send({
+            type: 'danger',
+            message: 'Unexpected error. Please try again!',
+        });
+    }
+});
+
 // Load admin pages
 app.get('/load-admin-pages/:page', (req, res) => {
     try {
@@ -915,7 +958,7 @@ app.get(/^(?!\/(style|js|assets|fonts|experience)).*$/, async (req, res, next) =
 
                                 ActivityLogger.info('ADMIN PAGE LOAD', { ip: req.ip, url: req.url, method: req.method });
                                 res.status(200);
-                                return res.render('dashboard-pages/dashboard-layout');
+                                return res.render('dashboard-pages/dashboard-layout', { user: user });
 
                             })
                             .catch((error) => {

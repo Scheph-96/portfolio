@@ -3,6 +3,7 @@ import { themeEvent, getCssRule, getFilename } from '../tools/util.js';
 import { lineChart, barChart, pieChart } from './charts.js';
 import { MyLocalStorage } from "./persistent_data/local_storage.js";
 import { customPushState, customReplaceState } from "../../tools/route_loader.tool.js";
+import { alertToast } from '../../tools/util.js';
 // import { emailClick } from "../pages_features/mailbox_features.js";
 
 
@@ -16,6 +17,7 @@ const mainContent = document.querySelector('.main-content');
 const headerLogo = document.querySelector('.logo');
 const profile = document.querySelector('.profile-info .profile');
 const profileInner = document.querySelector('.profile-info .profile-info-inner');
+const profileInnerActions = document.querySelectorAll('.profile-info-inner .actions .profile-action')
 
 
 let chart, dropdown, cssMainRule, gridContainerRule,
@@ -133,6 +135,9 @@ function switchTheme() {
     });
 }
 
+/**
+ * Method to display or hide the profile panel
+ */
 function displayProfileInner() {
     try {
         let profileInnerRule = getCssRule('dashboard-style.css', 'header .header-tools .profile-info-inner');
@@ -152,6 +157,50 @@ function displayProfileInner() {
         }, true);
     } catch (error) {
         console.log("DISPLAY PROFILE INNER ERROR: ", error);
+    }
+}
+
+/**
+ * Method to log the admin out
+ */
+function adminLogout() {
+    for (let i = 0; i < profileInnerActions.length; i++) {
+        profileInnerActions[i].addEventListener('click', async (e) => {
+            try {
+                let isClicked = false;
+                profileInnerActions[i].disabled = true;
+                if (!isClicked) {
+                    isClicked = true;
+                    const clickedElement = e.currentTarget;
+                    ajaxRequest.loadEndPoint("/sc-admin/profile/actions/"+clickedElement.getAttribute('action'))
+                        .then((result) => {
+                            console.log("THE LOGIN RESULT: ", result);
+                            if (result.message) {
+                                alertToast(result.type, result.message);
+                            }
+        
+                            if (result.redirectionUrl) {
+                                window.location.href = window.location.origin + result.redirectionUrl;
+                            }
+                        })
+                        .catch((error) => {
+                            if (error.errorMessage) {
+                                alertToast(error.errorMessage.type, error.errorMessage.message);
+                            }
+                            console.log(`ERR::::::::::::`);
+                            console.error(`ERROR:: ${error.error}`);
+                        }).finally(() => {
+                            isClicked = false;
+                            profileInnerActions[i].disabled = false;
+                        });
+                }
+
+            } catch (error) {
+
+            }
+
+
+        })
     }
 }
 
@@ -226,8 +275,8 @@ function switchPage() {
 /**
  * Method that load the each page requirements
  * 
- * @param {boolean} once execute the vent listener once
- * @param {Node} clickedElement the menu clicked in the sidebar menu
+ * @param {boolean} once execute the event listener once
+ * @param {Node} clickedElement the menu item clicked in the sidebar menu
  */
 function loadRequirements(once, clickedElement = null) {
 
@@ -412,5 +461,6 @@ export {
     switchTheme,
     switchPage,
     collapseExtendMenuSideBar,
-    displayProfileInner
+    displayProfileInner,
+    adminLogout,
 }

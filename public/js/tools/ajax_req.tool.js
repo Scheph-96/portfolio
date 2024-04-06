@@ -7,7 +7,7 @@ import { alertToast } from "./util.js";
 export class AjaxRequest {
 
     #xhttp = new XMLHttpRequest();
-    
+
     /**
      * Load html snippets from file
      * @param {String} filename The file containing the snippet
@@ -48,11 +48,24 @@ export class AjaxRequest {
     loadEndPoint(url) {
         return new Promise((resolve, reject) => {
             this.#query('GET', null, url, this.#xhttp, () => {
-                if (this.#xhttp.status === 200) {
-                    console.log(this.#xhttp.status);
-                    resolve(this.#xhttp.responseText);
-                } else if (this.#xhttp.status !== 200) {
-                    reject(`Unable to load ressource:: status: ${this.#xhttp.status}`);
+                try {
+                    if (this.#xhttp.status.toString().includes(20)) {
+                        console.log("THA RESPONSE: ", this.#xhttp.responseText);
+                        console.log("THE PARSED ATTRIBUTE: ", JSON.parse(this.#xhttp.responseText));
+                        resolve(JSON.parse(this.#xhttp.responseText));
+                    } else {
+                        console.log('REJECT!!!');
+                        console.log(JSON.parse(this.#xhttp.responseText));
+                        reject({ status: this.#xhttp.status, error: `Unable to load ressource:: status: ${this.#xhttp.status}`, errorMessage: JSON.parse(this.#xhttp.responseText) });
+                    
+                    }
+                } catch (err) {
+                    reject({
+                        error: `Unable to load ressource::${err.message}`, errorMessage: JSON.parse({
+                            type: 'danger',
+                            message: 'Unknown error',
+                        })
+                    });
                 }
             });
         });
@@ -68,15 +81,19 @@ export class AjaxRequest {
                     if (this.#xhttp.status.toString().includes(20)) {
                         console.log("THA RESPONSE: ", this.#xhttp.responseText);
                         console.log("THE PARSED ATTRIBUTE: ", JSON.parse(this.#xhttp.responseText));
-                        resolve(JSON.parse(this.#xhttp.responseText));                        
+                        resolve(JSON.parse(this.#xhttp.responseText));
                     } else {
                         console.log('REJECT!!!');
                         console.log(JSON.parse(this.#xhttp.responseText));
                         reject({ status: this.#xhttp.status, error: `Unable to load ressource:: status: ${this.#xhttp.status}`, errorMessage: JSON.parse(this.#xhttp.responseText) });
                     }
                 } catch (err) {
-                    reject({ error: `Unable to load ressource::${err.message}`, errorMessage: JSON.parse({type: 'danger',
-                    message: 'Unknown error',}) });
+                    reject({
+                        error: `Unable to load ressource::${err.message}`, errorMessage: JSON.parse({
+                            type: 'danger',
+                            message: 'Unknown error',
+                        })
+                    });
                 }
             });
 

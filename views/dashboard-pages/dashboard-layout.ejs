@@ -29,12 +29,14 @@
         <div class="profile"></div>
         <div class="profile-info-inner">
           <div class="username-section">
-            <h3>Username</h3>
+            <% if (user) { %>
+              <h3><%= user.username %></h3>
+            <% } %>
           </div>
           <div class="actions">
-            <p>My Profile</p>
-            <p>Setting</p>
-            <p>Log Out</p>
+            <button action="my-profile" class="profile-action">My Profile</button>
+            <button action="settings" class="profile-action">Settings</button>
+            <button action="logout" class="profile-action">Log Out</button>
           </div>
         </div>
       </div>
