@@ -14,8 +14,8 @@ const switchBtn = document.querySelector('.switch-btn');
 const menuItems = document.querySelectorAll('.sidebar-menu-item');
 const mainContent = document.querySelector('.main-content');
 const headerLogo = document.querySelector('.logo');
-const inboxContent = document.querySelector('inbox-content');
-const emails = document.querySelectorAll('.email');
+const profile = document.querySelector('.profile-info .profile');
+const profileInner = document.querySelector('.profile-info .profile-info-inner');
 
 
 let chart, dropdown, cssMainRule, gridContainerRule,
@@ -78,9 +78,9 @@ try {
  */
 function __init__() {
     try {
-        cssMainRule = getCssRule('style.css', 'main');
-        gridContainerRule = getCssRule('style.css', '.grid-container');
-        mainContentRule = getCssRule('style.css', 'main .main-content');
+        cssMainRule = getCssRule('dashboard-style.css', 'main');
+        gridContainerRule = getCssRule('dashboard-style.css', '.grid-container');
+        mainContentRule = getCssRule('dashboard-style.css', 'main .main-content');
 
         // if theme was dark re-enable it
         if (localStorage.getData(localStorageKeys.theme) === 'dark') {
@@ -131,6 +131,28 @@ function switchTheme() {
 
 
     });
+}
+
+function displayProfileInner() {
+    try {
+        let profileInnerRule = getCssRule('dashboard-style.css', 'header .header-tools .profile-info-inner');
+
+        profile.addEventListener('click', () => {
+            if (profileInnerRule.style['opacity'] == '0') {
+                profileInnerRule.style['opacity'] = '1';
+            } else {
+                profileInnerRule.style['opacity'] = '0';
+            }
+        }, false);
+
+        document.addEventListener('click', (e) => {
+            if (!profileInner.contains(e.target) && e.target != profile) {
+                profileInnerRule.style['opacity'] = '0';
+            }
+        }, true);
+    } catch (error) {
+        console.log("DISPLAY PROFILE INNER ERROR: ", error);
+    }
 }
 
 /**
@@ -189,7 +211,7 @@ function switchPage() {
 
                     default:
 
-                    ajaxRequest.loadHtml("/load-admin-pages/" + "default", mainContent, null);
+                        ajaxRequest.loadHtml("/load-admin-pages/" + "default", mainContent, null);
 
                         break;
                 }
@@ -282,7 +304,7 @@ function loadRequirements(once, clickedElement = null) {
  */
 function dropdownHandler() {
     dropdown = document.querySelector('.dropdown');
-    let cssRule = getCssRule('style.css', '.dropdown-content');
+    let cssRule = getCssRule('dashboard-style.css', '.dropdown-content');
     dropdown.addEventListener('click', () => {
         if (cssRule.style['transform'] == 'scaleY(0)') {
             cssRule.style['transform'] = 'scaleY(1)';
@@ -335,7 +357,7 @@ function dashboardPageRequirements() {
     dropdownHandler();
     localStorage.setData(localStorageKeys.currentPageLoaded, pages.dashboard);
 }
-function orderRequirements() { 
+function orderRequirements() {
     localStorage.setData(localStorageKeys.currentPageLoaded, pages.order);
 }
 function projectsPageRequirements() {
@@ -390,4 +412,5 @@ export {
     switchTheme,
     switchPage,
     collapseExtendMenuSideBar,
+    displayProfileInner
 }

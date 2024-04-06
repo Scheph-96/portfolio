@@ -23,6 +23,7 @@ export class MyLocalStorage {
             this.#storage.removeItem('storage_test');
             return true;
         } catch (error) {
+            return false;
             throw new LocalStorageError('Unable to access localStorage');
         }
     }

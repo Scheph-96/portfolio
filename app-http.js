@@ -930,11 +930,11 @@ app.get(/^(?!\/(style|js|assets|fonts|experience)).*$/, async (req, res, next) =
                     next(error);
                 });
 
-            console.log("REQ COOK: ", req.cookies);
-            console.log("THE DAMN COOKIES: ", cookie);
-            console.log("THA HEADER : ", req.headers);
-            console.log("THA HEADER CONTENT-TYPE: ", req.headers['content-type']);
-            console.log("THA HEADER DAMN COOKIES: ", req.headers.cookie);
+            // console.log("REQ COOK: ", req.cookies);
+            // console.log("THE DAMN COOKIES: ", cookie);
+            // console.log("THA HEADER : ", req.headers);
+            // console.log("THA HEADER CONTENT-TYPE: ", req.headers['content-type']);
+            // console.log("THA HEADER DAMN COOKIES: ", req.headers.cookie);
 
             // const token = cookies.token;
 
