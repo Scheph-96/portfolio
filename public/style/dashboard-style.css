@@ -76,6 +76,10 @@ button {
     cursor: pointer;
 }
 
+button:focus {
+    outline: none;
+}
+
 i,
 .iconify {
     color: var(--default-text-color);
@@ -465,12 +469,16 @@ header .header-tools .profile-info-inner .username-section {
     border-top-right-radius: inherit;
 }
 
-header .header-tools .profile-info-inner .actions p {
-    cursor: pointer;
+header .header-tools .profile-info-inner .actions .profile-action {
+    font-size: .9rem;
 }
 
-header .header-tools .profile-info-inner p:nth-of-type(1),
-header .header-tools .profile-info-inner p:nth-of-type(2) {
+header .header-tools .profile-info-inner .actions  .profile-action:hover {
+    color: var(--primary-color);
+}
+
+header .header-tools .profile-info-inner .profile-action:nth-of-type(1),
+header .header-tools .profile-info-inner .profile-action:nth-of-type(2) {
     margin-bottom: var(--default-margin);
 }
 

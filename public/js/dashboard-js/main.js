@@ -1,5 +1,5 @@
 import { websocketClient } from "../tools/websocket_client.js";
-import { switchTheme, switchPage, collapseExtendMenuSideBar, __init__, displayProfileInner } from "./plugins/website_events.js";
+import { switchTheme, switchPage, collapseExtendMenuSideBar, __init__, displayProfileInner, adminLogout } from "./plugins/website_events.js";
 
 
 const main = () => {
@@ -8,6 +8,8 @@ const main = () => {
     switchPage();
     collapseExtendMenuSideBar();
     displayProfileInner();
+    adminLogout();
+
     websocketClient();
 }
 
