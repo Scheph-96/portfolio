@@ -14,11 +14,14 @@ const adminSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        required: [true, 'Provide a password']
     },
     username: {
         type: String,
     },
+    online: {
+        type: Boolean,
+    }
 });
 
 // arg1: Model Name

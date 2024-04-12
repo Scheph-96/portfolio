@@ -196,7 +196,7 @@ function adminLogout() {
                 }
 
             } catch (error) {
-
+                console.log("LOGOUT ERROR: ", error);
             }
 
 
