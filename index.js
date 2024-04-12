@@ -15,7 +15,6 @@ const appConfig = require('./dependencies.js');
 const { ErrorLogger } = require('./tools/util.tool.js');
 const { collectionInsertionNotifier } = require('./tools/db.streams.js');
 const Order = require('./models/Schema/order.js');
-const {socketServer, webSocketController} = require('./app-websocket.js');
 
 
 const httpServer = http.createServer(app);
@@ -114,5 +113,4 @@ httpServer.listen(PORT, () => {
     console.log(`Server started at ${appConfig.host}:${appConfig.port}`);
 });
 
-socketServer.on('connection', webSocketController)
 

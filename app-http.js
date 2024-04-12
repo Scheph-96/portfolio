@@ -20,13 +20,20 @@ const OrderCrud = require('./model_crud/order.crud.js');
 const ExperienceCrud = require('./model_crud/experience.crud.js');
 const RecommendationCrud = require('./model_crud/recommendation_crud.js');
 const appConfig = require('./dependencies.js');
+const AppWebsocket = require('./app-websocket.js');
 
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// **************************************************************************************
+// ON REVIEW LINK GENERATION DON'T FORGET TO CHANGE THE URL BEFORE PRODUCTION
+// **************************************************************************************
+/////////////////////////////////////////////////////////////////////////////////////////
 
 // Multiple import
 const { Order, NewOrder } = require('./models/Schema/order.js');
 const { formidableFormParser, generateUUID_V4, writeOnDisk, ErrorLogger, ActivityLogger, validatePassword, readOnDisk, getCookie } = require('./tools/util.tool.js');
 const { Recommendation } = require('./models/Schema/recommendation.js');
-const { ifError } = require('assert');
+// const socketLauncher = require('./app-websocket.js');
 
 
 const app = express();
@@ -35,7 +42,8 @@ let serviceCrud = new ServiceCrud();
 let orderCrud = new OrderCrud();
 let experienceCrud = new ExperienceCrud();
 let recommendationCrud = new RecommendationCrud();
-let adminCrud = new AdminCrud()
+let adminCrud = new AdminCrud();
+let appWebsocket = new AppWebsocket();
 
 // Create a transporter using custom SMTP settings
 const transporter = nodemailer.createTransport({
@@ -726,11 +734,12 @@ app.post('/sc-admin/login', (req, res) => {
                                     ActivityLogger.info(`${adminUser.username} logged in!`, { ip: req.ip, url: req.url, method: req.method });
 
                                     res.setHeader('Set-Cookie', serializedCookie);
-                                    return res.status(200).send({
+                                    res.status(200).send({
                                         type: 'success',
                                         message: `Welcome back, ${adminUser.username}`,
                                         redirectionUrl: '/sc-admin'
                                     });
+
                                     return;
                                 });
 
@@ -766,17 +775,17 @@ app.post('/sc-admin/login', (req, res) => {
 });
 
 // Admin profile actions
-app.get('/sc-admin/profile/actions/:action', (req, res) => {
+app.get('/sc-admin/profile/actions/:action', async (req, res) => {
     try {
         switch (req.params.action) {
             case "my-profile":
-                
+
                 break;
-        
+
             case "settings":
-                
+
                 break;
-        
+
             case "logout":
                 const serializedCookie = serialize('authToken', null, {
                     httpOnly: true,
@@ -785,17 +794,25 @@ app.get('/sc-admin/profile/actions/:action', (req, res) => {
                     maxAge: -1,
                     path: '/sc-admin'
                 });
-                
+
+                await adminCrud.update({ username: "SC-Admin-1" }, { online: false })
+
+                ActivityLogger.info(`SC-Admin-1 IS GOING OFFLINE`, { ip: req.ip, url: req.url, method: req.method });
+
+                appWebsocket.close();
+
                 res.setHeader('Set-Cookie', serializedCookie);
                 return res.status(200).send({
                     type: 'success',
                     message: `Logged Out`,
                     redirectionUrl: '/sc-admin'
                 });
-                
+
                 break;
-        
+
             default:
+                ErrorLogger.error("ADMIN PROFILE ACTIONS DEFAULT BLOCK REACHED", { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
+        
                 break;
         }
     } catch (error) {
@@ -916,7 +933,7 @@ app.get(/^(?!\/(style|js|assets|fonts|experience)).*$/, async (req, res, next) =
 
             getCookie(cookie, 'authToken')
                 .then(async (authToken) => {
-                    console.log("THE AUTH TOKEN: ", authToken);
+                    // console.log("THE AUTH TOKEN: ", authToken);
 
                     if (!authToken) {
                         res.status(401);
@@ -948,17 +965,35 @@ app.get(/^(?!\/(style|js|assets|fonts|experience)).*$/, async (req, res, next) =
                         console.log("DECODED TOKEN OBJECT: ", user);
 
                         adminCrud.read(user)
-                            .then((isMatched) => {
-                                if (!isMatched) {
-                                    ActivityLogger.info(`${user.username} not logged in!`, { ip: req.ip, url: req.url, method: req.method });
+                            .then((matchedUser) => {
+                                if (!matchedUser) {
+                                    ActivityLogger.info(`${user.username} failed to log in! Admin not recognize on page load`, { ip: req.ip, url: req.url, method: req.method });
 
                                     res.status(401);
                                     return res.render('dashboard-pages/dashboard-login');
                                 }
 
+                                if (!matchedUser.online) {
+
+                                    adminCrud.update({ username: user.username }, { online: true })
+                                        .then((result) => {
+                                            
+                                            appWebsocket.connection();
+
+                                            console.log("ADMIN UPDATE RESULT: ", util.inspect(result, { showHidden: false, depth: null, colors: true }));
+                                            ActivityLogger.info(`${user.username} IS ONLINE`, { ip: req.ip, url: req.url, method: req.method });
+                                        })
+                                        .catch((error) => {
+                                            next(error);
+                                        });
+                                }
+
                                 ActivityLogger.info('ADMIN PAGE LOAD', { ip: req.ip, url: req.url, method: req.method });
                                 res.status(200);
-                                return res.render('dashboard-pages/dashboard-layout', { user: user });
+                                res.render('dashboard-pages/dashboard-layout', { user: user });
+
+                                console.log("HERE WE ARE!!");
+                                return
 
                             })
                             .catch((error) => {
