@@ -180,8 +180,8 @@ async function writeOnDisk(destination, files, objectId, objectType) {
 
             let fileExtension = getFileExtension(files[Object.keys(files)[0]][0].originalFilename);
             let prefix;
-
-            if (objectType === "order") {
+            
+            if (objectType === "order" || objectType === "new_order") {
                 if (fileExtension !== 'pdf') {
                     reject(new FileUploadError('Only pdf files are allowed for specifications'));
                     return;

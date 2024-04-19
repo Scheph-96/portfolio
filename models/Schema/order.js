@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const OrderType = require('../enums/order_type');
 const { generateUUID_V4 } = require('../../tools/util.tool');
+const { socketPortalEvent } = require('../class/socket_portal');
 
 /**
  * THE LOGIC:
@@ -90,6 +91,7 @@ const newOrderSchema = orderSchema = new mongoose.Schema({
 
 newOrderSchema.post('save', (doc) => {
     console.log('THE NEW CHANGE: ', doc);
+    socketPortalEvent.emit(socketPortalEvent.events.orderUpdate);
 });
 
 // arg1: Model Name
