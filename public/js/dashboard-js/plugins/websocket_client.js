@@ -1,5 +1,9 @@
 function websocketClient() {
-    const webSocket = new WebSocket('ws://192.168.0.114:2971/');
+    const webSocket = new WebSocket('ws://192.168.0.114:2971/', );
+
+    webSocket.onerror = (event) => {
+        console.log("SOCKET ERROR");
+    }
 
     webSocket.onopen = (event) => {
         const adminUsername = document.querySelector('.username-section h3');

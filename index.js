@@ -95,6 +95,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, "public"), { index: false }));
 app.use(express.static('uploads'));
 
+// EXPRESS ERROR HANDLER
 app.use((err, req, res, next) => {
     ErrorLogger.error(err.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(err, { showHidden: false, depth: null, colors: true }) });
     res.render('portfolio-pages/error');

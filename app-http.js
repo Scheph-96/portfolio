@@ -226,9 +226,9 @@ app.post('/submit-order', (req, res) => {
 
 /* 
  * Experiences route
- * This endpoint return all work fo experience favprite by type
- * on the work menu with web uidesign poster and logo when the
- * user click on each menu item endpoint return the needed
+ * This endpoint return all work of experience favorite by type
+ * on the work menu with "web" "uidesign" "poster" and "logo" when the
+ * user click on each menu item the endpoint return the needed
  * ressources. I use to load all the favorites at the same time
  * causing a performance issue but now the idea is to load
  * the ressource only when it's needed
@@ -787,6 +787,9 @@ app.get('/sc-admin/profile/actions/:action', async (req, res) => {
                 break;
 
             case "logout":
+
+                ActivityLogger.info(`SC-Admin-1 IS GOING OFFLINE...`, { ip: req.ip, url: req.url, method: req.method });
+
                 const serializedCookie = serialize('authToken', null, {
                     httpOnly: true,
                     secure: app.get('env') === 'production',
@@ -795,11 +798,11 @@ app.get('/sc-admin/profile/actions/:action', async (req, res) => {
                     path: '/sc-admin'
                 });
 
-                await adminCrud.update({ username: "SC-Admin-1" }, { online: false })
-
-                ActivityLogger.info(`SC-Admin-1 IS GOING OFFLINE`, { ip: req.ip, url: req.url, method: req.method });
-
+                await adminCrud.update({ username: "SC-Admin-1" }, { online: false });
                 appWebsocket.close();
+
+                ActivityLogger.info(`SC-Admin-1 IS OFFLINE`, { ip: req.ip, url: req.url, method: req.method });
+
 
                 res.setHeader('Set-Cookie', serializedCookie);
                 return res.status(200).send({
@@ -812,7 +815,7 @@ app.get('/sc-admin/profile/actions/:action', async (req, res) => {
 
             default:
                 ErrorLogger.error("ADMIN PROFILE ACTIONS DEFAULT BLOCK REACHED", { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
-        
+
                 break;
         }
     } catch (error) {
@@ -918,24 +921,21 @@ app.get(/^(?!\/(style|js|assets|fonts|experience)).*$/, async (req, res, next) =
 
             res.render('portfolio-pages/portfolio-layout', { skeleton: skeleton });
         } else if (req.url.includes("/sc-admin")) {
-            // res.render('dashboard-pages/dashboard-layout');
 
             let { cookie } = req.headers;
-            // console.log("THA HEADER : ", req.headers);
-            // console.log("THA HEADER CONTENT-TYPE: ", req.headers['content-type']);
-            // cookie = null;
 
             if (!cookie) {
-                console.log("NO COOKIE AT ALL");
+                ActivityLogger.info("NO COOKIE AT ALL: /sc-admin request attempt", { ip: req.ip, url: req.url, method: req.method });
+                
                 res.status(401);
                 return res.render('dashboard-pages/dashboard-login');
             }
 
             getCookie(cookie, 'authToken')
                 .then(async (authToken) => {
-                    // console.log("THE AUTH TOKEN: ", authToken);
 
                     if (!authToken) {
+                        ActivityLogger.info("AUTHTOKEN COOKIE UNAVAILABLE: /sc-admin request attempt", { ip: req.ip, url: req.url, method: req.method });
                         res.status(401);
                         return res.render('dashboard-pages/dashboard-login');
                     }
@@ -944,56 +944,67 @@ app.get(/^(?!\/(style|js|assets|fonts|experience)).*$/, async (req, res, next) =
                         if (err) {
 
                             if (err.name === "TokenExpiredError") {
+                                /** 
+                                 * IT'S FINE. KEEP THE ERRORLOGGER HERE. 
+                                 * IT'S ALREADY CALLED IN THE EXPRESS ERROR HANDLER
+                                 * PRE-SET IN index.js
+                                 */
                                 ErrorLogger.error(err.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(err, { showHidden: false, depth: null, colors: true }) });
 
                                 res.status(401);
                                 return res.render('dashboard-pages/dashboard-login');
                             }
 
-                            // return res.status(422).send({
-                            //     type: 'danger',
-                            //     message: 'Unprocessable entity!',
-                            // });
+                            // ERRORLOGGER ALREADY EXIST HERE. WHEN WE CALL EXPRESS ERROR HANDLER
                             next(err);
                             return
                         }
 
+                        /**
+                         * THE DECODED TOKEN LOOK LIKE THIS:
+                         * decoded = { username: string, iat: timestamp, exp: timestamp }
+                         * 
+                         * It was the admin username that we signed in the token
+                         * 
+                         * In the JSON Web Token (JWT) standard, the "iat" (issued at)
+                         * claim is a timestamp that indicates the time at which the
+                         * JWT was issued. This is the time at which the JWT was created,
+                         * and can be used to determine the age of the JWT.
+                         */
                         decoded = validator.escape(decoded.username);
-                        console.log("THE DECODED TOKEN: ", decoded);
-                        // return res.render('dashboard-pages/dashboard-login');
                         let user = { username: decoded };
-                        console.log("DECODED TOKEN OBJECT: ", user);
 
                         adminCrud.read(user)
                             .then((matchedUser) => {
                                 if (!matchedUser) {
-                                    ActivityLogger.info(`${user.username} failed to log in! Admin not recognize on page load`, { ip: req.ip, url: req.url, method: req.method });
+                                    ActivityLogger.info(`Admin '${user.username}' failed to log in! Admin not recognize on page load`, { ip: req.ip, url: req.url, method: req.method });
 
                                     res.status(401);
                                     return res.render('dashboard-pages/dashboard-login');
                                 }
 
+                                ActivityLogger.info(`Admin '${user.username}' found!`, { ip: req.ip, url: req.url, method: req.method });
+
                                 if (!matchedUser.online) {
+                                    ActivityLogger.info(`Admin '${user.username}' IS OFFLINE. SETTING IT ONLINE...`, { ip: req.ip, url: req.url, method: req.method });
 
                                     adminCrud.update({ username: user.username }, { online: true })
                                         .then((result) => {
-                                            
                                             appWebsocket.connection();
-
-                                            console.log("ADMIN UPDATE RESULT: ", util.inspect(result, { showHidden: false, depth: null, colors: true }));
-                                            ActivityLogger.info(`${user.username} IS ONLINE`, { ip: req.ip, url: req.url, method: req.method });
+                                            ActivityLogger.info(`Admin '${user.username}' IS ONLINE`, { ip: req.ip, url: req.url, method: req.method });
                                         })
                                         .catch((error) => {
                                             next(error);
                                         });
+                                } else {
+                                    ActivityLogger.info(`Admin '${user.username}' IS ALREADY ONLINE`, { ip: req.ip, url: req.url, method: req.method });
+
+                                    appWebsocket.connection();
                                 }
 
                                 ActivityLogger.info('ADMIN PAGE LOAD', { ip: req.ip, url: req.url, method: req.method });
                                 res.status(200);
-                                res.render('dashboard-pages/dashboard-layout', { user: user });
-
-                                console.log("HERE WE ARE!!");
-                                return
+                                return res.render('dashboard-pages/dashboard-layout', { user: user });
 
                             })
                             .catch((error) => {
@@ -1007,27 +1018,7 @@ app.get(/^(?!\/(style|js|assets|fonts|experience)).*$/, async (req, res, next) =
                     // Call express error handler define in index.js
                     next(error);
                 });
-
-            // console.log("REQ COOK: ", req.cookies);
-            // console.log("THE DAMN COOKIES: ", cookie);
-            // console.log("THA HEADER : ", req.headers);
-            // console.log("THA HEADER CONTENT-TYPE: ", req.headers['content-type']);
-            // console.log("THA HEADER DAMN COOKIES: ", req.headers.cookie);
-
-            // const token = cookies.token;
-
-
-            // if (!token) {
-            //     res.status(401);
-            //     return res.render('dashboard-pages/dashboard-login');
-            // }
-
-
-
         }
-        // res.render('portfolio-pages/layout');
-        // }
-
     } catch (error) {
         next(error);
     }

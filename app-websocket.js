@@ -6,6 +6,8 @@ const validator = require('validator');
 
 const { ActivityLogger, ErrorLogger } = require('./tools/util.tool');
 const AdminCrud = require('./model_crud/admin_crud');
+const { socketPortalEvent } = require('./models/class/socket_portal');
+// const SocketPortal = require('./models/class/socket_portal');
 
 
 class AppWebsocket {
@@ -62,6 +64,12 @@ class AppWebsocket {
                         ws.close();
                     });
             }
+            console.log("WIDE SOCKET CONNECTION");
+            
+            socketPortalEvent.on(socketPortalEvent.events.orderUpdate, () => {
+                console.log("SOCKET GOT ORDER CHANGE");
+                ws.send("NEW ORDER UPDATE");
+            });
 
 
         } catch (error) {
