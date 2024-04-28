@@ -118,6 +118,10 @@ class OrderCrud {
         });
     }
 
+    /**
+     * Read all new order and parse them for view display
+     * @returns promise
+     */
     readAndParseNewOrders() {
         return new Promise(async (resolve, reject) => {
             try {

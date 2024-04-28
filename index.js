@@ -15,10 +15,12 @@ const appConfig = require('./dependencies.js');
 const { ErrorLogger } = require('./tools/util.tool.js');
 const { collectionInsertionNotifier } = require('./tools/db.streams.js');
 const Order = require('./models/Schema/order.js');
+const AppWebsocket = require('./app-websocket.js');
 
 
 const httpServer = http.createServer(app);
 const PORT = appConfig.port;
+let appWebsocket = new AppWebsocket();
 
 
 // Mongo db connection
@@ -112,6 +114,7 @@ app.use((err, req, res, next) => {
 
 httpServer.listen(PORT, () => {
     console.log(`Server started at ${appConfig.host}:${appConfig.port}`);
+    appWebsocket.connection();
 });
 
 

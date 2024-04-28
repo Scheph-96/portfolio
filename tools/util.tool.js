@@ -238,7 +238,7 @@ async function readOnDisk(path) {
 }
 
 /**
- * 
+ * Parse the order object for view display
  * @param {OrderSchema.NewOrder} newOrder 
  * @returns 
  * 
@@ -246,7 +246,7 @@ async function readOnDisk(path) {
 async function parseNewOrder(newOrder) {
     return new Promise((resolve, reject) => {
         try {
-            let newOrderParsed = new NewOrder(newOrder.lastname+" "+newOrder.firstname, newOrder.service, timeago.simple(newOrder.created));
+            let newOrderParsed = new NewOrder(newOrder.orderNumber ,newOrder.lastname+" "+newOrder.firstname, newOrder.service, timeago.simple(newOrder.created));
             resolve(newOrderParsed);
         } catch (error) {
             reject(error);
