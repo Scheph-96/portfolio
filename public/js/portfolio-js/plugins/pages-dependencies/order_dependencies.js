@@ -38,9 +38,12 @@ function execOrder() {
                 .catch((error) => {
                     if (error.errorMessage) {
                         alertToast(error.errorMessage.type, error.errorMessage.message);
+                    } else {
+                        console.log(`ERR::::::::::::`);
+                        console.error(`ERROR:: ${error.error}`);
+                        console.error(`JUST ERROR: ${error}`);
+                        alertToast('danger', 'Unexpected error. Please try again!');
                     }
-                    console.log(`ERR::::::::::::`);
-                    console.error(`ERROR:: ${error.error}`);
                 })
                 .finally(() => {
                     isSubmit = false;

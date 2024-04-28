@@ -20,19 +20,20 @@ const OrderCrud = require('./model_crud/order.crud.js');
 const ExperienceCrud = require('./model_crud/experience.crud.js');
 const RecommendationCrud = require('./model_crud/recommendation_crud.js');
 const appConfig = require('./dependencies.js');
-const AppWebsocket = require('./app-websocket.js');
 
 
-/////////////////////////////////////////////////////////////////////////////////////////
-// **************************************************************************************
-// ON REVIEW LINK GENERATION DON'T FORGET TO CHANGE THE URL BEFORE PRODUCTION
-// **************************************************************************************
-/////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+// *********************************************************************************************
+// ON REVIEW LINK GENERATION (/gen/review/link) DON'T FORGET TO CHANGE THE URL BEFORE PRODUCTION
+// *********************************************************************************************
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Multiple import
 const { Order, NewOrder } = require('./models/Schema/order.js');
 const { formidableFormParser, generateUUID_V4, writeOnDisk, ErrorLogger, ActivityLogger, validatePassword, readOnDisk, getCookie } = require('./tools/util.tool.js');
 const { Recommendation } = require('./models/Schema/recommendation.js');
+const { adminAuthMiddleware } = require('./middleware/app-middleware.js');
+const AppServerResponse = require('./models/class/app_server_response.js');
 // const socketLauncher = require('./app-websocket.js');
 
 
@@ -43,7 +44,6 @@ let orderCrud = new OrderCrud();
 let experienceCrud = new ExperienceCrud();
 let recommendationCrud = new RecommendationCrud();
 let adminCrud = new AdminCrud();
-let appWebsocket = new AppWebsocket();
 
 // Create a transporter using custom SMTP settings
 const transporter = nodemailer.createTransport({
@@ -85,143 +85,165 @@ app.get('/load-order/:service', (req, res) => {
 
 // Orders route
 app.post('/submit-order', (req, res) => {
+    try {
 
-    const form = new formidable.IncomingForm({ allowEmptyFiles: true, minFileSize: 0 });
+        const form = new formidable.IncomingForm({ allowEmptyFiles: true, minFileSize: 0 });
 
-    form.parse(req, async (formidableErr, fields, files) => {
+        form.parse(req, async (formidableErr, fields, files) => {
+            try {
 
-        if (formidableErr) {
-            ErrorLogger.error("FORMIDABLE ERROR", { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(formidableErr, { showHidden: false, depth: null, colors: true }) });
+                if (formidableErr) {
+                    ErrorLogger.error("FORMIDABLE ERROR", { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(formidableErr, { showHidden: false, depth: null, colors: true }) });
 
-            return res.status(520).send({
-                type: 'danger',
-                message: 'Unexpected error. Please try again!',
-            });
-        }
-
-        console.log("FIELDS: ", fields);
-
-        let order = new NewOrder(formidableFormParser(fields));
-
-        // Check if there is afile
-        if (files.specifications.length !== 0 && files.specifications[0].originalFilename !== "" && files.specifications[0].size !== 0) {
-            // there is a file
-            order.specifications = true;
-        } else {
-            // there is no file
-            order.specifications = false;
-        }
-
-        order.description = order.description.trim();
-
-        let modelError = order.validateSync();
-
-        if (modelError) {
-
-            /**
-             * modelError = ValidationError: description: Description is required
-             * 
-             * modelError.errors = {
-             *                   properties: {
-             *                       validator: [Function (anonymous)],
-             *                       message: 'Description is required',
-             *                       type: 'required',
-             *                       path: 'description',
-             *                       value: undefined
-             *                   },
-             *                   kind: 'required',
-             *                   path: 'description',
-             *                   value: undefined,
-             *                   reason: undefined,
-             *                   [Symbol(mongoose:validatorError)]: true
-             *               }
-             * 
-             * To get the error message we have to do: modelError.errors['description'].message
-             * 
-             * We get the keys: Object.keys(modelError.errors) = ['description']
-             * 
-             * And: Object.keys(modelError.errors)[0] = 'description'
-             * 
-             * Finally: modelError.errors[`${Object.keys(modelError.errors)[0]}`].message = 'Description is required'
-             *
-            */
-
-            ErrorLogger.error(modelError.errors[`${Object.keys(modelError.errors)[0]}`].message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(modelError.errors[`${Object.keys(modelError.errors)[0]}`], { showHidden: false, depth: null, colors: true }) });
-            return res.status(449).send({
-                type: 'danger',
-                message: modelError.errors[`${Object.keys(modelError.errors)[0]}`].message
-            });
-        }
-
-        // Check if the service exist
-        serviceCrud.read({ value: order.service })
-            .then(async (service) => {
-                if (!service) {
-                    ErrorLogger.error("NO SERVICE FOUND ON THIS ORDER", { ip: req.ip, url: req.url, method: req.method });
-                    return res.status(422).send({
+                    return res.status(520).send({
                         type: 'danger',
-                        message: 'Unprocessable entity',
+                        message: 'Unexpected error. Please try again!',
                     });
+                }
+
+                let order = new NewOrder(formidableFormParser(fields));
+
+                // Check if there is afile
+                if (files.specifications.length !== 0 && files.specifications[0].originalFilename !== "" && files.specifications[0].size !== 0) {
+                    // there is a file
+                    order.specifications = true;
                 } else {
+                    // there is no file
+                    order.specifications = false;
+                }
 
-                    // Write the file on the disk if there is one
-                    if (order.specifications) {
-                        try {
-                            let attr = await writeOnDisk('specs', files, order._id, order.constructor.collection.name);
-                        } catch (error) {
-                            ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
-                            if (error.name === 'FileUploadError') {
-                                return res.status(449).send({
-                                    type: 'danger',
-                                    message: error.message,
-                                });
-                            }
-                            return res.status(520).send({
+                order.description = order.description.trim();
+
+                let modelError = order.validateSync();
+
+                if (modelError) {
+
+                    /**
+                     * modelError = ValidationError: description: Description is required
+                     * 
+                     * modelError.errors = {
+                     *                   properties: {
+                     *                       validator: [Function (anonymous)],
+                     *                       message: 'Description is required',
+                     *                       type: 'required',
+                     *                       path: 'description',
+                     *                       value: undefined
+                     *                   },
+                     *                   kind: 'required',
+                     *                   path: 'description',
+                     *                   value: undefined,
+                     *                   reason: undefined,
+                     *                   [Symbol(mongoose:validatorError)]: true
+                     *               }
+                     * 
+                     * To get the error message we have to do: modelError.errors['description'].message
+                     * 
+                     * We get the keys: Object.keys(modelError.errors) = ['description']
+                     * 
+                     * And: Object.keys(modelError.errors)[0] = 'description'
+                     * 
+                     * Finally: modelError.errors[`${Object.keys(modelError.errors)[0]}`].message = 'Description is required'
+                     *
+                    */
+
+                    ErrorLogger.error(modelError.errors[`${Object.keys(modelError.errors)[0]}`].message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(modelError.errors[`${Object.keys(modelError.errors)[0]}`], { showHidden: false, depth: null, colors: true }) });
+                    return res.status(449).send({
+                        type: 'danger',
+                        message: modelError.errors[`${Object.keys(modelError.errors)[0]}`].message
+                    });
+                }
+
+                // Check if the service exist
+                serviceCrud.read({ value: order.service })
+                    .then(async (service) => {
+                        if (!service) {
+                            ErrorLogger.error("NO SERVICE FOUND ON THIS ORDER", { ip: req.ip, url: req.url, method: req.method });
+                            return res.status(422).send({
                                 type: 'danger',
-                                message: 'Unexpected error. Please try again!',
+                                message: 'Unprocessable entity',
                             });
+                        } else {
 
-                        }
-                    }
-
-                    // Create the order
-                    orderCrud.create(order)
-                        .then((dbOrder) => {
-                            ejs.renderFile(__dirname + '/views/portfolio-pages/order-success.ejs', dbOrder, (err, html) => {
-                                if (err) {
-                                    ErrorLogger.error(err.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(err, { showHidden: false, depth: null, colors: true }) });
+                            // Write the file on the disk if there is one
+                            if (order.specifications) {
+                                try {
+                                    let attr = await writeOnDisk('specs', files, order._id, order.constructor.collection.name);
+                                } catch (error) {
+                                    ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
+                                    if (error.name === 'FileUploadError') {
+                                        return res.status(449).send({
+                                            type: 'danger',
+                                            message: error.message,
+                                        });
+                                    }
                                     return res.status(520).send({
                                         type: 'danger',
                                         message: 'Unexpected error. Please try again!',
                                     });
+
                                 }
+                            }
 
-                                return res.status(201).send({
-                                    type: 'success',
-                                    message: 'Order send successfully',
-                                    page: html,
+                            // Create the order
+                            orderCrud.create(order)
+                                .then((dbOrder) => {
+                                    ejs.renderFile(__dirname + '/views/portfolio-pages/order-success.ejs', dbOrder, (err, html) => {
+                                        if (err) {
+                                            ErrorLogger.error(err.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(err, { showHidden: false, depth: null, colors: true }) });
+                                            return res.status(520).send({
+                                                type: 'danger',
+                                                message: 'Unexpected error. Please try again!',
+                                            });
+                                        }
+
+                                        // return res.status(201).send({
+                                        //     type: 'success',
+                                        //     message: 'Order send successfully',
+                                        //     page: html,
+                                        // });
+
+                                        return res.status(201).send(new AppServerResponse(
+                                            'success',
+                                            'Order send successfully',
+                                            null,
+                                            html,
+                                        ));
+                                    });
+
+                                })
+                                .catch((error) => {
+                                    ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
+                                    
+                                    return res.status(520).send({
+                                        type: 'danger',
+                                        message: 'Unexpected error. Please try again!',
+                                    });
                                 });
-                            });
-
-                        })
-                        .catch((error) => {
-                            ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
-                            res.status(520).send({
-                                type: 'danger',
-                                message: 'Unexpected error. Please try again!',
-                            });
+                        }
+                    })
+                    .catch((error) => {
+                        ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
+                        return res.status(520).send({
+                            type: 'danger',
+                            message: 'Unexpected error. Please try again!',
                         });
-                }
-            })
-            .catch((error) => {
+
+                    });
+            } catch (error) {
                 ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
                 return res.status(520).send({
                     type: 'danger',
                     message: 'Unexpected error. Please try again!',
                 });
-
-            });
-    });
+            }
+        });
+    } catch (error) {
+        ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
+        return res.status(520).send({
+            type: 'danger',
+            message: 'Unexpected error. Please try again!',
+        });
+    }
 });
 
 /* 
@@ -381,6 +403,12 @@ app.get('/gen/review/link', async (req, res) => {
         let tempLink = new TempLink({ token: generateUUID_V4() });
 
         await tempLink.save();
+
+        // **************************************************************************************
+        // ON REVIEW LINK GENERATION DON'T FORGET TO CHANGE THE URL BEFORE PRODUCTION
+        //
+        // HERE CHANGE THE GENERATE LINK DOMAIN
+        // **************************************************************************************
 
         res.status(201).json({ type: "success", message: `127.0.0.1:${appConfig.port}/review/${tempLink.token}` });
 
@@ -630,8 +658,7 @@ app.post('/user/contact', (req, res) => {
 // Admin Login
 app.post('/sc-admin/login', (req, res) => {
     try {
-        console.log("THA HEADER IN LOGIN: ", req.headers);
-        console.log("THA HEADER CONTENT-TYPE IN LOGIN: ", req.headers['content-type']);
+
         const form = new formidable.IncomingForm({ allowEmptyFiles: true, minFileSize: 0 });
 
         form.parse(req, async (formidableErr, fields) => {
@@ -706,7 +733,7 @@ app.post('/sc-admin/login', (req, res) => {
                                     });
                                 }
 
-                                jwt.sign({ username: adminUser.username }, await readOnDisk(__dirname + '/keys/jwtRS256.key'), { algorithm: 'RS256', expiresIn: "30 days" }, (err, token) => {
+                                jwt.sign({ username: adminUser.username }, await readOnDisk(__dirname + '/keys/jwtRS256.key'), { algorithm: 'RS256', expiresIn: "30 days" }, async (err, token) => {
 
                                     if (err) {
                                         ErrorLogger.error(err.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(err, { showHidden: false, depth: null, colors: true }) });
@@ -726,12 +753,10 @@ app.post('/sc-admin/login', (req, res) => {
                                         path: '/sc-admin'
                                     });
 
-                                    // res.status(200).send({
-                                    //     type: 'success',
-                                    //     message: `Welcome back, ${adminUser.username}`
-                                    // });
-
                                     ActivityLogger.info(`${adminUser.username} logged in!`, { ip: req.ip, url: req.url, method: req.method });
+
+                                    await adminCrud.update({ username: adminUser.username }, { session: adminUser.session + 1 });
+                                    ActivityLogger.info(`ADMIN "${adminUser.username}" NEW SESSION. N.${adminUser.session + 1}`, { ip: req.ip, url: req.url, method: req.method });
 
                                     res.setHeader('Set-Cookie', serializedCookie);
                                     res.status(200).send({
@@ -775,7 +800,7 @@ app.post('/sc-admin/login', (req, res) => {
 });
 
 // Admin profile actions
-app.get('/sc-admin/profile/actions/:action', async (req, res) => {
+app.get('/sc-admin/profile/actions/:action', adminAuthMiddleware, async (req, res) => {
     try {
         switch (req.params.action) {
             case "my-profile":
@@ -787,7 +812,14 @@ app.get('/sc-admin/profile/actions/:action', async (req, res) => {
                 break;
 
             case "logout":
-
+                // console.log("AJAX REQUEST HEADER: ", req.headers);
+                // console.log("\nTHE USER: ", req.authenticateAdmin);
+                // console.log();
+                // return res.status(200).send({
+                //     type: 'info',
+                //     message: `Test Successfull`,
+                //     redirectionUrl: '/sc-admin'
+                // });
                 ActivityLogger.info(`SC-Admin-1 IS GOING OFFLINE...`, { ip: req.ip, url: req.url, method: req.method });
 
                 const serializedCookie = serialize('authToken', null, {
@@ -797,19 +829,45 @@ app.get('/sc-admin/profile/actions/:action', async (req, res) => {
                     maxAge: -1,
                     path: '/sc-admin'
                 });
+                let admin = req.authenticateAdmin;
 
-                await adminCrud.update({ username: "SC-Admin-1" }, { online: false });
-                appWebsocket.close();
+                adminCrud.read(admin)
+                    .then(async (matchedAdmin) => {
+                        if (!matchedAdmin) {
+                            ActivityLogger.info(`Admin "${matchedAdmin.username}" failed to log out! Admin not recognize on logout action`, { ip: req.ip, url: req.url, method: req.method });
 
-                ActivityLogger.info(`SC-Admin-1 IS OFFLINE`, { ip: req.ip, url: req.url, method: req.method });
+                            res.status(401);
+                            return res.send(new AppServerResponse(
+                                'danger',
+                                'Unrecognize admin',
+                            ));
+                        }
+                        matchedAdmin.session -= 1;
+                        await adminCrud.update({ username: matchedAdmin.username }, { session: matchedAdmin.session });
+                        ActivityLogger.info(`ADMIN "${matchedAdmin.username}" NEW SESSION. N.${matchedAdmin.session}`, { ip: req.ip, url: req.url, method: req.method });
 
+                        if (matchedAdmin.session === 0) {
+                            await adminCrud.update({ username: matchedAdmin.username }, { online: false });
+                        }
 
-                res.setHeader('Set-Cookie', serializedCookie);
-                return res.status(200).send({
-                    type: 'success',
-                    message: `Logged Out`,
-                    redirectionUrl: '/sc-admin'
-                });
+                        ActivityLogger.info(`SC-Admin-1 IS OFFLINE`, { ip: req.ip, url: req.url, method: req.method });
+        
+                        res.setHeader('Set-Cookie', serializedCookie);
+                        return res.status(200).send({
+                            type: 'success',
+                            message: `Logged Out`,
+                            redirectionUrl: '/sc-admin'
+                        });
+
+                    })
+                    .catch((error) => {
+                        ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
+                
+                        return res.status(520).send({
+                            type: 'danger',
+                            message: 'Unexpected error. Please try again!',
+                        });
+                    });
 
                 break;
 
@@ -887,6 +945,7 @@ app.get('/load-admin-pages/:page', (req, res) => {
 });
 
 app.get(/^(?!\/(style|js|assets|fonts|experience)).*$/, async (req, res, next) => {
+    // console.log("BROWSER REQUEST HEADER: ", req.headers);
     try {
         // logger.info(`[${req.method}] ${req.url}`);
         // logger.info({ip: req.ip, message: 'Request successful'});
@@ -922,11 +981,21 @@ app.get(/^(?!\/(style|js|assets|fonts|experience)).*$/, async (req, res, next) =
             res.render('portfolio-pages/portfolio-layout', { skeleton: skeleton });
         } else if (req.url.includes("/sc-admin")) {
 
+            ////////////////////////////////////////////////////////////////////////////////////////////////
+            // *********************************************************************************************
+            // REMOVE THIS LINE BEFORE PRODUCTION
+            // 
+            // WHEN THE SERVER DO NOT RELOAD IN DEV MODE WE HAVE TO REMOVE
+            // THE PREVIOUS LISTENER 
+            // *********************************************************************************************
+            ////////////////////////////////////////////////////////////////////////////////////////////////
+            // appWebsocket.removeAllListener('connection');
+
             let { cookie } = req.headers;
 
             if (!cookie) {
                 ActivityLogger.info("NO COOKIE AT ALL: /sc-admin request attempt", { ip: req.ip, url: req.url, method: req.method });
-                
+
                 res.status(401);
                 return res.render('dashboard-pages/dashboard-login');
             }
@@ -975,32 +1044,55 @@ app.get(/^(?!\/(style|js|assets|fonts|experience)).*$/, async (req, res, next) =
                         let user = { username: decoded };
 
                         adminCrud.read(user)
-                            .then((matchedUser) => {
+                            .then(async (matchedUser) => {
                                 if (!matchedUser) {
-                                    ActivityLogger.info(`Admin '${user.username}' failed to log in! Admin not recognize on page load`, { ip: req.ip, url: req.url, method: req.method });
+                                    ActivityLogger.info(`Admin "${user.username}" failed to log in! Admin not recognize on page load`, { ip: req.ip, url: req.url, method: req.method });
 
                                     res.status(401);
                                     return res.render('dashboard-pages/dashboard-login');
                                 }
 
-                                ActivityLogger.info(`Admin '${user.username}' found!`, { ip: req.ip, url: req.url, method: req.method });
+                                ActivityLogger.info(`Admin "${user.username}" found!`, { ip: req.ip, url: req.url, method: req.method });
 
                                 if (!matchedUser.online) {
-                                    ActivityLogger.info(`Admin '${user.username}' IS OFFLINE. SETTING IT ONLINE...`, { ip: req.ip, url: req.url, method: req.method });
+                                    ActivityLogger.info(`ADMIN "${user.username}" IS OFFLINE. SETTING IT ONLINE...`, { ip: req.ip, url: req.url, method: req.method });
 
-                                    adminCrud.update({ username: user.username }, { online: true })
-                                        .then((result) => {
-                                            appWebsocket.connection();
-                                            ActivityLogger.info(`Admin '${user.username}' IS ONLINE`, { ip: req.ip, url: req.url, method: req.method });
-                                        })
-                                        .catch((error) => {
-                                            next(error);
-                                        });
+                                    try {
+                                        await adminCrud.update({ username: user.username }, { online: true });
+                                        ActivityLogger.info(`ADMIN "${user.username}" IS ONLINE`, { ip: req.ip, url: req.url, method: req.method });
+
+
+                                        ////////////////////////////////////////////////////////////////////////////////////////////////
+                                        // *********************************************************************************************
+                                        // UNCOMMENT THIS LINE BEFORE PRODUCTION
+                                        // 
+                                        // IN PRODUCTION THE SERVER RUN FOR EVER
+                                        // THAT'S WHY EXECUTING THIS LINE ONCE IN ENOUGH
+                                        // *********************************************************************************************
+                                        ////////////////////////////////////////////////////////////////////////////////////////////////
+                                        // appWebsocket.connection();
+
+                                        // await adminCrud.update({ username: user.username }, { session: matchedUser.session + 1 });
+                                    } catch (error) {
+                                        next(error);
+                                    }
+
                                 } else {
-                                    ActivityLogger.info(`Admin '${user.username}' IS ALREADY ONLINE`, { ip: req.ip, url: req.url, method: req.method });
-
-                                    appWebsocket.connection();
+                                    // if (matchedUser.session > 0) {
+                                    // } else {
+                                        ActivityLogger.info(`ADMIN "${user.username}" IS ALREADY ONLINE`, { ip: req.ip, url: req.url, method: req.method });
+                                    // }
+                                    // appWebsocket.connectionOnce();
                                 }
+
+                                ////////////////////////////////////////////////////////////////////////////////////////////////
+                                // *********************************************************************************************
+                                // REMOVE THIS LINE ALSO BEFORE PRODUCTION
+                                // WHEN THE SERVER RELOAD IN DEV MODE WE HAVE RESTART THE WEBSOCKET SERVER
+                                // 
+                                // *********************************************************************************************
+                                ////////////////////////////////////////////////////////////////////////////////////////////////
+                                // appWebsocket.connection();
 
                                 ActivityLogger.info('ADMIN PAGE LOAD', { ip: req.ip, url: req.url, method: req.method });
                                 res.status(200);

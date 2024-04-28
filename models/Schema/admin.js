@@ -21,6 +21,10 @@ const adminSchema = new mongoose.Schema({
     },
     online: {
         type: Boolean,
+    },
+    session: {
+        type: Number,
+        default: 0
     }
 });
 

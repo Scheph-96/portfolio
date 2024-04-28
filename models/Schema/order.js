@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const OrderType = require('../enums/order_type');
-const { generateUUID_V4 } = require('../../tools/util.tool');
+const { generateUUID_V4, parseNewOrder } = require('../../tools/util.tool');
 const { socketPortalEvent } = require('../class/socket_portal');
 
 /**
@@ -47,7 +47,7 @@ const newOrderSchema = orderSchema = new mongoose.Schema({
     },
     specifications: {
         type: Boolean,
-        required: [function() {
+        required: [function () {
             /**
              * if there is no description then specifications is required
             */
@@ -56,7 +56,7 @@ const newOrderSchema = orderSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        required: [function() { 
+        required: [function () {
             /**
              * if there is no specifications and no description then description is required
              * if there is no specifications and the description trim return 0 the description is required
@@ -77,7 +77,8 @@ const newOrderSchema = orderSchema = new mongoose.Schema({
     },
     // To track and recognize each order
     orderNumber: {
-        type: mongoose.SchemaTypes.UUID,
+        type: String,
+        // type: mongoose.SchemaTypes.UUID,
         default: generateUUID_V4(),
         required: true,
     },
@@ -89,15 +90,23 @@ const newOrderSchema = orderSchema = new mongoose.Schema({
 });
 
 
-newOrderSchema.post('save', (doc) => {
-    console.log('THE NEW CHANGE: ', doc);
-    socketPortalEvent.emit(socketPortalEvent.events.orderUpdate);
+newOrderSchema.post('save', async (newOrder) => {
+    /**
+     * Do not add a try..catch here.
+     * 
+     * Any error taised in this function will be catched
+     * in the catch block of order.create in app.http.js
+     * in the '/submit-order' endpoint
+     */
+
+    let parsedOrder = await parseNewOrder(newOrder);
+    socketPortalEvent.emit(socketPortalEvent.events.orderUpdate, { data: parsedOrder, type: "order" });
 });
 
 // arg1: Model Name
 // arg2: Schema
 // arg3: collection name in the database
-module.exports = { 
+module.exports = {
     NewOrder: mongoose.model('NewOrder', newOrderSchema, 'new_order'),
-    Order: mongoose.model('Order', orderSchema, 'order') 
+    Order: mongoose.model('Order', orderSchema, 'order')
 }
