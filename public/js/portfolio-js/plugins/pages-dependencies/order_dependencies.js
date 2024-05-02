@@ -10,7 +10,6 @@ function execOrder() {
     const orderForm = document.getElementById('order-form');
     const submitButton = document.getElementById('submit-button');
     let isSubmit = false;
-    console.log('EXECUTE ORDER');
     orderForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -22,13 +21,9 @@ function execOrder() {
 
             let order = new FormData(orderForm);
 
-            console.log('THE ORDER: ', order);
-            // setTimeout(() => {
 
             ajaxRequest.submitForm('/submit-order', order)
                 .then((result) => {
-                    // contentHandlerOnRawCode(result.page);
-                    // customReplaceState(result.page, '', routes().orderSuccess.addressBarUrl);
                     window.history.replaceState('', '', routes().orderSuccess.addressBarUrl);
                     contentHandlerOnRawCode(result.page);
                     if (result.message) {
@@ -39,9 +34,6 @@ function execOrder() {
                     if (error.errorMessage) {
                         alertToast(error.errorMessage.type, error.errorMessage.message);
                     } else {
-                        console.log(`ERR::::::::::::`);
-                        console.error(`ERROR:: ${error.error}`);
-                        console.error(`JUST ERROR: ${error}`);
                         alertToast('danger', 'Unexpected error. Please try again!');
                     }
                 })
@@ -51,7 +43,6 @@ function execOrder() {
                     submitButton.value = "confirm";
 
                 });
-            // }, 5000);
 
         }
 

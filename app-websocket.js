@@ -58,7 +58,7 @@ class AppWebsocket {
         // Remove the current event listener
         // this.#socketServer.removeListener('connection', this.webSocketController);
     }
-    
+
     socketPortalEventHandler(ws, stream) {
         // console.log("SOCKET CLIENTS: ", this.#socketServer.clients);
         console.log("SOCKET GOT ORDER CHANGE: ", stream);
@@ -126,14 +126,14 @@ class AppWebsocket {
                             console.log("ADMIN SET: ", this.#admins);
 
 
-                                socketPortalEvent.on(socketPortalEvent.events.orderUpdate, handlerFoo);
+                            socketPortalEvent.on(socketPortalEvent.events.orderUpdate, handlerFoo);
 
-                                this.#admins.add(ws);
-                                console.log("END OF NOT SOCKET EXISTING");
-                            
+                            this.#admins.add(ws);
+                            console.log("END OF NOT SOCKET EXISTING");
+
                             console.log("ADMIN SET SIZE: ", this.#admins.size);
                             console.log("NUMBER OF LISTENER: ", socketPortalEvent.listenerCount(socketPortalEvent.events.orderUpdate));
-                        
+
                         } else {
                             ActivityLogger.info("NO ADMIN FOUND ON WEBSOCKET CONNECTION ATTEMPT: CONNECTION CLOSED", { ip: req.socket.remoteAddress, url: req.url, method: req.method });
                             ws.send("Unable to connect");

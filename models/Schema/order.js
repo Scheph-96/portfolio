@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const OrderType = require('../enums/order_type');
 const { generateUUID_V4, parseNewOrder } = require('../../tools/util.tool');
 const { socketPortalEvent } = require('../class/socket_portal');
+const NotificationCrud = require('../../model_crud/notification_crud');
 
 /**
  * THE LOGIC:
@@ -100,6 +101,8 @@ newOrderSchema.post('save', async (newOrder) => {
      */
 
     let parsedOrder = await parseNewOrder(newOrder);
+    let notificationCrud = new NotificationCrud();
+    await notificationCrud.update({type: "order"}, {notify: true})
     socketPortalEvent.emit(socketPortalEvent.events.orderUpdate, { data: parsedOrder, type: "order" });
 });
 

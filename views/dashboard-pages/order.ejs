@@ -28,11 +28,10 @@
         <p id="current-year-accepted-orders">136</p>
       </div>
     </div>
-    <div class="card col1-2-row2">
+    <div class="card col1-2-row2 new-order-block">
       <p class="card-title">New Order</p>
       <hr>
-      <div class="content s">
-        <% //console.log(newOrders) %>
+      <div class="content">
           <table class="table order-table small-table">
             <thead>
                 <tr>
@@ -41,103 +40,23 @@
                     <th>Time</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td class="title-section">
-                      <%- include('order-icons/new-order.ico.ejs') %>
-                        <p>Tommy Delware</p>
-                    </td>
-                    <td class="service">
-                        <p>Web Development</p>
-                    </td>
-                    <td class="time">
-                        <p>1 hour ago</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="title-section">
-                      <%- include('order-icons/new-order.ico.ejs') %>
-                        <p>Peter Orangatan</p>
-                    </td>
-                    <td class="service">
-                        <p>Logo</p>
-                    </td>
-                    <td class="time">
-                        <p>3 hour ago</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="title-section">
-                      <%- include('order-icons/new-order.ico.ejs') %>
-                        <p>John Dale</p>
-                    </td>
-                    <td class="service">
-                        <p>UI Design</p>
-                    </td>
-                    <td class="time">
-                        <p>6 hour ago</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="title-section">
-                      <%- include('order-icons/new-order.ico.ejs') %>
-                        <p>Jim Halpert</p>
-                    </td>
-                    <td class="service">
-                        <p>Poster</p>
-                    </td>
-                    <td class="time">
-                        <p>7 hour ago</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="title-section">
-                      <%- include('order-icons/new-order.ico.ejs') %>
-                        <p>Tommy Delware</p>
-                    </td>
-                    <td class="service">
-                        <p>Web Development</p>
-                    </td>
-                    <td class="time">
-                        <p>1 hour ago</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="title-section">
-                      <%- include('order-icons/new-order.ico.ejs') %>
-                        <p>Peter Orangatan</p>
-                    </td>
-                    <td class="service">
-                        <p>Logo</p>
-                    </td>
-                    <td class="time">
-                        <p>3 hour ago</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="title-section">
-                      <%- include('order-icons/new-order.ico.ejs') %>
-                        <p>John Dale</p>
-                    </td>
-                    <td class="service">
-                        <p>UI Design</p>
-                    </td>
-                    <td class="time">
-                        <p>6 hour ago</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="title-section">
-                      <%- include('order-icons/new-order.ico.ejs') %>
-                        <p>Jim Halpert</p>
-                    </td>
-                    <td class="service">
-                        <p>Poster</p>
-                    </td>
-                    <td class="time">
-                        <p>7 hour ago</p>
-                    </td>
-                </tr>
+            <tbody class="new-order-block-tbody">
+                <% if (newOrders) { %>
+                    <% for (let i=0; i < newOrders.length; i++) { %>
+                        <tr order-number="<%= newOrders[i].orderNumber %>">
+                            <td class="title-section">
+                              <%- include('order-icons/new-order.ico.ejs') %>
+                                <p><%= newOrders[i].customer %></p>
+                            </td>
+                            <td class="service">
+                                <p><%= newOrders[i].service %></p>
+                            </td>
+                            <td class="time">
+                                <p><%= newOrders[i].time %></p>
+                            </td>
+                        </tr>
+                    <% } %>
+                <% } %>
             </tbody>
           </table>
       </div>
