@@ -34,6 +34,7 @@ const { formidableFormParser, generateUUID_V4, writeOnDisk, ErrorLogger, Activit
 const { Recommendation } = require('./models/Schema/recommendation.js');
 const { adminAuthMiddleware } = require('./middleware/app-middleware.js');
 const AppServerResponse = require('./models/class/app_server_response.js');
+const NotificationCrud = require('./model_crud/notification_crud.js');
 // const socketLauncher = require('./app-websocket.js');
 
 
@@ -44,6 +45,7 @@ let orderCrud = new OrderCrud();
 let experienceCrud = new ExperienceCrud();
 let recommendationCrud = new RecommendationCrud();
 let adminCrud = new AdminCrud();
+let notificationCrud = new NotificationCrud();
 
 // Create a transporter using custom SMTP settings
 const transporter = nodemailer.createTransport({
@@ -188,26 +190,35 @@ app.post('/submit-order', (req, res) => {
                             orderCrud.create(order)
                                 .then((dbOrder) => {
                                     ejs.renderFile(__dirname + '/views/portfolio-pages/order-success.ejs', dbOrder, (err, html) => {
-                                        if (err) {
-                                            ErrorLogger.error(err.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(err, { showHidden: false, depth: null, colors: true }) });
+                                        try {
+                                            if (err) {
+                                                ErrorLogger.error(err.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(err, { showHidden: false, depth: null, colors: true }) });
+                                                return res.status(520).send({
+                                                    type: 'danger',
+                                                    message: 'Unexpected error. Please try again!',
+                                                });
+                                            }
+    
+                                            // return res.status(201).send({
+                                            //     type: 'success',
+                                            //     message: 'Order send successfully',
+                                            //     page: html,
+                                            // });
+    
+                                            return res.status(201).send(new AppServerResponse(
+                                                'success',
+                                                'Order send successfully',
+                                                null,
+                                                html,
+                                            ));
+                                        } catch (error) {
+                                            ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
+                                            
                                             return res.status(520).send({
                                                 type: 'danger',
                                                 message: 'Unexpected error. Please try again!',
                                             });
                                         }
-
-                                        // return res.status(201).send({
-                                        //     type: 'success',
-                                        //     message: 'Order send successfully',
-                                        //     page: html,
-                                        // });
-
-                                        return res.status(201).send(new AppServerResponse(
-                                            'success',
-                                            'Order send successfully',
-                                            null,
-                                            html,
-                                        ));
                                     });
 
                                 })
@@ -896,7 +907,8 @@ app.get('/load-admin-pages/:page', (req, res) => {
 
             case "order":
                 Promise.all([orderCrud.readAndParseNewOrders(), orderCrud.readAll()])
-                    .then((orders) => {
+                    .then(async (orders) => {
+                        await notificationCrud.update({type: "order"}, {notify: false});
                         res.render(`dashboard-pages/${req.params.page}`, { newOrders: orders[0], orders: orders[1] });
                     })
                     .catch((error) => {
@@ -1094,9 +1106,13 @@ app.get(/^(?!\/(style|js|assets|fonts|experience)).*$/, async (req, res, next) =
                                 ////////////////////////////////////////////////////////////////////////////////////////////////
                                 // appWebsocket.connection();
 
+                                let orderNotification = await notificationCrud.read({type: "order"});
+
+                                console.log("THE NOTIFICATION: ", orderNotification);
+
                                 ActivityLogger.info('ADMIN PAGE LOAD', { ip: req.ip, url: req.url, method: req.method });
                                 res.status(200);
-                                return res.render('dashboard-pages/dashboard-layout', { user: user });
+                                return res.render('dashboard-pages/dashboard-layout', { user: user, orderNotification: orderNotification });
 
                             })
                             .catch((error) => {

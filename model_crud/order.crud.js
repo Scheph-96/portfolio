@@ -107,10 +107,10 @@ class OrderCrud {
      * 
      * @returns 
      */
-    readNewAll() {
+    readNewAll(options=null) {
         return new Promise(async (resolve, reject) => {
             try {
-                let results = await NewOrder.find({}).exec();
+                let results = await NewOrder.find(null, null, options).exec();
                 resolve(results);
             } catch (error) {
                 reject(error);
@@ -126,7 +126,7 @@ class OrderCrud {
         return new Promise(async (resolve, reject) => {
             try {
                 let pardsedNewOrders = [];
-                let newOrders = await this.readNewAll();
+                let newOrders = await this.readNewAll({sort: {created: 'desc'}});
 
                 for (let i = 0; i < newOrders.length; i++) {
                     pardsedNewOrders.push( await parseNewOrder(newOrders[i]) );

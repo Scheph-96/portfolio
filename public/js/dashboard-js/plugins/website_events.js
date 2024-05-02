@@ -4,6 +4,7 @@ import { lineChart, barChart, pieChart } from './charts.js';
 import { MyLocalStorage } from "./persistent_data/local_storage.js";
 import { customPushState, customReplaceState } from "../../tools/route_loader.tool.js";
 import { alertToast } from '../../tools/util.js';
+import { notificationComponent } from './components.js';
 // import { emailClick } from "../pages_features/mailbox_features.js";
 
 
@@ -172,13 +173,13 @@ function adminLogout() {
                 if (!isClicked) {
                     isClicked = true;
                     const clickedElement = e.currentTarget;
-                    ajaxRequest.loadEndPoint("/sc-admin/profile/actions/"+clickedElement.getAttribute('action'))
+                    ajaxRequest.loadEndPoint("/sc-admin/profile/actions/" + clickedElement.getAttribute('action'))
                         .then((result) => {
                             console.log("THE LOGIN RESULT: ", result);
                             if (result.message) {
                                 alertToast(result.type, result.message);
                             }
-        
+
                             if (result.redirectionUrl) {
                                 window.location.href = window.location.origin + result.redirectionUrl;
                             }
@@ -230,6 +231,13 @@ function switchPage() {
 
                     case 'order':
 
+                        const menuOrderIcon = document.querySelector('.dashboard-menu-sidebar-icon.order-icon');
+                        const notificationDot = document.getElementById('notification-dot');
+
+                        if (notificationDot) {
+                            menuOrderIcon.removeChild(notificationDot);
+                        }
+
                         ajaxRequest.loadHtml("/load-admin-pages/" + e.currentTarget.getAttribute('menu-item-type'), mainContent, null);
 
                         break;
@@ -271,6 +279,7 @@ function switchPage() {
                         break;
                 }
             } catch (error) {
+                console.error("SWITCH PAGE ERROR: ", error);
             }
 
         });
