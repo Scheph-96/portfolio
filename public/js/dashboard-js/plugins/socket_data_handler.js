@@ -1,7 +1,11 @@
-import { newOrderComponent, notificationComponent } from "./components.js";
+import { AjaxRequest } from "../../tools/ajax_req.tool.js";
+import { alertToast } from "../../tools/util.js";
+import { newOrderComponent, notificationComponent, orderTableRowPopup } from "./components.js";
+import { tableRowOnClick } from "./website_events.js";
 
 function orderUpdateHandler(newOrder) {
     const newOrderBlock = document.querySelector('.new-order-block-tbody');
+    const body = document.querySelector('body');
 
     /** 
      * Witch means that thd current loaded page is not order page 
@@ -17,9 +21,12 @@ function orderUpdateHandler(newOrder) {
         menuOrderIcon.appendChild(notificationComponent());
         
     } else {
+        let ajaxRequest = new AjaxRequest();
         console.log("WE ARE ON ORDER PAGE");
+        const orderComponent = newOrderComponent(newOrder);
+        newOrderBlock.prepend(orderComponent);
 
-        newOrderBlock.prepend(newOrderComponent(newOrder));
+        orderComponent.addEventListener('click', tableRowOnClick);
     }
 }
 

@@ -36,8 +36,19 @@
       <label class="input-icon-box" for="specifications"><i class='bx bx-upload'></i></label>
     </div>
     <div class="input-box">
-      <textarea name="description" id="project-description" cols="30" rows="10" placeholder="Description"></textarea>
+      <textarea name="description" id="project-description" maxlength="350" cols="30" rows="10" placeholder="Description"></textarea>
       <label class="input-icon-box" for="description"><i class='bx bxs-envelope'></i></label>
+    </div>
+    <div class="progress">
+      <div class="progress-bar"></div>
+    </div>
+    <div style="display: flex; justify-content: space-between;">
+      <p class="textarea-progress-value"></p>
+      <div style="display: flex">
+        <p class="textarea-current-size"></p>
+        <p>/</p>
+        <p class="textarea-max-size"></p>
+      </div>
     </div>
     <div>
       <p class="note"><span style="color: red; font-size: 1rem;">*</span> Add a small description to

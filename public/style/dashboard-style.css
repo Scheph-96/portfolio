@@ -8,6 +8,7 @@
     --transparent-primary-color: rgba(30, 144, 255, .2);
     --secondary-color: #e6edfa;
     --default-bg-color: #F2F6FB;
+    --default-bg-color-lite: rgb(242, 246, 251, .5);
     --default-text-color: #435d77;
     --default-text-color-transparent: rgba(92, 120, 148, .5);
     --chart-grid-line-color: rgb(235, 235, 235, .6);
@@ -26,6 +27,7 @@
 .dark {
     --primary-bg-color: #1F1F1F;
     --default-bg-color: #121212;
+    --default-bg-color-lite: rgb(18, 18, 18, .5);
     --default-text-color: #eff3f8;
     --default-text-color-transparent: rgb(239, 243, 248, .5);
     --line-color: rgba(94, 94, 94, .5);
@@ -333,6 +335,74 @@ body .ls-error-content button {
     height: 10px;
     border-radius: 50%;
     background-color: crimson;
+}
+
+.table-row-popup-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--default-bg-color-lite);
+    z-index: 9999999;
+}
+
+.table-row-popup-container .submit-box input.reject {
+    background-color: var(--danger-color);
+}
+
+.table-row-popup-container .submit-box input.accept {
+    background-color: var(--success-color);
+}
+
+.table-row-popup h3 {
+    text-align: center;
+}
+
+.table-row-popup h3 span {
+    color: var(--primary-color);
+}
+
+.table-row-popup {
+    width: 60%;
+    height: 90%;
+    background-color: var(--primary-bg-color);
+    padding: calc(var(--default-padding) * 2);
+    border-radius: var(--default-border-radius);
+    box-shadow: var(--default-box-shadow);
+    position: relative;
+}
+
+.table-row-popup-content {
+    width: 100%;
+    height: 90%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    overflow: auto;
+    padding: 0 0 calc(var(--default-padding) * 2) 0;
+}
+
+.table-row-popup .submit-btn-section {
+    padding: 0 calc(var(--default-padding) * 2);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 16%;
+    align-items: center;
+}
+
+.table-row-popup .submit-btn-section .submit-box input {
+    margin: 0;
+}
+
+.table-row-popup-data {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
 body.dark .bxs-moon {

@@ -30,11 +30,13 @@ const appConfig = require('./dependencies.js');
 
 // Multiple import
 const { Order, NewOrder } = require('./models/Schema/order.js');
-const { formidableFormParser, generateUUID_V4, writeOnDisk, ErrorLogger, ActivityLogger, validatePassword, readOnDisk, getCookie } = require('./tools/util.tool.js');
+const { formidableFormParser, generateUUID_V4, writeOnDisk, ErrorLogger, ActivityLogger, validatePassword, readOnDisk, getCookie, toBase64 } = require('./tools/util.tool.js');
 const { Recommendation } = require('./models/Schema/recommendation.js');
 const { adminAuthMiddleware } = require('./middleware/app-middleware.js');
 const AppServerResponse = require('./models/class/app_server_response.js');
 const NotificationCrud = require('./model_crud/notification_crud.js');
+const OrderType = require('./models/enums/order_type.js');
+const { default: mongoose } = require('mongoose');
 // const socketLauncher = require('./app-websocket.js');
 
 
@@ -104,6 +106,8 @@ app.post('/submit-order', (req, res) => {
                 }
 
                 let order = new NewOrder(formidableFormParser(fields));
+
+                console.log("THE NEW ORDER: ", order);
 
                 // Check if there is afile
                 if (files.specifications.length !== 0 && files.specifications[0].originalFilename !== "" && files.specifications[0].size !== 0) {
@@ -198,13 +202,13 @@ app.post('/submit-order', (req, res) => {
                                                     message: 'Unexpected error. Please try again!',
                                                 });
                                             }
-    
+
                                             // return res.status(201).send({
                                             //     type: 'success',
                                             //     message: 'Order send successfully',
                                             //     page: html,
                                             // });
-    
+
                                             return res.status(201).send(new AppServerResponse(
                                                 'success',
                                                 'Order send successfully',
@@ -213,7 +217,7 @@ app.post('/submit-order', (req, res) => {
                                             ));
                                         } catch (error) {
                                             ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
-                                            
+
                                             return res.status(520).send({
                                                 type: 'danger',
                                                 message: 'Unexpected error. Please try again!',
@@ -224,7 +228,7 @@ app.post('/submit-order', (req, res) => {
                                 })
                                 .catch((error) => {
                                     ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
-                                    
+
                                     return res.status(520).send({
                                         type: 'danger',
                                         message: 'Unexpected error. Please try again!',
@@ -862,7 +866,7 @@ app.get('/sc-admin/profile/actions/:action', adminAuthMiddleware, async (req, re
                         }
 
                         ActivityLogger.info(`SC-Admin-1 IS OFFLINE`, { ip: req.ip, url: req.url, method: req.method });
-        
+
                         res.setHeader('Set-Cookie', serializedCookie);
                         return res.status(200).send({
                             type: 'success',
@@ -873,7 +877,7 @@ app.get('/sc-admin/profile/actions/:action', adminAuthMiddleware, async (req, re
                     })
                     .catch((error) => {
                         ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
-                
+
                         return res.status(520).send({
                             type: 'danger',
                             message: 'Unexpected error. Please try again!',
@@ -906,10 +910,10 @@ app.get('/load-admin-pages/:page', (req, res) => {
                 break;
 
             case "order":
-                Promise.all([orderCrud.readAndParseNewOrders(), orderCrud.readAll()])
+                Promise.all([orderCrud.readAndParseOrders(OrderType.enum.new), orderCrud.readAndParseOrders(OrderType.enum.pending), orderCrud.readAll()])
                     .then(async (orders) => {
-                        await notificationCrud.update({type: "order"}, {notify: false});
-                        res.render(`dashboard-pages/${req.params.page}`, { newOrders: orders[0], orders: orders[1] });
+                        await notificationCrud.update({ type: "order" }, { notify: false });
+                        res.render(`dashboard-pages/${req.params.page}`, { newOrders: orders[0], pendingOrders: orders[1], orders: orders[2] });
                     })
                     .catch((error) => {
 
@@ -956,8 +960,178 @@ app.get('/load-admin-pages/:page', (req, res) => {
     }
 });
 
+app.get('/order/specifications/:orderNumber', async (req, res, next) => {
+    try {
+        console.log("GET PDF");
+        let foundNewOrder = await orderCrud.readNew({ orderNumber: req.params.orderNumber });
+
+        if (foundNewOrder) {
+            console.log("NEW ORDER");
+            return res.sendFile(`${__dirname}/uploads/specs/specs_${foundNewOrder._id}.pdf`);
+        } else {
+            console.log("REGULAR ORDER");
+            let foundOrder = await orderCrud.read({ orderNumber: req.params.orderNumber });
+
+            if (foundOrder) {
+                return res.sendFile(`${__dirname}/uploads/specs/specs_${foundOrder._id}.pdf`);
+            } else {
+                ErrorLogger.error("NO PDF FILE FOUND", { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
+
+                return res.status(404).send({
+                    type: 'danger',
+                    message: 'NO SUCH FILE!',
+                });
+            }
+        }
+    } catch (error) {
+        next(error);
+    }
+});
+
+// Load order table row detail
+app.get('/load-data/detail/:type/:number', async (req, res) => {
+    try {
+        console.log("THE PARAM: ", req.params.type);
+        switch (req.params.type) {
+            case "new-order": case "pending-order":
+                let foundNewOrder;
+
+                if (req.params.type === "new-order") {
+                    // GET NEW ORDERS
+                    foundNewOrder = await orderCrud.readNew({ orderNumber: req.params.number })
+                    orderCrud.deleteNew(foundNewOrder._id)
+                        .then(async (value) => {
+                            foundNewOrder.status = OrderType.enum.pending;
+                            let ordinaryOrder = new Order(foundNewOrder.toObject());
+                            await orderCrud.createOrder(ordinaryOrder);
+                        }).catch((error) => {
+                            /**
+                             * I consider that it's useless to send this error back to the user
+                             * So let's just add it to logs 
+                             * */
+                            
+                            ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
+                        });
+                } else {
+                    // GET PENDING ORDERS
+                    foundNewOrder = await orderCrud.read({ orderNumber: req.params.number, status: OrderType.enum.pending })
+                }
+
+                if (foundNewOrder) {
+                    let order;
+
+                    if (foundNewOrder.specifications) {
+                        order = { order: foundNewOrder, path: `/order/specifications/${foundNewOrder.orderNumber}` };
+                    } else {
+                        order = { order: foundNewOrder };
+                    }
+
+                    ejs.renderFile(__dirname + '/views/dashboard-pages/order-table-row-popup.ejs', order, (err, html) => {
+                        try {
+                            if (err) {
+                                ErrorLogger.error(err.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(err, { showHidden: false, depth: null, colors: true }) });
+                                return res.status(520).send({
+                                    type: 'danger',
+                                    message: 'Unexpected error. Please try again!',
+                                });
+                            }
+
+                            return res.status(200).send(new AppServerResponse(
+                                'success',
+                                null,
+                                null,
+                                html,
+                            ));
+                        } catch (error) {
+                            ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
+
+                            return res.status(520).send({
+                                type: 'danger',
+                                message: 'Unexpected error. Please try again!',
+                            });
+                        }
+                    });
+                } else {
+
+                    return res.status(404).send(new AppServerResponse(
+                        'warning',
+                        'No Order Found',
+                    ));
+                }
+
+                break;
+
+            case "order":
+                let foundOrder = await orderCrud.read({ orderNumber: req.params.number });
+                // orderCrud.update(foundOrder._id, { status: OrderType.enum.pending });
+
+                if (foundOrder) {
+                    let order;
+
+                    if (foundOrder.specifications) {
+                        order = { order: foundOrder, path: `/order/specifications/${foundOrder.orderNumber}` };
+                    } else {
+                        order = { order: foundOrder };
+                    }
+
+                    ejs.renderFile(__dirname + '/views/dashboard-pages/order-table-row-popup.ejs', order, (err, html) => {
+                        try {
+                            if (err) {
+                                ErrorLogger.error(err.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(err, { showHidden: false, depth: null, colors: true }) });
+                                return res.status(520).send({
+                                    type: 'danger',
+                                    message: 'Unexpected error. Please try again!',
+                                });
+                            }
+
+                            return res.status(200).send(new AppServerResponse(
+                                'success',
+                                null,
+                                null,
+                                html,
+                            ));
+                        } catch (error) {
+                            ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
+
+                            return res.status(520).send({
+                                type: 'danger',
+                                message: 'Unexpected error. Please try again!',
+                            });
+                        }
+                    });
+                } else {
+
+                    return res.status(404).send(new AppServerResponse(
+                        'warning',
+                        'No Order Found',
+                    ));
+                }
+                break;
+
+            default:
+                ErrorLogger.error("LOAD TABLE ROW DATA DETAIL DEFAULT BLOCK REACHED", { ip: req.ip, url: req.url, method: req.method });
+
+                break;
+        }
+    } catch (error) {
+        ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
+
+        return res.status(520).send({
+            type: 'danger',
+            message: 'Unexpected error. Please try again!',
+        });
+    }
+});
+
+
+
+
+
+
+/////////////////////////////////////// APP START POINT ///////////////////////////////////////
+
 app.get(/^(?!\/(style|js|assets|fonts|experience)).*$/, async (req, res, next) => {
-    // console.log("BROWSER REQUEST HEADER: ", req.headers);
+    
     try {
         // logger.info(`[${req.method}] ${req.url}`);
         // logger.info({ip: req.ip, message: 'Request successful'});
@@ -992,16 +1166,6 @@ app.get(/^(?!\/(style|js|assets|fonts|experience)).*$/, async (req, res, next) =
 
             res.render('portfolio-pages/portfolio-layout', { skeleton: skeleton });
         } else if (req.url.includes("/sc-admin")) {
-
-            ////////////////////////////////////////////////////////////////////////////////////////////////
-            // *********************************************************************************************
-            // REMOVE THIS LINE BEFORE PRODUCTION
-            // 
-            // WHEN THE SERVER DO NOT RELOAD IN DEV MODE WE HAVE TO REMOVE
-            // THE PREVIOUS LISTENER 
-            // *********************************************************************************************
-            ////////////////////////////////////////////////////////////////////////////////////////////////
-            // appWebsocket.removeAllListener('connection');
 
             let { cookie } = req.headers;
 
@@ -1072,41 +1236,15 @@ app.get(/^(?!\/(style|js|assets|fonts|experience)).*$/, async (req, res, next) =
                                     try {
                                         await adminCrud.update({ username: user.username }, { online: true });
                                         ActivityLogger.info(`ADMIN "${user.username}" IS ONLINE`, { ip: req.ip, url: req.url, method: req.method });
-
-
-                                        ////////////////////////////////////////////////////////////////////////////////////////////////
-                                        // *********************************************************************************************
-                                        // UNCOMMENT THIS LINE BEFORE PRODUCTION
-                                        // 
-                                        // IN PRODUCTION THE SERVER RUN FOR EVER
-                                        // THAT'S WHY EXECUTING THIS LINE ONCE IN ENOUGH
-                                        // *********************************************************************************************
-                                        ////////////////////////////////////////////////////////////////////////////////////////////////
-                                        // appWebsocket.connection();
-
-                                        // await adminCrud.update({ username: user.username }, { session: matchedUser.session + 1 });
                                     } catch (error) {
                                         next(error);
                                     }
 
                                 } else {
-                                    // if (matchedUser.session > 0) {
-                                    // } else {
-                                        ActivityLogger.info(`ADMIN "${user.username}" IS ALREADY ONLINE`, { ip: req.ip, url: req.url, method: req.method });
-                                    // }
-                                    // appWebsocket.connectionOnce();
+                                    ActivityLogger.info(`ADMIN "${user.username}" IS ALREADY ONLINE`, { ip: req.ip, url: req.url, method: req.method });
                                 }
 
-                                ////////////////////////////////////////////////////////////////////////////////////////////////
-                                // *********************************************************************************************
-                                // REMOVE THIS LINE ALSO BEFORE PRODUCTION
-                                // WHEN THE SERVER RELOAD IN DEV MODE WE HAVE RESTART THE WEBSOCKET SERVER
-                                // 
-                                // *********************************************************************************************
-                                ////////////////////////////////////////////////////////////////////////////////////////////////
-                                // appWebsocket.connection();
-
-                                let orderNotification = await notificationCrud.read({type: "order"});
+                                let orderNotification = await notificationCrud.read({ type: "order" });
 
                                 console.log("THE NOTIFICATION: ", orderNotification);
 

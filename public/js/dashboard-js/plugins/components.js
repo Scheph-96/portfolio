@@ -12,7 +12,7 @@ function notificationComponent() {
 
 function newOrderComponent(newOrder) {
     const tempContainer = document.createElement('tr');
-    tempContainer.setAttribute("order-number", newOrder.orderNumber);
+    tempContainer.setAttribute("new-order-number", newOrder.orderNumber);
     tempContainer.innerHTML = `
     <td class="title-section">
         <div class="icon-container new">
@@ -37,8 +37,18 @@ function newOrderComponent(newOrder) {
     return tempContainer;
 }
 
+function orderTableRowPopup(orderDetail) {
+    const tempContainer = document.createElement('div');
+    tempContainer.classList.add("table-row-popup-container");
+
+    tempContainer.innerHTML = orderDetail;
+
+    return tempContainer;
+}
+
 
 export {
     notificationComponent,
-    newOrderComponent
+    newOrderComponent,
+    orderTableRowPopup,
 }

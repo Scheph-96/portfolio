@@ -50,8 +50,35 @@ function execOrder() {
 
 }
 
+function textAreaLimit() {
+    const textArea = document.querySelector('textarea');
+    const currentSize = document.querySelector('.textarea-current-size');
+    const maxSize = document.querySelector('.textarea-max-size');
+    const textAreaProgressValue = document.querySelector('.textarea-progress-value');
+    const progressBar = document.querySelector('.progress-bar');
+
+    let textAreaMaxSize = textArea.getAttribute('maxlength');
+    let textAreaCurrentSize = 0;
+    let progress;
+
+    // init maxSize on the view
+    maxSize.innerHTML = textAreaMaxSize;
+    currentSize.innerHTML = textAreaCurrentSize;
+    textAreaProgressValue.innerHTML = '0.00%';
+
+    textArea.addEventListener('input', () => {
+        textAreaCurrentSize = currentSize.innerHTML = textArea.value.length;
+        // limit the progress to 2 digit after the decimal point
+        progress = ((textAreaCurrentSize / textAreaMaxSize) * 100).toFixed(2);
+        progressBar.style.width = `${progress}%`;
+        textAreaProgressValue.innerHTML = `${progress}%`;
+    });
+
+}
+
 function orderDependenciesMain() {
     execOrder();
+    textAreaLimit();
 }
 
 export {

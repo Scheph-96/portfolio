@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="card col1-2-row2 new-order-block">
-      <p class="card-title">New Order</p>
+      <p class="card-title">New Orders</p>
       <hr>
       <div class="content">
           <table class="table order-table small-table">
@@ -43,7 +43,7 @@
             <tbody class="new-order-block-tbody">
                 <% if (newOrders) { %>
                     <% for (let i=0; i < newOrders.length; i++) { %>
-                        <tr order-number="<%= newOrders[i].orderNumber %>">
+                        <tr type="new-order" number="<%= newOrders[i].orderNumber %>">
                             <td class="title-section">
                               <%- include('order-icons/new-order.ico.ejs') %>
                                 <p><%= newOrders[i].customer %></p>
@@ -53,6 +53,39 @@
                             </td>
                             <td class="time">
                                 <p><%= newOrders[i].time %></p>
+                            </td>
+                        </tr>
+                    <% } %>
+                <% } %>
+            </tbody>
+          </table>
+      </div>
+    </div>
+    <div class="card col3-2-row2 new-order-block">
+      <p class="card-title">Pending Orders</p>
+      <hr>
+      <div class="content">
+          <table class="table order-table small-table">
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Service</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody class="new-order-block-tbody">
+                <% if (pendingOrders) { %>
+                    <% for (let i=0; i < pendingOrders.length; i++) { %>
+                        <tr type="pending-order" number="<%= pendingOrders[i].orderNumber %>">
+                            <td class="title-section">
+                                <%- include('order-icons/pending-order.ico.ejs') %>
+                                <p><%= pendingOrders[i].customer %></p>
+                            </td>
+                            <td class="service">
+                                <p><%= pendingOrders[i].service %></p>
+                            </td>
+                            <td class="time">
+                                <p><%= pendingOrders[i].time %></p>
                             </td>
                         </tr>
                     <% } %>
@@ -77,20 +110,20 @@
             <table class="table order-details-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>N*</th>
                         <th>Service</th>
                         <th>Receipt Date</th>
-                        <th>Specifications</th>
-                        <th>Description</th>
+                        <!-- <th>Specifications</th> -->
+                        <!-- <th>Description</th> -->
                         <th>Customer</th>
                     </tr>
                 </thead>
                 <tbody class="">
                     <% if (orders) { %>
                         <% for (let i=0; i < orders.length; i++) { %>
-                        <tr order-number=<%= orders[i].orderNumber %>>
+                        <tr type="order" number=<%= orders[i].orderNumber %>>
                             <td class="order-id">
-                                <p><%= orders[i]._id.toString().substring(orders[i]._id.toString().length - 5) %></p>
+                                <p><%= orders[i].orderNumber.toString().substring(orders[i].orderNumber.toString().length - 5) %></p>
                             </td>
                             <td class="order-service title-section">
                                 <% switch (orders[i].status) { 
@@ -115,17 +148,19 @@
                             <td class="order-receipt-date">
                                 <p><%= orders[i].created.toDateString() %></p>
                             </td>
-                            <td class="order-specifications">
-                                <p>
-                                    <%= orders[i].specifications %> 
-                                    <% if (orders[i].specifications) { %>
-                                        <i class='bx bx-link-external'></i>
-                                    <% } %>
-                                </p>
-                            </td>
-                            <td class="order-description">
+                            <!-- <td class="order-specifications" style="display: flex; justify-content: center;">
+                                <a href="">
+                                    <p>
+                                        <%#= orders[i].specifications %> 
+                                        <%# if (orders[i].specifications) { %>
+                                            <i class='bx bx-link-external'></i>
+                                        <%# } %>
+                                    </p>
+                                </a>
+                            </td> -->
+                            <!-- <td class="order-description">
                             <i class='bx bx-link-external'></i>
-                            </td>
+                            </td> -->
                             <td class="order-customer">
                                 <p><%= orders[i].lastname %> <%= orders[i].firstname %></p>
                             </td>

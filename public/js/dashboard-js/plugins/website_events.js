@@ -4,7 +4,7 @@ import { lineChart, barChart, pieChart } from './charts.js';
 import { MyLocalStorage } from "./persistent_data/local_storage.js";
 import { customPushState, customReplaceState } from "../../tools/route_loader.tool.js";
 import { alertToast } from '../../tools/util.js';
-import { notificationComponent } from './components.js';
+import { notificationComponent, orderTableRowPopup } from './components.js';
 // import { emailClick } from "../pages_features/mailbox_features.js";
 
 
@@ -225,6 +225,7 @@ function switchPage() {
                 // load page for each menu item clicked
                 switch (e.currentTarget.getAttribute('menu-item-type')) {
                     case 'dashboard':
+
                         ajaxRequest.loadHtml("/load-admin-pages/" + e.currentTarget.getAttribute('menu-item-type'), mainContent, null);
 
                         break;
@@ -422,6 +423,7 @@ function dashboardPageRequirements() {
     localStorage.setData(localStorageKeys.currentPageLoaded, pages.dashboard);
 }
 function orderRequirements() {
+    tableRowDataDetail();
     localStorage.setData(localStorageKeys.currentPageLoaded, pages.order);
 }
 function projectsPageRequirements() {
@@ -446,6 +448,63 @@ function incomePageRequirements() {
 }
 function analyticsPageRequirements() {
     localStorage.setData(localStorageKeys.currentPageLoaded, pages.analytics);
+}
+
+function tableRowDataDetail() {
+    try {
+        const tableRows = document.querySelectorAll('tbody tr');
+
+        for (let i = 0; i < tableRows.length; i++) {
+            tableRows[i].addEventListener('click', tableRowOnClick);
+        }
+
+        document.addEventListener('click', (e) => {
+            const tableRowPopupContainer = document.querySelector('.table-row-popup-container');
+            const tableRowPopup = document.querySelector('.table-row-popup');
+            const tableRowPopupContent = document.querySelector('.table-row-popup-content');
+            const submitBtnSection = document.querySelector('.submit-btn-section');
+
+            if (tableRowPopupContainer) {
+                if (!tableRowPopup.contains(e.target)) {
+                    console.log("THE CLICK:: TARGET: ", e.target);
+                    body.removeChild(tableRowPopupContainer);
+                }
+            }
+        });
+    } catch (error) {
+        console.error("ERROR IN TABLE RAW DETAIL: ", error);
+    }
+}
+
+function tableRowOnClick(event) {
+    ajaxRequest.loadEndPoint(`/load-data/detail/${event.currentTarget.getAttribute('type')}/${event.currentTarget.getAttribute('number')}`)
+        .then((data) => {
+            body.appendChild(orderTableRowPopup(data.page));
+
+            const cancelBtn = document.querySelectorAll('.close-popup');
+            const rejectBtn = document.querySelector('.close-popup .reject');
+            const acceptBtn = document.querySelector('.close-popup .accept');
+
+            const tableRowPopupContainer = document.querySelector('.table-row-popup-container');
+
+            for (let cancelIndex = 0; cancelIndex < cancelBtn.length; cancelIndex++) {
+                cancelBtn[cancelIndex].addEventListener('click', () => {
+                    body.removeChild(tableRowPopupContainer);
+                }, { once: true });
+            }
+
+            // rejectBtn.addEventListener('click', () => {
+            //     ajaxRequest.loadEndPoint();
+            // });
+
+        })
+        .catch((error) => {
+            console.error("TABLE RAW DETAIL REQUEST ERROR: ", error);
+            if (error.errorMessage) {
+                alertToast(error.errorMessage.type, error.errorMessage.message);
+            }
+        });
+
 }
 
 /**
@@ -478,4 +537,5 @@ export {
     collapseExtendMenuSideBar,
     displayProfileInner,
     adminLogout,
+    tableRowOnClick,
 }
