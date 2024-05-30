@@ -17,7 +17,7 @@ const NotificationCrud = require('../../model_crud/notification_crud');
  * if there is no description then specifications is required
  * In the same way, when there is no specification description is required
 */
-const newOrderSchema = orderSchema = new mongoose.Schema({
+const orderSchema = new mongoose.Schema({
     service: {
         type: String,
         validate: {
@@ -60,35 +60,31 @@ const newOrderSchema = orderSchema = new mongoose.Schema({
         required: [function () {
             /**
              * if there is no specifications and no description then description is required
-             * if there is no specifications and the description trim return 0 the description is required
+             * if there is no specifications and the description trim return 0 description is required
             */
             return !this.specifications && (!this.description || this.description.trim().length === 0);
         }, 'Description is required']
     },
-    // isAccepted: {
-    //     type: Boolean,
-    //     default: null,
-    //     required: false,
-    // },
     status: {
         type: String,
         enum: OrderType.enums,
-        default: OrderType.enum().new,
+        default: OrderType.enum.new,
         required: true,
     },
     // To track and recognize each order
     orderNumber: {
         type: String,
-        // type: mongoose.SchemaTypes.UUID,
-        default: generateUUID_V4(),
+        default: generateUUID_V4,
         required: true,
     },
     created: {
         type: Date,
-        default: Date.now(),
+        default: Date.now,
         required: true,
     }
 });
+
+const [newOrderSchema, ordinaryOrder] = [orderSchema, orderSchema]
 
 
 newOrderSchema.post('save', async (newOrder) => {
@@ -96,14 +92,14 @@ newOrderSchema.post('save', async (newOrder) => {
      * Do not add a try..catch here.
      * 
      * Any error taised in this function will be catched
-     * in the catch block of order.create in app.http.js
+     * in the catch block of order.create in app-http.js
      * in the '/submit-order' endpoint
      */
 
     let parsedOrder = await parseNewOrder(newOrder);
     let notificationCrud = new NotificationCrud();
     await notificationCrud.update({type: "order"}, {notify: true})
-    socketPortalEvent.emit(socketPortalEvent.events.orderUpdate, { data: parsedOrder, type: "order" });
+    socketPortalEvent.emit(socketPortalEvent.events.newOrderCreated, { data: parsedOrder, type: "order" });
 });
 
 // arg1: Model Name
@@ -111,5 +107,5 @@ newOrderSchema.post('save', async (newOrder) => {
 // arg3: collection name in the database
 module.exports = {
     NewOrder: mongoose.model('NewOrder', newOrderSchema, 'new_order'),
-    Order: mongoose.model('Order', orderSchema, 'order')
+    Order: mongoose.model('Order', ordinaryOrder, 'order')
 }

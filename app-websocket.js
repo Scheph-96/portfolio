@@ -104,7 +104,7 @@ class AppWebsocket {
                 // this.#socketServer.removeListener('connection');
                 // socketPortalEvent.removeListener(socketPortalEvent.events.orderUpdate, this.socketPortalFoo);
                 // socketPortalEvent.removeAllListeners(socketPortalEvent.events.orderUpdate);
-                socketPortalEvent.removeListener(socketPortalEvent.events.orderUpdate, handlerFoo)
+                socketPortalEvent.removeListener(socketPortalEvent.events.newOrderCreated, handlerFoo)
                 this.#admins.delete(ws);
                 ActivityLogger.info(`WEBSOCKET CONNECTION CLOSED. CLEANLY? ${event.wasClean}`, { ip: req.socket.remoteAddress, url: req.url, method: req.method });
             }
@@ -126,13 +126,14 @@ class AppWebsocket {
                             console.log("ADMIN SET: ", this.#admins);
 
 
-                            socketPortalEvent.on(socketPortalEvent.events.orderUpdate, handlerFoo);
+                            socketPortalEvent.on(socketPortalEvent.events.newOrderCreated, handlerFoo);
+                            // socketPortalEvent.on(socketPortalEvent.events.orderStatusChanged, handlerFoo);
 
                             this.#admins.add(ws);
                             console.log("END OF NOT SOCKET EXISTING");
 
                             console.log("ADMIN SET SIZE: ", this.#admins.size);
-                            console.log("NUMBER OF LISTENER: ", socketPortalEvent.listenerCount(socketPortalEvent.events.orderUpdate));
+                            console.log("NUMBER OF LISTENER: ", socketPortalEvent.listenerCount(socketPortalEvent.events.newOrderCreated));
 
                         } else {
                             ActivityLogger.info("NO ADMIN FOUND ON WEBSOCKET CONNECTION ATTEMPT: CONNECTION CLOSED", { ip: req.socket.remoteAddress, url: req.url, method: req.method });

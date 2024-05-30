@@ -3,12 +3,12 @@ const event = require('events');
 
 class SocketPortalEvent extends event.EventEmitter {
     events = {
-        orderUpdate: 'orderUpdate'
+        newOrderCreated: 'newOrderCreated',
+        orderStatusChanged: 'orderStatusChanged'
     }
 }
 
 class SocketPortal {
-
     static socketPortalEvent = new SocketPortalEvent();
 }
 

@@ -10,11 +10,11 @@ export class AjaxRequest {
 
     /**
      * Load html snippets from file
-     * @param {String} filename The file containing the snippet
+     * @param {String} url The url that serve the file
      * @param {Node} eventTarget The target that receive the event once the data is ready
      * @param {Node} node The node that will contains the loaded data
      */
-    loadHtml(filename, eventTarget, node) {
+    loadHtml(url, eventTarget, node) {
         // Listen to XMLHttpRequest status change
         this.#xhttp.onreadystatechange = () => {
             // 0: request not initialized
@@ -26,20 +26,24 @@ export class AjaxRequest {
             // when user want to signal the end of the request and send the response through an event 
             console.log(`THE NODE: ${node}`);
             if (this.#xhttp.readyState === 4 && this.#xhttp.status === 200 && !node) {
+                console.log("THE DONE EVENT!!!!!!!!!!!!!!!!!");
                 eventTarget.dispatchEvent(new CustomEvent('file-loaded', { detail: { data: this.#xhttp.responseText } }));
+                this.#xhttp.onreadystatechange = null;
                 // when user want to directly load the request response in the destination node
             } else if (this.#xhttp.readyState === 4 && this.#xhttp.status === 200 && node) {
                 node.innerHTML = this.#xhttp.responseText;
+                this.#xhttp.onreadystatechange = null;
                 // throw a new error when the request is finished but there is a problem with the file
             } else if (this.#xhttp.readyState === 4 && this.#xhttp.status !== 200) {
                 let error = JSON.parse(this.#xhttp.responseText);
                 alertToast(error.type, error.message);
+                this.#xhttp.onreadystatechange = null;
                 throw new FileLoadingError(`Unable to load ressource:: status: ${this.#xhttp.status}`);
             }
         }
 
         // Etablish connection with the server
-        this.#xhttp.open('GET', filename);
+        this.#xhttp.open('GET', url);
 
         // Send request
         this.#xhttp.send()

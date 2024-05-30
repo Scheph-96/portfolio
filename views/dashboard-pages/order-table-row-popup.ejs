@@ -1,0 +1,56 @@
+<div class="table-row-popup">
+    <div class="table-row-popup-content">
+        <% if (order) { %>
+            <% console.log(order) %>
+            <h3>Order | <span><%= order.orderNumber %></span></h3>
+            <div class="table-row-popup-data">
+                <p><b>Service:</b></p>
+                <p><%= order.service %></p> 
+            </div>
+            <div class="table-row-popup-data">
+                <p><b>Lastname:</b></p>
+                <p><%= order.lastname %></p>
+            </div>
+            <div class="table-row-popup-data">
+                <p><b>Firstname:</b></p>
+                <p><%= order.firstname %></p>
+            </div>
+            <div class="table-row-popup-data">
+                <p><b>Email:</b></p>
+                <p><%= order.email %></p>
+            </div>
+            <div class="table-row-popup-data">
+                <p><b>Specifications:</b></p>
+                <% if (order.specifications) { %>
+                    <p><a href="<%= path %>" target="_blank">open<i class='bx bx-link-external'></i></a></p>
+                <% } else { %>
+                    <p>none</p>
+                <% } %>
+            </div>
+            <div class="table-row-popup-data">
+                <p><b>Status:</b></p>
+                <p><%= order.status %></p>
+            </div>
+            <div class="table-row-popup-data">
+                <p><b>Receipt Date:</b></p>
+                <p><%= order.created.toDateString() %></p>
+            </div>
+            <div class="table-row-popup-data">
+                <p><b>Description:</b></p>
+                <% if (order.description) { %>
+                    <p><%= order.description %></p>
+                <% } else { %>
+                    <p>none</p>
+                <% } %>
+            </div>
+        <% } %>
+    </div>
+    <div class="submit-btn-section">
+        <div class="submit-box">
+            <input class="close-popup reject" type="button" value="reject">
+        </div>
+        <div class="submit-box">
+            <input class="close-popup accept" type="button" value="accept">
+        </div>
+    </div>
+</div>

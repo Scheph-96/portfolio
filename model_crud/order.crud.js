@@ -1,15 +1,32 @@
 const {Order, NewOrder} = require('../models/Schema/order');
+const OrderType = require('../models/enums/order_type');
 const { parseNewOrder } = require('../tools/util.tool');
 
 
 class OrderCrud {
 
     /**
-     * 
+     * Create a new order in NewOrder collection
      * @param {NewOrder} order 
      * @returns 
      */
     create(order) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let result = await order.save();
+                resolve(result);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+    /**
+     * Create an order in Order collection
+     * @param {Order} order 
+     * @returns 
+     */
+    createOrder(order) {
         return new Promise(async (resolve, reject) => {
             try {
                 let result = await order.save();
@@ -40,14 +57,31 @@ class OrderCrud {
     /**
      * 
      * @param {*} id 
-     * @param {*} options 
+     * @param {*} condition 
      * @returns 
      */
-    read(options) {
+    read(condition) {
         return new Promise(async (resolve, reject) => {
             try {
-                let result = await Order.find(options).exec();
+                let result = await Order.findOne(condition).exec();
                 resolve(result);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+    
+    /**
+     * 
+     * @param {*} condition 
+     * @param {*} option 
+     * @returns 
+     */
+    readAll(condition=null, option=null) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let results = await Order.find(condition, null, option).exec();
+                resolve(results);
             } catch (error) {
                 reject(error);
             }
@@ -55,10 +89,12 @@ class OrderCrud {
     }
 
     /**
+     * Parse the order for the order view on dashboard
+     * to avoid putting logic on the endpoint
      * 
      * @returns 
      */
-    readAll() {
+    readAllAndParseOrders() {
         return new Promise(async (resolve, reject) => {
             try {
                 let results = await Order.find({}).exec();
@@ -95,7 +131,7 @@ class OrderCrud {
     readNew(options) {
         return new Promise(async (resolve, reject) => {
             try {
-                let result = await NewOrder.find(options).exec();
+                let result = await NewOrder.findOne(options).exec();
                 resolve(result);
             } catch (error) {
                 reject(error);
@@ -122,14 +158,19 @@ class OrderCrud {
      * Read all new order and parse them for view display
      * @returns promise
      */
-    readAndParseNewOrders() {
+    readAndParseOrders(type) {
         return new Promise(async (resolve, reject) => {
             try {
                 let pardsedNewOrders = [];
-                let newOrders = await this.readNewAll({sort: {created: 'desc'}});
+                let order;
+                if (type === OrderType.enum.new) {
+                    order = await this.readNewAll({sort: {created: 'desc'}});
+                } else if (type === OrderType.enum.pending) {
+                    order = await this.readAll({status: OrderType.enum.pending}, {sort: {created: 'desc'}});
+                }
 
-                for (let i = 0; i < newOrders.length; i++) {
-                    pardsedNewOrders.push( await parseNewOrder(newOrders[i]) );
+                for (let i = 0; i < order.length; i++) {
+                    pardsedNewOrders.push( await parseNewOrder(order[i]) );
                 }
 
                 resolve(pardsedNewOrders);
