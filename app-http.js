@@ -37,6 +37,7 @@ const AppServerResponse = require('./models/class/app_server_response.js');
 const NotificationCrud = require('./model_crud/notification_crud.js');
 const OrderType = require('./models/enums/order_type.js');
 const { default: mongoose } = require('mongoose');
+const AppResponseType = require('./models/enums/app_response_type.js');
 // const socketLauncher = require('./app-websocket.js');
 
 
@@ -992,126 +993,73 @@ app.get('/order/specifications/:orderNumber', async (req, res, next) => {
 app.get('/load-data/detail/:type/:number', async (req, res) => {
     try {
         console.log("THE PARAM: ", req.params.type);
-        switch (req.params.type) {
-            case "new-order": case "pending-order":
-                let foundNewOrder;
+        let foundOrder;
 
-                if (req.params.type === "new-order") {
-                    // GET NEW ORDERS
-                    foundNewOrder = await orderCrud.readNew({ orderNumber: req.params.number })
-                    orderCrud.deleteNew(foundNewOrder._id)
-                        .then(async (value) => {
-                            foundNewOrder.status = OrderType.enum.pending;
-                            let ordinaryOrder = new Order(foundNewOrder.toObject());
-                            await orderCrud.createOrder(ordinaryOrder);
-                        }).catch((error) => {
-                            /**
-                             * I consider that it's useless to send this error back to the user
-                             * So let's just add it to logs 
-                             * */
-                            
-                            ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
+        if (req.params.type === "new-order") {
+            // GET NEW ORDERS
+            foundOrder = await orderCrud.readNew({ orderNumber: req.params.number });
+
+            // orderCrud.deleteNew(foundOrder._id)
+            //     .then(async (value) => {
+            //         foundOrder.status = OrderType.enum.pending;
+            //         let ordinaryOrder = new Order(foundOrder.toObject());
+            //         await orderCrud.createOrder(ordinaryOrder);
+            //     }).catch((error) => {
+            //         /**
+            //          * I consider that it's useless to send this error back to the user
+            //          * So let's just add it to logs 
+            //          * */
+
+            //         ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
+            //     });
+        } else if (req.params.type === "pending-order") {
+            // GET PENDING ORDERS
+            foundOrder = await orderCrud.read({ orderNumber: req.params.number, status: OrderType.enum.pending });
+        } else if (req.params.type === "order") {
+            // GET ORDINARY ORDER
+            foundOrder = await orderCrud.read({ orderNumber: req.params.number });
+        }
+
+        if (foundOrder) {
+            let order;
+
+            if (foundOrder.specifications) {
+                order = { order: foundOrder, path: `/order/specifications/${foundOrder.orderNumber}` };
+            } else {
+                order = { order: foundOrder };
+            }
+
+            ejs.renderFile(__dirname + '/views/dashboard-pages/order-table-row-popup.ejs', order, (err, html) => {
+                try {
+                    if (err) {
+                        ErrorLogger.error(err.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(err, { showHidden: false, depth: null, colors: true }) });
+                        return res.status(520).send({
+                            type: 'danger',
+                            message: 'Unexpected error. Please try again!',
                         });
-                } else {
-                    // GET PENDING ORDERS
-                    foundNewOrder = await orderCrud.read({ orderNumber: req.params.number, status: OrderType.enum.pending })
-                }
-
-                if (foundNewOrder) {
-                    let order;
-
-                    if (foundNewOrder.specifications) {
-                        order = { order: foundNewOrder, path: `/order/specifications/${foundNewOrder.orderNumber}` };
-                    } else {
-                        order = { order: foundNewOrder };
                     }
 
-                    ejs.renderFile(__dirname + '/views/dashboard-pages/order-table-row-popup.ejs', order, (err, html) => {
-                        try {
-                            if (err) {
-                                ErrorLogger.error(err.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(err, { showHidden: false, depth: null, colors: true }) });
-                                return res.status(520).send({
-                                    type: 'danger',
-                                    message: 'Unexpected error. Please try again!',
-                                });
-                            }
-
-                            return res.status(200).send(new AppServerResponse(
-                                'success',
-                                null,
-                                null,
-                                html,
-                            ));
-                        } catch (error) {
-                            ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
-
-                            return res.status(520).send({
-                                type: 'danger',
-                                message: 'Unexpected error. Please try again!',
-                            });
-                        }
-                    });
-                } else {
-
-                    return res.status(404).send(new AppServerResponse(
-                        'warning',
-                        'No Order Found',
+                    return res.status(200).send(new AppServerResponse(
+                        'success',
+                        null,
+                        null,
+                        html,
                     ));
-                }
+                } catch (error) {
+                    ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
 
-                break;
-
-            case "order":
-                let foundOrder = await orderCrud.read({ orderNumber: req.params.number });
-                // orderCrud.update(foundOrder._id, { status: OrderType.enum.pending });
-
-                if (foundOrder) {
-                    let order;
-
-                    if (foundOrder.specifications) {
-                        order = { order: foundOrder, path: `/order/specifications/${foundOrder.orderNumber}` };
-                    } else {
-                        order = { order: foundOrder };
-                    }
-
-                    ejs.renderFile(__dirname + '/views/dashboard-pages/order-table-row-popup.ejs', order, (err, html) => {
-                        try {
-                            if (err) {
-                                ErrorLogger.error(err.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(err, { showHidden: false, depth: null, colors: true }) });
-                                return res.status(520).send({
-                                    type: 'danger',
-                                    message: 'Unexpected error. Please try again!',
-                                });
-                            }
-
-                            return res.status(200).send(new AppServerResponse(
-                                'success',
-                                null,
-                                null,
-                                html,
-                            ));
-                        } catch (error) {
-                            ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
-
-                            return res.status(520).send({
-                                type: 'danger',
-                                message: 'Unexpected error. Please try again!',
-                            });
-                        }
+                    return res.status(520).send({
+                        type: 'danger',
+                        message: 'Unexpected error. Please try again!',
                     });
-                } else {
-
-                    return res.status(404).send(new AppServerResponse(
-                        'warning',
-                        'No Order Found',
-                    ));
                 }
-                break;
+            });
+        } else {
 
-            default:
-                ErrorLogger.error("LOAD TABLE ROW DATA DETAIL DEFAULT BLOCK REACHED", { ip: req.ip, url: req.url, method: req.method });
-
-                break;
+            return res.status(404).send(new AppServerResponse(
+                'warning',
+                'No Order Found',
+            ));
         }
     } catch (error) {
         ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
@@ -1123,6 +1071,58 @@ app.get('/load-data/detail/:type/:number', async (req, res) => {
     }
 });
 
+app.get('/update/status/:collection/:status?/:newStatus/:number', async (req, res, next) => {
+    try {
+        if (req.params.collection === "order") {
+            if (req.params.status === OrderType.enum.new) {
+                let foundOrder = await orderCrud.readNew({ orderNumber: req.params.number });
+
+                orderCrud.deleteNewById(foundOrder._id)
+                    .then(async (value) => {
+                        foundOrder.status = req.params.newStatus;
+                        let ordinaryOrder = new Order(foundOrder.toObject());
+                        await orderCrud.createOrder(ordinaryOrder);
+
+                        res.status(200).send(new AppServerResponse(
+                            AppResponseType.enum.success, 
+                            `Order ${req.params.newStatus} successfully`
+                        ));
+                    }).catch((error) => {
+                        ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
+                
+                        return res.status(520).send({
+                            type: 'danger',
+                            message: 'Unexpected error. Please try again!',
+                        });
+                    });
+            } else {
+                orderCrud.update({ orderNumber: req.params.number }, { status: req.params.newStatus })
+                    .then((result) => {
+                        res.status(200).send(new AppServerResponse(
+                            AppResponseType.enum.success, 
+                            `Order ${req.params.newStatus} successfully`
+                        ));
+                    })
+                    .catch((error) => {
+                        ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
+                
+                        return res.status(520).send({
+                            type: 'danger',
+                            message: 'Unexpected error. Please try again!',
+                        });
+                    });
+            }
+        }
+    } catch (error) {
+        ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
+
+        return res.status(520).send({
+            type: 'danger',
+            message: 'Unexpected error. Please try again!',
+        });
+    }
+})
+
 
 
 
@@ -1131,7 +1131,7 @@ app.get('/load-data/detail/:type/:number', async (req, res) => {
 /////////////////////////////////////// APP START POINT ///////////////////////////////////////
 
 app.get(/^(?!\/(style|js|assets|fonts|experience)).*$/, async (req, res, next) => {
-    
+
     try {
         // logger.info(`[${req.method}] ${req.url}`);
         // logger.info({ip: req.ip, message: 'Request successful'});
