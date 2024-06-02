@@ -64,12 +64,17 @@ export class AjaxRequest {
                     
                     }
                 } catch (err) {
+                    console.log("THE REJECTION ERROR: ", err);
                     reject({
                         error: `Unable to load ressource::${err.message}`, errorMessage: JSON.parse({
                             type: 'danger',
                             message: 'Unknown error',
                         })
                     });
+                } finally {
+                    console.log("LOAD ENDPOINT FINALLY BLOCK");
+                    // Remove the ajax request listener to avoid conflict
+                    this.#xhttp.onload = null;
                 }
             });
         });
@@ -98,6 +103,10 @@ export class AjaxRequest {
                             message: 'Unknown error',
                         })
                     });
+                } finally {
+                    console.log("SUBMIT FORM FINALLY BLOCK");
+                    // Remove the ajax request listener to avoid conflict
+                    this.#xhttp.onload = null;
                 }
             });
 

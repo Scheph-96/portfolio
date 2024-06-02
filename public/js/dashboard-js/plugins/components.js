@@ -1,3 +1,11 @@
+// THE FILE HOLD HOLD THE COMPONENTS THAT HAVE TO BE DYNAMICALLY ADD TO THE VIEW
+
+
+/**
+ * Create and return a notification dot
+ * 
+ * @returns 
+ */
 function notificationComponent() {
 
     const tempContainer = document.createElement('div');
@@ -10,6 +18,13 @@ function notificationComponent() {
 
 }
 
+/**
+ * Create and return a new table row (tr) containing
+ * informations about the new Order
+ * 
+ * @param {*} newOrder A new Order
+ * @returns 
+ */
 function newOrderComponent(newOrder) {
     const tempContainer = document.createElement('tr');
     tempContainer.setAttribute("new-order-number", newOrder.orderNumber);
@@ -37,6 +52,12 @@ function newOrderComponent(newOrder) {
     return tempContainer;
 }
 
+/**
+ * Create and return a popup containing every detail about an Order
+ * 
+ * @param {*} orderDetail an html representation of all the information about a specific Order (All the details)
+ * @returns 
+ */
 function orderTableRowPopup(orderDetail) {
     const tempContainer = document.createElement('div');
     tempContainer.classList.add("table-row-popup-container");

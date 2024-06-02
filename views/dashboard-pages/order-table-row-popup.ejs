@@ -1,8 +1,12 @@
 <div class="table-row-popup">
+<% if (order.status === "new" || order.status === "pending") { %>
     <div class="table-row-popup-content">
+<% } else { %>
+    <div class="table-row-popup-content" style="height: 100%;">
+<% } %>
         <% if (order) { %>
             <% console.log(order) %>
-            <h3>Order | <span><%= order.orderNumber %></span></h3>
+            <h3>Order | <span class="order-number"><%= order.orderNumber %></span></h3>
             <div class="table-row-popup-data">
                 <p><b>Service:</b></p>
                 <p><%= order.service %></p> 
@@ -29,7 +33,7 @@
             </div>
             <div class="table-row-popup-data">
                 <p><b>Status:</b></p>
-                <p><%= order.status %></p>
+                <p class="order-status"><%= order.status %></p>
             </div>
             <div class="table-row-popup-data">
                 <p><b>Receipt Date:</b></p>
@@ -45,12 +49,14 @@
             </div>
         <% } %>
     </div>
-    <div class="submit-btn-section">
-        <div class="submit-box">
-            <input class="close-popup reject" type="button" value="reject">
+    <% if (order.status === "new" || order.status === "pending") { %>
+        <div class="submit-btn-section">
+            <div class="submit-box">
+                <input class="close-popup reject" type="button" value="reject" status="rejected">
+            </div>
+            <div class="submit-box">
+                <input class="close-popup accept" type="button" value="accept" status="accepted">
+            </div>
         </div>
-        <div class="submit-box">
-            <input class="close-popup accept" type="button" value="accept">
-        </div>
-    </div>
+    <% } %>
 </div>

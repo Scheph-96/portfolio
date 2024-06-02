@@ -145,9 +145,11 @@ function displayProfileInner() {
 
         profile.addEventListener('click', () => {
             if (profileInnerRule.style['opacity'] == '0') {
+                profileInnerRule.style['display'] = 'block'
                 profileInnerRule.style['opacity'] = '1';
             } else {
                 profileInnerRule.style['opacity'] = '0';
+                profileInnerRule.style['display'] = 'none'
             }
         }, false);
 
@@ -298,7 +300,6 @@ function loadRequirements(once, clickedElement = null) {
 
     // the name of the page load from localStorage
     let pageName;
-
     // listen to file-loaded event, event fire by ajaxRequest object the needed page is load
     mainContent.addEventListener('file-loaded', (readyEvent) => {
         try {
@@ -419,7 +420,7 @@ function extendMenu(cssMainRule, gridContainerRule, mainContentRule) {
 function dashboardPageRequirements() {
     // lineChart();
     barChart(true);
-    dropdownHandler();
+    // dropdownHandler();
     localStorage.setData(localStorageKeys.currentPageLoaded, pages.dashboard);
 }
 function orderRequirements() {
@@ -461,12 +462,14 @@ function tableRowDataDetail() {
         document.addEventListener('click', (e) => {
             const tableRowPopupContainer = document.querySelector('.table-row-popup-container');
             const tableRowPopup = document.querySelector('.table-row-popup');
-            const tableRowPopupContent = document.querySelector('.table-row-popup-content');
-            const submitBtnSection = document.querySelector('.submit-btn-section');
+            const orderStatus = document.querySelector('.table-row-popup .order-status');
 
             if (tableRowPopupContainer) {
                 if (!tableRowPopup.contains(e.target)) {
                     console.log("THE CLICK:: TARGET: ", e.target);
+                    if (orderStatus.textContent === "new") {
+                        updateStatus();
+                    }
                     body.removeChild(tableRowPopupContainer);
                 }
             }
@@ -484,13 +487,16 @@ function tableRowOnClick(event) {
             const cancelBtn = document.querySelectorAll('.close-popup');
             const rejectBtn = document.querySelector('.close-popup .reject');
             const acceptBtn = document.querySelector('.close-popup .accept');
+            const submitBtns = document.querySelectorAll('.submit-box input');
 
-            const tableRowPopupContainer = document.querySelector('.table-row-popup-container');
+            // for (let cancelIndex = 0; cancelIndex < cancelBtn.length; cancelIndex++) {
+            //     cancelBtn[cancelIndex].addEventListener('click', () => {
+            //         body.removeChild(tableRowPopupContainer);
+            //     }, { once: true });
+            // }
 
-            for (let cancelIndex = 0; cancelIndex < cancelBtn.length; cancelIndex++) {
-                cancelBtn[cancelIndex].addEventListener('click', () => {
-                    body.removeChild(tableRowPopupContainer);
-                }, { once: true });
+            for (let actionIndex = 0; actionIndex < submitBtns.length; actionIndex++) {
+                submitBtns[actionIndex].addEventListener('click', updateStatus, { once: true });
             }
 
             // rejectBtn.addEventListener('click', () => {
@@ -504,7 +510,26 @@ function tableRowOnClick(event) {
                 alertToast(error.errorMessage.type, error.errorMessage.message);
             }
         });
+}
 
+function updateStatus(e=null) {
+    // body.removeChild(tableRowPopupContainer);
+    const orderNumber = document.querySelector('.table-row-popup .order-number');
+    const orderStatus = document.querySelector('.table-row-popup .order-status');
+    const tableRowPopupContainer = document.querySelector('.table-row-popup-container');
+
+    let status = "pending";
+
+    ajaxRequest.loadEndPoint(`/update/status/${localStorage.getData(localStorageKeys.currentPageLoaded)}/${orderStatus.textContent}/${e ? e.currentTarget.getAttribute('status') : status}/${orderNumber.textContent}`)
+        .then((result) => {
+            console.log("STATUS CHANGE RESULT: ", result);
+            alertToast(result.type, result.message);
+            body.removeChild(tableRowPopupContainer);
+        })
+        .catch((error) => {
+            alertToast(result.type, result.message);
+            console.log("STATUS CHANGE ERROR: ", error);
+        })
 }
 
 /**

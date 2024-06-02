@@ -61,7 +61,7 @@
           </table>
       </div>
     </div>
-    <div class="card col3-2-row2 new-order-block">
+    <div class="card col3-2-row2 pending-order-block">
       <p class="card-title">Pending Orders</p>
       <hr>
       <div class="content">
@@ -73,7 +73,7 @@
                     <th>Time</th>
                 </tr>
             </thead>
-            <tbody class="new-order-block-tbody">
+            <tbody class="pending-order-block-tbody">
                 <% if (pendingOrders) { %>
                     <% for (let i=0; i < pendingOrders.length; i++) { %>
                         <tr type="pending-order" number="<%= pendingOrders[i].orderNumber %>">

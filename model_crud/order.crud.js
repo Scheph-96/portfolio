@@ -187,10 +187,28 @@ class OrderCrud {
      * @param {*} options 
      * @returns 
      */
-    update(id, update, options=null) {
+    updateById(id, update, options=null) {
         return new Promise(async (resolve, reject) => {
             try {
                 let result = await Order.findByIdAndUpdate(id, { $set: update }, options);
+                resolve(result);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+    /**
+     * 
+     * @param {*} id 
+     * @param {*} update 
+     * @param {*} options 
+     * @returns 
+     */
+    update(condition, update, options=null) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let result = await Order.findOneAndUpdate(condition, { $set: update }, options);
                 resolve(result);
             } catch (error) {
                 reject(error);
@@ -222,10 +240,45 @@ class OrderCrud {
      * @param {*} options 
      * @returns 
      */
-    updateNew(id, update, options=null) {
+    updateNewById(id, update, options=null) {
         return new Promise(async (resolve, reject) => {
             try {
                 let result = await NewOrder.findByIdAndUpdate(id, { $set: update }, options);
+                resolve(result);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+    /**
+     * 
+     * @param {*} id 
+     * @param {*} update 
+     * @param {*} options 
+     * @returns 
+     */
+    updateNew(condition, update, options=null) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let result = await NewOrder.findOneAndUpdate(condition, { $set: update }, options);
+                resolve(result);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
+
+    /**
+     * 
+     * @param {*} id 
+     * @param {*} options 
+     * @returns 
+     */
+    deleteNewById(id, options=null) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let result = await NewOrder.findByIdAndDelete(id, options);
                 resolve(result);
             } catch (error) {
                 reject(error);
@@ -242,7 +295,7 @@ class OrderCrud {
     deleteNew(id, options=null) {
         return new Promise(async (resolve, reject) => {
             try {
-                let result = await NewOrder.findByIdAndDelete(id, options);
+                let result = await NewOrder.findOneAndDelete(id, options);
                 resolve(result);
             } catch (error) {
                 reject(error);

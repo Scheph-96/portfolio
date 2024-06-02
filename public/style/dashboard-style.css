@@ -347,7 +347,7 @@ body .ls-error-content button {
     align-items: center;
     justify-content: center;
     background-color: var(--default-bg-color-lite);
-    z-index: 9999999;
+    z-index: 99;
 }
 
 .table-row-popup-container .submit-box input.reject {
@@ -526,9 +526,10 @@ header .header-tools .profile-info-inner {
     top: 170%;
     right: 0;
     width: 220px;
-    z-index: 1;
+    display: none;
     opacity: 0;
     transition: opacity .5s ease;
+    z-index: 10;
 }
 
 header .header-tools .profile-info-inner::before {
