@@ -31,8 +31,8 @@ function execOrder() {
                     }
                 })
                 .catch((error) => {
-                    if (error.errorMessage) {
-                        alertToast(error.errorMessage.type, error.errorMessage.message);
+                    if (error.errorData) {
+                        alertToast(error.errorData.type, error.errorData.message);
                     } else {
                         alertToast('danger', 'Unexpected error. Please try again!');
                     }

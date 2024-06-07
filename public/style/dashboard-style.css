@@ -4,7 +4,6 @@
 
 :root {
     --primary-bg-color: #FEFEFF;
-    --primary-color: #1e90ff;
     --transparent-primary-color: rgba(30, 144, 255, .2);
     --secondary-color: #e6edfa;
     --default-bg-color: #F2F6FB;
@@ -170,6 +169,18 @@ body .ls-error-content button {
 /* GRID: Occupy the fourth column on the first row */
 .global-overview.cell-4 {
     grid-column: 4;
+    grid-row: 1;
+}
+
+/* GRID: Start from the first column and occupy 2 columns on the first row */
+.col1-2-row1 {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+}
+
+/* GRID: Start from the third column and occupy 2 columns on the first row */
+.col3-2-row1 {
+    grid-column: 3 / span 2;
     grid-row: 1;
 }
 
@@ -1087,4 +1098,30 @@ main .main-content .mail-inbox-container .inbox-content .messages .email-date {
     float: right;
     position: absolute;
     right: 20px;
+}
+
+main .main-content .generate-review-link-block .content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+main .main-content .generate-review-link-block .clear-link {
+    padding: var(--default-padding);
+    background-color: var(--default-bg-color);
+    text-transform: uppercase;
+}
+
+main .main-content .generate-review-link-block .clear-link p {
+    font-size: .8rem;
+}
+
+main .main-content .generate-review-link-block a {
+    text-transform: uppercase;
+    font-size: .8rem;
+    text-align: end;
+}
+
+main .main-content .generate-review-link-block input {
+    color: #121212;
 }

@@ -22,7 +22,7 @@ function routes(param=null) {
         },
         review: {
             addressBarUrl: '/review/'+param,
-            pageUrl: '/user/send/review/'+param,
+            pageUrl: '/send/review/'+param,
         },
         reviewSuccess: {
             addressBarUrl: '/review-success'

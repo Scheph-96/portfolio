@@ -20,6 +20,7 @@
     --danger-color: #bb0202;
     --warning-color: #db8505;
     --info-color: #0936c9;
+    --primary-color: #1e90ff;
 }
 
 .dark {
@@ -48,6 +49,10 @@
 ::-webkit-scrollbar-thumb:hover {
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
+}
+
+a {
+    color: var(--primary-color);
 }
 
 .not-found-page {
