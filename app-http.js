@@ -214,6 +214,7 @@ app.post('/submit-order', (req, res) => {
                                                 'success',
                                                 'Order send successfully',
                                                 null,
+                                                null,
                                                 html,
                                             ));
                                         } catch (error) {
@@ -423,10 +424,15 @@ app.get('/gen/review/link', async (req, res) => {
         // **************************************************************************************
         // ON REVIEW LINK GENERATION DON'T FORGET TO CHANGE THE URL BEFORE PRODUCTION
         //
-        // HERE CHANGE THE GENERATE LINK DOMAIN
+        // HERE CHANGE THE GENERATED LINK DOMAIN
         // **************************************************************************************
 
-        res.status(201).json({ type: "success", message: `127.0.0.1:${appConfig.port}/review/${tempLink.token}` });
+        // res.status(201).json({ type: "success", message: `http://127.0.0.1:${appConfig.port}/review/${tempLink.token}` });
+        res.status(201).json(new AppServerResponse(
+                            "success", 
+                            "Review Link Generated Successfully",
+                            `http://127.0.0.1:${appConfig.port}/review/${tempLink.token}`
+                            ));
 
     } catch (error) {
         ErrorLogger.error(error.message, { ip: req.ip, url: req.url, method: req.method, stacktrace: util.inspect(error, { showHidden: false, depth: null, colors: true }) });
@@ -439,8 +445,8 @@ app.get('/gen/review/link', async (req, res) => {
 
 });
 
-// Render review page
-app.get('/user/send/review/:token', async (req, res) => {
+// Thia endpoint send back the user the review page
+app.get('/send/review/:token', async (req, res) => {
     try {
         let token = req.params.token;
         let result = await TempLink.findOne({ token: token }).exec();
@@ -461,7 +467,7 @@ app.get('/user/send/review/:token', async (req, res) => {
     }
 });
 
-// Handle review upload
+// This endpoint handle the review upload
 app.post('/user/review/post/:token', (req, res) => {
     try {
 
@@ -1043,6 +1049,7 @@ app.get('/load-data/detail/:type/:number', async (req, res) => {
                         'success',
                         null,
                         null,
+                        null,
                         html,
                     ));
                 } catch (error) {
@@ -1096,8 +1103,10 @@ app.get('/update/status/:collection/:status?/:newStatus/:number', async (req, re
                         });
                     });
             } else {
+                console.log("PARAMS: ", req.params);
                 orderCrud.update({ orderNumber: req.params.number }, { status: req.params.newStatus })
                     .then((result) => {
+                        console.log("THA UPDATE RESULT: ", result);
                         res.status(200).send(new AppServerResponse(
                             AppResponseType.enum.success, 
                             `Order ${req.params.newStatus} successfully`

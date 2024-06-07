@@ -177,7 +177,6 @@ function adminLogout() {
                     const clickedElement = e.currentTarget;
                     ajaxRequest.loadEndPoint("/sc-admin/profile/actions/" + clickedElement.getAttribute('action'))
                         .then((result) => {
-                            console.log("THE LOGIN RESULT: ", result);
                             if (result.message) {
                                 alertToast(result.type, result.message);
                             }
@@ -187,10 +186,10 @@ function adminLogout() {
                             }
                         })
                         .catch((error) => {
-                            if (error.errorMessage) {
-                                alertToast(error.errorMessage.type, error.errorMessage.message);
-                                if (error.errorMessage.redirectionUrl) {
-                                    window.location.href = window.location.origin + error.errorMessage.redirectionUrl;
+                            if (error.errorData) {
+                                alertToast(error.errorData.type, error.errorData.message);
+                                if (error.errorData.redirectionUrl) {
+                                    window.location.href = window.location.origin + error.errorData.redirectionUrl;
                                 }
                             } else {
                                 console.log(`ERR::::::::::::`);
@@ -448,7 +447,37 @@ function incomePageRequirements() {
     localStorage.setData(localStorageKeys.currentPageLoaded, pages.income);
 }
 function analyticsPageRequirements() {
+    generateLink();
     localStorage.setData(localStorageKeys.currentPageLoaded, pages.analytics);
+}
+
+
+function generateLink() {
+    try {
+        const clearLink = document.querySelector('.clear-link p');
+        const newReviewLink = document.querySelector('.new-review-link');
+        const generateReviewLinkBtn = document.querySelector('.generate-review-link-btn');
+
+        generateReviewLinkBtn.addEventListener('click', () => {
+            ajaxRequest.loadEndPoint('/gen/review/link')
+                .then((result) => {
+                    alertToast(result.type, result.message);
+                    clearLink.innerHTML = result.data;
+                    newReviewLink.setAttribute('href', result.data);
+                })
+                .catch((error) => {
+                    if (error.errorData) {
+                        alertToast(error.errorData.type, error.errorData.message);
+                    } else {
+                        alertToast('danger', 'Unexpected error. Please try again!');
+                    }
+                });
+        });
+
+        
+    } catch (error) {
+        console.error("LINK GENERATION ERROR: ", error);
+    }
 }
 
 function tableRowDataDetail() {
@@ -483,37 +512,25 @@ function tableRowOnClick(event) {
     ajaxRequest.loadEndPoint(`/load-data/detail/${event.currentTarget.getAttribute('type')}/${event.currentTarget.getAttribute('number')}`)
         .then((data) => {
             body.appendChild(orderTableRowPopup(data.page));
-
-            const cancelBtn = document.querySelectorAll('.close-popup');
-            const rejectBtn = document.querySelector('.close-popup .reject');
-            const acceptBtn = document.querySelector('.close-popup .accept');
+            
             const submitBtns = document.querySelectorAll('.submit-box input');
-
-            // for (let cancelIndex = 0; cancelIndex < cancelBtn.length; cancelIndex++) {
-            //     cancelBtn[cancelIndex].addEventListener('click', () => {
-            //         body.removeChild(tableRowPopupContainer);
-            //     }, { once: true });
-            // }
 
             for (let actionIndex = 0; actionIndex < submitBtns.length; actionIndex++) {
                 submitBtns[actionIndex].addEventListener('click', updateStatus, { once: true });
             }
 
-            // rejectBtn.addEventListener('click', () => {
-            //     ajaxRequest.loadEndPoint();
-            // });
-
         })
         .catch((error) => {
             console.error("TABLE RAW DETAIL REQUEST ERROR: ", error);
-            if (error.errorMessage) {
-                alertToast(error.errorMessage.type, error.errorMessage.message);
+            if (error.errorData) {
+                alertToast(error.errorData.type, error.errorData.message);
+            } else {
+                alertToast('danger', 'Unexpected error. Please try again!');
             }
         });
 }
 
 function updateStatus(e=null) {
-    // body.removeChild(tableRowPopupContainer);
     const orderNumber = document.querySelector('.table-row-popup .order-number');
     const orderStatus = document.querySelector('.table-row-popup .order-status');
     const tableRowPopupContainer = document.querySelector('.table-row-popup-container');

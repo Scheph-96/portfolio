@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 
 tempLinkSchema = new mongoose.Schema({
     token: {
-        type: mongoose.Schema.Types.UUID,
+        type: String,
         required: true
     },
     expireAt: {
         type: Date,
-        default: Date.now(),
+        default: Date.now,
         expires: 3600,
         required: true
     }

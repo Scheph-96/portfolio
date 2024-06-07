@@ -169,11 +169,13 @@ function contactFormHandler() {
                     })
                     .catch((error) => {
                         if (error.status === 404) {
-                            alertToast(error.errorMessage.type, error.errorMessage.message);
-                            contentHandlerOnRawCode(error.errorMessage.page);
+                            alertToast(error.errorData.type, error.errorData.message);
+                            contentHandlerOnRawCode(error.errorData.page);
                         } else {
-                            if (error.errorMessage) {
-                                alertToast(error.errorMessage.type, error.errorMessage.message);
+                            if (error.errorData) {
+                                alertToast(error.errorData.type, error.errorData.message);
+                            } else {
+                              alertToast('danger', 'Unexpected error. Please try again!');
                             }
                         }
                         console.log(`ERR::::::::::::`);
