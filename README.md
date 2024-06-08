@@ -1,1 +1,3 @@
-# My Awesome Portfolio with nodejs templating
+# A portfolio website
+## This portfolio website is for individuals or businesses 
+A way to showcase services and skills as a developer or designer
