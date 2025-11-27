@@ -4,10 +4,13 @@
           <ul>
             <% for(let i = 0; i < experienceFavorite.ressources.length; i++) { %>
             <li>
-              <figure class="">
+              <figure class="work-figure">
                 <a href="<%= experienceFavorite.ressources[i].link %>" target="_blank">
                   <img src="<%= experienceFavorite.ressources[i].cover %>" alt="<%= experienceFavorite.ressources[i].tagInfo %>">
                 </a>
+                <div class="work-figure-content">
+                  <h4>Gestion de clinique</h4>
+                </div>
               </figure>
             </li>
             <% } %>

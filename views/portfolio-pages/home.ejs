@@ -1,54 +1,26 @@
 <div class="header">
   <div class="greeting-text">
-    <h1>Looking for a services?</h1>
-    <h2>Welcome Customer.</h2>
-    <h3>Take a seat and choose the service that suit you.</h3>
+    <h2>Looking for a services?</h2>
+    <h3>Hello,</h3>
+    <p>
+      I’m a web developer with experience in HTML, CSS, JavaScript, REACT, and Node.js. I enjoy creating websites and web applications that are fast, responsive, and easy to use. I’m always learning and improving, and I love turning ideas into functional products.
+      Feel free to explore my page &#128522;
+    </p>
   </div>
   <div class="coder">
     <img src="/assets/portfolio/img/coder.png">
   </div>
 </div>
 <div class="body">
-  <div class="status">
-    <div class="experience-year">
-      <span>5+</span>
-      <p>Years Experience</p>
-    </div>
-    <div class="completed-projects">
-      <span>75</span>
-      <p>Completed Projects</p>
-    </div>
-    <div class="happy-customers">
-      <span>60</span>
-      <p>Happy Customers</p>
-    </div>
-  </div>
-  <div class="services">
-    <h2>Services</h2>
-    <div class="services-content">
-      <% if(services) { %>
-      <% for(let i = 0; i < services.length; i++) { %>
-      <div class="service">
-        <h3><%= services[i].title %></h3>
-        <p><%= services[i].description %></p>
-        <div class="order-now" service="<%= services[i].value %>">
-          <p>order now</p>
-          <i class='bx bx-chevron-right'></i>
-        </div>
-      </div>
-      <% } %>
-      <% } %>
-    </div>
-  </div>
   <div class="works">
     <div class="works-header section-header">
-      <h2>Works</h2>
+      <h2>Projects</h2>
       <div class="work-filter">
         <ul>
-          <li class="title active" type="web">web</li>
-          <li class="title" type="ui_design">ui design</li>
-          <li class="title" type="poster">poster</li>
-          <li class="title" type="logo">logo</li>
+          <li class="title active" type="web">html-css</li>
+          <li class="title" type="ui_design">react</li>
+          <li class="title" type="poster">node.js</li>
+          <!-- <li class="title" type="logo">logo</li> -->
         </ul>
       </div>
       <div class="work-filter-shortcut">
@@ -68,34 +40,34 @@
       <div class="swiper mySwiper">
         <div class="swiper-wrapper">
           <% if (recommendationFavorite) { %>
-            <% for (let i = 0; i < recommendationFavorite.length; i++) { %>
-            <div class="swiper-slide recommendation-instance">
-              <div class="recommendation-header">
-                <div class="profile">
-                  <div class="profile-pic">
-                    <img src="data:image/<%=recommendationFavorite[i].pic.extension%>;base64,<%=recommendationFavorite[i].pic.path%>" alt="Customer Pic">
-                  </div>
-                  <h3><%= recommendationFavorite[i].username %></h3>
+          <% for (let i = 0; i < recommendationFavorite.length; i++) { %>
+          <div class="swiper-slide recommendation-instance">
+            <div class="recommendation-header">
+              <div class="profile">
+                <div class="profile-pic">
+                  <img src="data:image/<%=recommendationFavorite[i].pic.extension%>;base64,<%=recommendationFavorite[i].pic.path%>" alt="Customer Pic">
                 </div>
-                <span>
-                  <% for (let j = 1; j <= 5; j++) { %>
-                    <% if (j <= recommendationFavorite[i].rate) { %>
-                      <i class='bx bxs-star'></i>
-                    <% } else { %>
-                      <i class='bx bx-star' ></i>
-                    <% } %>
-                  <% } %>
-                </span>
+                <h3><%= recommendationFavorite[i].username %></h3>
               </div>
-              <div class="recommendation-content">
-                <p><%= recommendationFavorite[i].message %></p>
-              </div>
-              <div class="recommendation-footer">
-                <p><%= recommendationFavorite[i].date %></p>
-              </div>
+              <span>
+                <% for (let j = 1; j <= 5; j++) { %>
+                <% if (j <= recommendationFavorite[i].rate) { %>
+                <i class='bx bxs-star'></i>
+                <% } else { %>
+                <i class='bx bx-star'></i>
+                <% } %>
+                <% } %>
+              </span>
             </div>
-            <% } %>
-            <% } %>
+            <div class="recommendation-content">
+              <p><%= recommendationFavorite[i].message %></p>
+            </div>
+            <div class="recommendation-footer">
+              <p><%= recommendationFavorite[i].date %></p>
+            </div>
+          </div>
+          <% } %>
+          <% } %>
         </div>
         <div class="swipe-btns">
           <div class="swiper-pagination"></div>

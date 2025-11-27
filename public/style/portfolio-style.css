@@ -623,7 +623,9 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
     background-position: 0% 40%;
     position: relative;
     box-shadow: var(--y-shadow);
-    display: flex;
+    padding: var(--main-padding);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
 }
 
 .main-content .container>.header::before {
@@ -633,15 +635,13 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(75, 75, 88, 0.75);
+    background-color: rgba(32, 32, 39, 0.75);
 }
 
 /* ------------------- Gretting Text ------------------- */
 
 .main-content .container>.header .greeting-text {
-    position: absolute;
-    left: 3rem;
-    top: 2rem;
+    z-index: 10;
 }
 
 /* ------------------- h1 ------------------- */
@@ -665,10 +665,17 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
     font-size: calc(.9rem + .5vw);
 }
 
+/* ------------------- p ------------------- */
+
+.main-content .container>.header p {
+    color: var(--default-text-color);
+    /* font-size: calc(.9rem + .5vw); */
+}
+
 /* ------------------- coder ------------------- */
 
 .main-content .container>.header .coder {
-    width: 320px;
+    /* width: 320px; */
     /* height: 100px; */
     /* background-color: rebeccapurple; */
     position: absolute;
@@ -711,12 +718,12 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
 
 /* ------------------- services ------------------- */
 
-.main-content .container .body .services .services-content {
+/* .main-content .container .body .services .services-content {
     padding: var(--main-padding) 0 0 0;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
-}
+} */
 
 .main-content .container .body .service {
     /* width: 19rem; */
@@ -730,8 +737,8 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
 }
 
 .main-content .container .body .service>p {
-    color: var(--light-text-color);
-    font-size: .8rem;
+    color: var(--default-text-color);
+    font-size: 1rem;
     margin: 1rem 0;
 }
 
