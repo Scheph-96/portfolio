@@ -1,6 +1,6 @@
 class ExperienceRessourceType {
     // static enums = ['WEB', 'UIDESIGN', 'LOGO', 'POSTER'];
-    static enums = ['web', 'ui_design', 'poster', 'logo'];
+    static enums = ['html_css', 'react', 'nodejs'];
 
     /**
      * Turn the list into a key-value object where 

@@ -207,7 +207,8 @@ a {
     background-color: #98a5b1;
 }
 
-.submit-box input {
+.submit-box input,
+.default-btn {
     border: none;
     outline: none;
     background-color: var(--primary-color);

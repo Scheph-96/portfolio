@@ -45,7 +45,7 @@ main {
 main>div {
     height: 100%;
     display: grid;
-    grid-template-columns: 290px auto;
+    grid-template-columns: 250px auto;
     /* overflow: hidden; */
 }
 
@@ -821,13 +821,60 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
 .asset-showcase ul {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: .5rem;
 }
 
 .main-content .container .body .works .works-content .work-item li,
 .asset-showcase li {
     background-color: var(--card-bg-color);
+}
+
+.main-content .container .body .works .works-content .work-item .work-figure {
+    padding: 1rem;
+    box-shadow: var(--y-shadow);
+}
+
+.main-content .container .body .works .works-content .work-item .work-figure .work-figure-content {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+}
+
+.main-content .container .body .works .works-content .work-item .work-figure .work-figure-content h4 {
+    padding-top: .5rem;
+}
+
+.main-content .container .body .works .works-content .work-item .work-figure .work-figure-content p {
+    font-size: .8rem;
+    color: var(--light-text-color);
+}
+
+.main-content .container .body .works .works-content .work-item .work-figure .work-figure-content .languages {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    flex-wrap: wrap;
+}
+
+.main-content .container .body .works .works-content .work-item .work-figure .work-figure-content .languages span {
+    /* width: fit-content; */
+    font-size: .8rem;
+    padding: 0 .8rem;
+    border-radius: 30px;
+    background-color: var(--primary-color);
+    color: var(--card-bg-color);
+    text-transform: uppercase;
+}
+
+.main-content .container .body .works .works-content .work-item .work-figure .work-figure-content .default-btn {
+    border-radius: 10px;
     cursor: pointer;
+}
+
+.main-content .container .body .works .works-content .work-item .work-figure .work-figure-content .default-btn i {
+    color: var(--card-bg-color);
+    font-size: 1rem;
+    margin-left: 1rem;
 }
 
 .main-content .container .body .works .works-content .work-item img,
