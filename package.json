@@ -11,31 +11,30 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.1.1",
-    "body-parser": "^1.20.2",
+    "body-parser": "^2.2.1",
     "config": "^4.1.1",
     "cookie": "^1.1.1",
-    "cookie-parser": "^1.4.6",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
-    "ejs": "^3.1.9",
-    "ejs-lint": "^2.0.0",
+    "ejs": "^3.1.10",
+    "ejs-lint": "^2.0.1",
     "enum": "^3.0.4",
-    "express": "^4.18.2",
+    "express": "^5.2.1",
     "express-mongo-sanitize": "^2.2.0",
-    "express-session": "^1.17.3",
-    "formidable": "^3.5.1",
+    "express-session": "^1.18.2",
+    "formidable": "^3.5.4",
     "jsonwebtoken": "^9.0.2",
-    "luxon": "^3.4.4",
+    "luxon": "^3.7.2",
     "memorystore": "^1.6.7",
-    "mongoose": "^7.6.0",
+    "mongoose": "^9.0.0",
     "nodemailer": "^7.0.11",
     "timeago-simple": "^1.2.4",
-    "uuid": "^9.0.1",
+    "uuid": "^13.0.0",
     "validator": "^13.15.23",
-    "winston": "^3.11.0",
-    "ws": "^8.16.0"
+    "winston": "^3.18.3",
+    "ws": "^8.18.3"
   },
   "devDependencies": {
-    "nodemon": "^3.0.2"
+    "nodemon": "^3.1.11"
   }
 }
