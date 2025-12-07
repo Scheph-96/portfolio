@@ -18,6 +18,14 @@ const experienceSchema = new mongoose.Schema({
         type: String,
         enum: ExperienceRessourceType.enums,
         required: true,
+    },
+    tags: {
+        type: [String],
+        required: true,
+    },
+    description: {
+        type: String,
+        required: true
     }
 });
 

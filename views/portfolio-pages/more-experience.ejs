@@ -1,17 +1,30 @@
 <div class="more-experience-page">
     <% if (experiences) { %>
     <div class="header detail-page-header">
-        <h2>Work Experiences: <span><%= experiences.type %></span></h2>
+        <h2><span><%= experiences.type %></span> Projects:</h2>
     </div>
     <div class="content asset-showcase">
         <ul>
             <% for (let i = 0; i < experiences.ressources.length; i++) { %>
             <li>
-                <figure>
+              <figure class="work-figure">
+                  <img src="<%= experiences.ressources[i].cover %>" alt="<%= experiences.ressources[i].tagInfo %>">
+                <!-- </a> -->
+                <div class="work-figure-content">
+                  <h4><%= experiences.ressources[i].tagInfo %></h4>
+                  <p><%= experiences.ressources[i].description %></p>
+                  <div class="languages">
+                    <% for(let j = 0; j< experiences.ressources[i].tags.length; j++) { %>
+                    <span><%= experiences.ressources[i].tags[j] %></span>
+                    <% } %>
+                  </div>
+                  <button class="default-btn">
                     <a href="<%= experiences.ressources[i].link %>" target="_blank">
-                        <img src="<%= experiences.ressources[i].cover %>" alt="<%= experiences.ressources[i].tagInfo %>">
+                      Explore <i class='bx bx-link-external'></i>
                     </a>
-                </figure>
+                  </button>
+                </div>
+              </figure>
             </li>
             <% } %>
         </ul>

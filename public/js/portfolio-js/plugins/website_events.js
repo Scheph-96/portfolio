@@ -48,7 +48,7 @@ function profilHandler() {
             bodyRules.style['display'] = 'flex';
             bodyRules.style['justify-content'] = 'center';
             bodyRules.style['align-items'] = 'center';
-            mainRules.style['width'] = '86%';
+            mainRules.style['width'] = '90%';
         } else {
             removeCssPropertyFromRule(profileDetailsRules, 'transform');
             removeCssPropertyFromRule(profileDetailsRules, 'position');

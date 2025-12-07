@@ -24,7 +24,7 @@ let appWebsocket = new AppWebsocket();
 
 
 // Mongo db connection
-mongoose.connect(appConfig.dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(appConfig.dbUri);
 const db = mongoose.connection;
 db.on('error', (error) => console.log(`DB CONNEXION ERROR::${error}`));
 db.once('open', () => {

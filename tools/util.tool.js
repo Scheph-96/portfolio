@@ -7,7 +7,7 @@ const uuid = require('uuid');
 const path = require('path');
 const fileSys = require('fs');
 const timeago = require("timeago-simple");
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 // Custom requirement
 const FileUploadError = require('../errors/file_upload.error');

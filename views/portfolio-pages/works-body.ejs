@@ -5,18 +5,21 @@
             <% for(let i = 0; i < experienceFavorite.ressources.length; i++) { %>
             <li>
               <figure class="work-figure">
-                <!-- <a href="<%= //experienceFavorite.ressources[i].link %>" target="_blank"> -->
                   <img src="<%= experienceFavorite.ressources[i].cover %>" alt="<%= experienceFavorite.ressources[i].tagInfo %>">
                 <!-- </a> -->
                 <div class="work-figure-content">
-                  <h4>Gestion de clinique</h4>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod repellendus veritatis maiores amet reprehenderit porro consequuntur minima ipsa illo beatae.</p>
+                  <h4><%= experienceFavorite.ressources[i].tagInfo %></h4>
+                  <p><%= experienceFavorite.ressources[i].description %></p>
                   <div class="languages">
-                    <span>html</span>
-                    <span>css</span>
-                    <span>javascript</span>
+                    <% for(let j = 0; j< experienceFavorite.ressources[i].tags.length; j++) { %>
+                    <span><%= experienceFavorite.ressources[i].tags[j] %></span>
+                    <% } %>
                   </div>
-                  <button class="default-btn">Explore <i class='bx bx-link-external'></i></button>
+                  <button class="default-btn">
+                    <a href="<%= experienceFavorite.ressources[i].link %>" target="_blank">
+                      Explore <i class='bx bx-link-external'></i>
+                    </a>
+                  </button>
                 </div>
               </figure>
             </li>

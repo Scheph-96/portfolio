@@ -260,7 +260,7 @@ body.error .error-page .content h1 {
     margin: 2rem 0;
 }
 
-body.error .error-page .content p span{
+body.error .error-page .content p span {
     color: var(--primary-color);
 }
 
@@ -825,38 +825,45 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
 }
 
 .main-content .container .body .works .works-content .work-item li,
+.main-content .container .more-experience-page li,
 .asset-showcase li {
     background-color: var(--card-bg-color);
 }
 
-.main-content .container .body .works .works-content .work-item .work-figure {
+.main-content .container .body .works .works-content .work-item .work-figure,
+.main-content .container .more-experience-page .work-figure {
     padding: 1rem;
     box-shadow: var(--y-shadow);
 }
 
-.main-content .container .body .works .works-content .work-item .work-figure .work-figure-content {
+.main-content .container .body .works .works-content .work-item .work-figure .work-figure-content,
+.main-content .container .more-experience-page .work-figure .work-figure-content {
     display: flex;
     flex-direction: column;
     gap: .8rem;
 }
 
-.main-content .container .body .works .works-content .work-item .work-figure .work-figure-content h4 {
+.main-content .container .body .works .works-content .work-item .work-figure .work-figure-content h4,
+.main-content .container .more-experience-page .work-figure .work-figure-content h4 {
     padding-top: .5rem;
 }
 
-.main-content .container .body .works .works-content .work-item .work-figure .work-figure-content p {
+.main-content .container .body .works .works-content .work-item .work-figure .work-figure-content p,
+.main-content .container .more-experience-page .work-figure .work-figure-content p {
     font-size: .8rem;
     color: var(--light-text-color);
 }
 
-.main-content .container .body .works .works-content .work-item .work-figure .work-figure-content .languages {
+.main-content .container .body .works .works-content .work-item .work-figure .work-figure-content .languages,
+.main-content .container .more-experience-page .work-figure .work-figure-content .languages {
     display: flex;
     align-items: center;
     gap: .5rem;
     flex-wrap: wrap;
 }
 
-.main-content .container .body .works .works-content .work-item .work-figure .work-figure-content .languages span {
+.main-content .container .body .works .works-content .work-item .work-figure .work-figure-content .languages span,
+.main-content .container .more-experience-page .work-figure .work-figure-content .languages span {
     /* width: fit-content; */
     font-size: .8rem;
     padding: 0 .8rem;
@@ -866,30 +873,41 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
     text-transform: uppercase;
 }
 
-.main-content .container .body .works .works-content .work-item .work-figure .work-figure-content .default-btn {
+.main-content .container .body .works .works-content .work-item .work-figure .work-figure-content .default-btn,
+.main-content .container .more-experience-page .work-figure .work-figure-content .default-btn {
     border-radius: 10px;
     cursor: pointer;
 }
 
-.main-content .container .body .works .works-content .work-item .work-figure .work-figure-content .default-btn i {
+.main-content .container .body .works .works-content .work-item .work-figure .work-figure-content .default-btn a,
+.main-content .container .more-experience-page .work-figure .work-figure-content .default-btn a {
+    color: var(--card-bg-color);
+}
+
+.main-content .container .body .works .works-content .work-item .work-figure .work-figure-content .default-btn i,
+.main-content .container .more-experience-page .work-figure .work-figure-content .default-btn i {
     color: var(--card-bg-color);
     font-size: 1rem;
     margin-left: 1rem;
 }
 
 .main-content .container .body .works .works-content .work-item img,
+.main-content .container .more-experience-page img,
 .asset-showcase ul img {
     aspect-ratio: 3 / 2;
     object-fit: cover;
 }
 
-.main-content .container .body .works .works-content .work-item .more-work {
+.main-content .container .body .works .works-content .work-item .more-work,
+.main-content .container .more-experience-page .more-work {
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 
-.main-content .container .body .works .works-content .work-item .more-work>a {
+.main-content .container .body .works .works-content .work-item .more-work>a,
+.main-content .container .more-experience-page .more-work>a {
     font-size: 2rem;
     font-weight: 700;
 }
@@ -1094,7 +1112,7 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
     /* background-color: red; */
 }
 
-.main-content .container .order-success-page .bottom, 
+.main-content .container .order-success-page .bottom,
 .main-content .container .review-success-page .bottom {
     display: flex;
     justify-content: end;
@@ -1402,7 +1420,7 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
     }
 
     .main-content .container:has(>.more-experience-page) {
-        padding: var(--main-padding) 0;        
+        padding: var(--main-padding) 0;
     }
 
     /* Remove the padding of container (where all our content are loaded)
@@ -1487,7 +1505,7 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
     .main-content .container .more-recommendation-page>.header .wrapper {
         justify-content: start;
     }
-    
+
     /* .main-content .container .review-success-page {
         justify-content: start;
     } */
