@@ -7,11 +7,22 @@
       Feel free to explore my page &#128522;
     </p>
   </div>
-  <div class="coder">
-    <img src="/assets/portfolio/img/coder.png">
-  </div>
 </div>
 <div class="body">
+  <div class="status">
+    <div class="experience-year">
+      <span>5+</span>
+      <p>Years Experience</p>
+    </div>
+    <div class="completed-projects">
+      <span>35</span>
+      <p>Completed Projects</p>
+    </div>
+    <div class="happy-customers">
+      <span>15</span>
+      <p>Happy Customers</p>
+    </div>
+  </div>
   <div class="works">
     <div class="works-header section-header">
       <h2>Projects</h2>
@@ -31,72 +42,24 @@
       <%- include('works-body') %>
     </div>
   </div>
-  <div class="recommendations">
-    <div class="recommendations-header section-header">
-      <h2>Recommendations</h2>
-      <p class="all-recommendations">see all</p>
-    </div>
-    <div class="recommendations-content">
-      <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
-          <% if (recommendationFavorite) { %>
-          <% for (let i = 0; i < recommendationFavorite.length; i++) { %>
-          <div class="swiper-slide recommendation-instance">
-            <div class="recommendation-header">
-              <div class="profile">
-                <div class="profile-pic">
-                  <img src="data:image/<%=recommendationFavorite[i].pic.extension%>;base64,<%=recommendationFavorite[i].pic.path%>" alt="Customer Pic">
-                </div>
-                <h3><%= recommendationFavorite[i].username %></h3>
-              </div>
-              <span>
-                <% for (let j = 1; j <= 5; j++) { %>
-                <% if (j <= recommendationFavorite[i].rate) { %>
-                <i class='bx bxs-star'></i>
-                <% } else { %>
-                <i class='bx bx-star'></i>
-                <% } %>
-                <% } %>
-              </span>
-            </div>
-            <div class="recommendation-content">
-              <p><%= recommendationFavorite[i].message %></p>
-            </div>
-            <div class="recommendation-footer">
-              <p><%= recommendationFavorite[i].date %></p>
-            </div>
-          </div>
-          <% } %>
-          <% } %>
-        </div>
-        <div class="swipe-btns">
-          <div class="swiper-pagination"></div>
-          <div>
-            <div class="swiper-button-prev-unique"><i class='bx bx-chevron-left'></i></div>
-            <div class="swiper-button-next-unique"><i class='bx bx-chevron-right'></i></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="contact dark">
     <h2>Contact me</h2>
     <form method="post" id="contact-form" enctype="multipart/form-data">
       <div class="form-container">
         <div class="input-box">
-          <input type="text" name="customer-name" id="customer-name" placeholder="Name" required>
+          <input type="text" name="name" id="customer-name" placeholder="Name" required>
           <label class="input-icon-box" for="customer-name"><i class='bx bxs-user'></i></label>
         </div>
         <div class="input-box">
-          <input type="email" name="to" id="customer-email" placeholder="Email" required>
+          <input type="email" name="email" id="customer-email" placeholder="Email" required>
           <label class="input-icon-box" for="customer-email"><i class='bx bx-at'></i></label>
         </div>
         <div class="input-box">
-          <input type="text" name="subject" id="customer-name" placeholder="Name" required>
-          <label class="input-icon-box" for="customer-name"><i class='bx bxs-user'></i></label>
+          <input type="text" name="subject" id="customer-email-subject" placeholder="Subject" required>
+          <label class="input-icon-box" for="customer-email-subject"><i class='bx bx-question-mark'></i></label>
         </div>
         <div class="input-box">
-          <textarea name="text" id="customer-message" cols="30" rows="13" placeholder="Message"></textarea>
+          <textarea name="message" id="customer-message" cols="30" rows="13" placeholder="Message"></textarea>
           <label class="input-icon-box" for="customer-message"><i class='bx bxs-envelope'></i></label>
         </div>
         <div class="submit-box">
@@ -109,10 +72,10 @@
 <div class="footer">
   <footer>
     <div class="copyright">
-      <p>Copyright &COPY; All right reserved 2023</p>
+      <p>Copyright &COPY; All right reserved <%= new Date().getFullYear() %></p>
     </div>
     <div class="author">
-      <p>Website author: <a href="#">Omar Scheph</a></p>
+      <p>Author: <a href="#">Omar Scheph</a></p>
     </div>
   </footer>
 </div>

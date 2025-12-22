@@ -1,4 +1,5 @@
 import { AjaxRequest } from "../../../tools/ajax_req.tool.js";
+import { alertToast } from "../../../tools/util.js";
 import { customPushState, routeLoader } from "../../../tools/route_loader.tool.js";
 import { workContentSkeleton } from "../../../tools/util.js";
 
@@ -40,34 +41,34 @@ function workSwipe() {
   const workFilterShortcutDisplayer = document.querySelector('.work-filter ul');
 
 
-    for (let i = 0; i < workTitles.length; i++) {
-      workTitles[i].addEventListener('click', (e) => {
-        workContent.innerHTML = workContentSkeleton();
-        for (let index = 0; index < workTitles.length; index++) {
-          if (workTitles[index].classList.contains('active')) {
-            workTitles[index].classList.remove('active');
-            break;
-          }
+  for (let i = 0; i < workTitles.length; i++) {
+    workTitles[i].addEventListener('click', (e) => {
+      workContent.innerHTML = workContentSkeleton();
+      for (let index = 0; index < workTitles.length; index++) {
+        if (workTitles[index].classList.contains('active')) {
+          workTitles[index].classList.remove('active');
+          break;
         }
-  
-        e.currentTarget.classList.add('active');
-  
-        ajaxRequest.loadHtml(`/experience/favorite/ressource/${workTitles[i].getAttribute('type')}`, workContent, null);
-  
-        workContent.addEventListener('file-loaded', (e) => {
-          console.log("IN WORK CONTENT");
-      
-          workContent.innerHTML = e.detail.data;
-      
-          showMoreOfExperience();
-        });
-  
-        if (workFilterShortcut && workFilterShortcutDisplayer.classList.contains('show')) {
-          workFilterShortcutDisplayer.classList.remove('show');
-        }
-  
+      }
+
+      e.currentTarget.classList.add('active');
+
+      ajaxRequest.loadHtml(`/experience/favorite/ressource/${workTitles[i].getAttribute('type')}`, workContent, null);
+
+      workContent.addEventListener('file-loaded', (e) => {
+        console.log("IN WORK CONTENT");
+
+        workContent.innerHTML = e.detail.data;
+
+        showMoreOfExperience();
       });
-    }
+
+      if (workFilterShortcut && workFilterShortcutDisplayer.classList.contains('show')) {
+        workFilterShortcutDisplayer.classList.remove('show');
+      }
+
+    });
+  }
 }
 
 function orderPageHandler() {
@@ -80,20 +81,20 @@ function orderPageHandler() {
 }
 
 function workMenuHandler() {
-    const workFilterShortcut = document.querySelector('.work-filter-shortcut');
-    const workFilterShortcutDisplayer = document.querySelector('.work-filter ul');
-    if (workFilterShortcut) {
-      workFilterShortcut.addEventListener('click', () => {
-        workFilterShortcutDisplayer.classList.add('show');
-        console.log(workFilterShortcutDisplayer.classList);
-      }, false);
-  
-      document.addEventListener('click', (event) => {
-        if (!workFilterShortcutDisplayer.contains(event.target)) {
-          workFilterShortcutDisplayer.classList.remove('show');
-        }
-      }, true);
-    }
+  const workFilterShortcut = document.querySelector('.work-filter-shortcut');
+  const workFilterShortcutDisplayer = document.querySelector('.work-filter ul');
+  if (workFilterShortcut) {
+    workFilterShortcut.addEventListener('click', () => {
+      workFilterShortcutDisplayer.classList.add('show');
+      console.log(workFilterShortcutDisplayer.classList);
+    }, false);
+
+    document.addEventListener('click', (event) => {
+      if (!workFilterShortcutDisplayer.contains(event.target)) {
+        workFilterShortcutDisplayer.classList.remove('show');
+      }
+    }, true);
+  }
 }
 
 function openImage() {
@@ -127,72 +128,129 @@ function showMoreOfExperience() {
   }, { once: true });
 }
 
-function showMoreOfRecommendation() {
-  const moreRecommendation = document.querySelector('.all-recommendations');
+// function showMoreOfRecommendation() {
+//   const moreRecommendation = document.querySelector('.all-recommendations');
 
-  moreRecommendation.addEventListener('click', () => {
-    customPushState('', '', '/recommendations');
-  }, { once: true })
-}
+//   moreRecommendation.addEventListener('click', () => {
+//     customPushState('', '', '/recommendations');
+//   }, { once: true })
+// }
 
 function contactFormHandler() {
   const contactForm = document.getElementById('contact-form');
-    const submitButton = document.getElementById('submit-button');
-    let isSubmit = false;
-    console.log('EXECUTE CONTACT');
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
+  const submitButton = document.getElementById('submit-button');
+  let isSubmit = false;
+  console.log('EXECUTE CONTACT');
+  if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
 
-            if (!isSubmit) {
+      if (!isSubmit) {
 
-                isSubmit = true;
-                submitButton.disabled = true;
-                submitButton.value = "submitting...";
+        isSubmit = true;
+        submitButton.disabled = true;
+        submitButton.value = "submitting...";
 
-                let contact = new FormData(contactForm);
+        let contact = new FormData(contactForm);
+        contact.append("access_key", "3b2b4909-5a31-4aae-bfb5-1ba10cc266f2");
+        const object = Object.fromEntries(contact);
+        const json = JSON.stringify(object);
 
-                console.log('THE CONTACT: ', contact.get("rate"));
-                console.log('THE CONTACT: ', ...contact);
+        console.log('THE CONTACT: ', ...contact);
 
-                ajaxRequest.submitForm(`/user/contact`, contact)
-                    .then((result) => {
-                        console.log(result);
-                        // contentHandlerOnRawCode(result.page);
-                        // customReplaceState(result.page, '', routes().reviewSuccess.addressBarUrl);
-                        // window.history.replaceState('', '', routes().reviewSuccess.addressBarUrl);
-                        // contentHandlerOnRawCode(result.page);
-                        // alertToast(result.type, result.message);
-                        if (result.message) {
-                            alertToast(result.type, result.message);
-                        }
-                    })
-                    .catch((error) => {
-                        if (error.status === 404) {
-                            alertToast(error.errorData.type, error.errorData.message);
-                            contentHandlerOnRawCode(error.errorData.page);
-                        } else {
-                            if (error.errorData) {
-                                alertToast(error.errorData.type, error.errorData.message);
-                            } else {
-                              alertToast('danger', 'Unexpected error. Please try again!');
-                            }
-                        }
-                        console.log(`ERR::::::::::::`);
-                        console.error(`ERROR:: ${error.error}`);
-                    })
-                    .finally(() => {
-                        isSubmit = false;
-                        submitButton.disabled = false;
-                        submitButton.value = "confirm";
+        fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: json,
+        })
+          .then(async (result) => {
+                  let json = await result.json();
 
-                    });
-                // }, 5000);
-
+            console.log(json);
+            // contentHandlerOnRawCode(result.page);
+            // customReplaceState(result.page, '', routes().reviewSuccess.addressBarUrl);
+            // window.history.replaceState('', '', routes().reviewSuccess.addressBarUrl);
+            // contentHandlerOnRawCode(result.page);
+            // alertToast(result.type, result.message);
+            // if (result.message) {
+            //   alertToast(result.type, result.message);
+            // }
+          })
+          .catch((error) => {
+            if (error.status === 404) {
+              alertToast(error.errorData.type, error.errorData.message);
+              contentHandlerOnRawCode(error.errorData.page);
+            } else {
+              if (error.errorData) {
+                alertToast(error.errorData.type, error.errorData.message);
+              } else {
+                alertToast('danger', 'Unexpected error. Please try again!');
+              }
             }
+            console.log(`ERR::::::::::::`);
+            console.error(`ERROR:: ${error.error}`);
+          })
+          .finally(() => {
+            isSubmit = false;
+            submitButton.disabled = false;
+            submitButton.value = "send message";
 
-        });
-    }
+          });
+        // }, 5000);
+
+      }
+
+    });
+  }
+
+
+  //   const contactForm = document.getElementById("contact-form");
+  // const result = document.getElementById("result");
+
+  // form.addEventListener("submit", function (e) {
+  //   e.preventDefault();
+
+  //   const formData = new FormData(form);
+  //   formData.append("3b2b4909-5a31-4aae-bfb5-1ba10cc266f2");
+  //   const object = Object.fromEntries(formData);
+  //   const json = JSON.stringify(object);
+
+  //   fetch("https://api.web3forms.com/submit", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Accept: "application/json",
+  //     },
+  //     body: json,
+  //   })
+  //     .then(async (response) => {
+  //       let json = await response.json();
+  //       if (response.status == 200) {
+  //         result.innerHTML = json.message;
+  //         result.classList.remove("text-gray-500");
+  //         result.classList.add("text-green-500");
+  //       } else {
+  //         console.log(response);
+  //         result.innerHTML = json.message;
+  //         result.classList.remove("text-gray-500");
+  //         result.classList.add("text-red-500");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       result.innerHTML = "Something went wrong!";
+  //     })
+  //     .then(function () {
+  //       form.reset();
+  //       setTimeout(() => {
+  //         result.style.display = "none";
+  //       }, 5000);
+  //     });
+  // });
+
 
 }
 
@@ -204,7 +262,7 @@ function homeDependencieMain() {
   workMenuHandler();
   // openImage();
   showMoreOfExperience();
-  showMoreOfRecommendation();
+  // showMoreOfRecommendation();
   contactFormHandler();
 }
 

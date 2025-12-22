@@ -24,11 +24,13 @@
               </figure>
             </li>
             <% } %>
+            <% if (experienceFavorite.ressources.length === 5) { %>
             <li class="more-work" more="<%= experienceFavorite.type %>">
               <figure>
                 <p>SEE MORE</p>
               </figure>
             </li>
+            <% } %>
           </ul>
         </div>
     <% } %>

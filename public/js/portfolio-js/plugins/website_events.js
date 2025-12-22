@@ -10,9 +10,9 @@ const profileDetailShortcut = document.querySelector('.profile-details-shortcut'
 const profileDetailShadow = document.querySelector('.profile-details-shadow');
 const profileDetailShortcutIcon = document.querySelector('.bxs-user-circle');
 const workFilterShortcutIcon = document.querySelector('.bx-dots-vertical-rounded');
-const moreLanguagesBtn = document.querySelector('.more-languages-btn');
-const programmingLanguage = document.querySelector('.programming-language');
-const moreLanguages = document.querySelector('.more-languages');
+// const moreLanguagesBtn = document.querySelector('.more-languages-btn');
+// const programmingLanguage = document.querySelector('.programming-language');
+// const moreLanguages = document.querySelector('.more-languages');
 const main = document.querySelector('main');
 const mainFirstDiv = document.querySelector('main > div');
 const expandCollapseButton = document.querySelector('.main-content .collapse-expand-sidebar');
@@ -27,13 +27,13 @@ function profilHandler() {
     profileDetailShortcut.addEventListener('click', () => {
         profileDetails.style.transform = 'translateX(0px)';
         profileDetailShadow.classList.add('show');
-        profileDetailShortcut.classList.add('hide');
+        // profileDetailShortcut.classList.add('hide');
     });
 
     profileDetailShadow.addEventListener('click', () => {
         profileDetails.style.transform = '';
         profileDetailShadow.classList.remove('show');
-        profileDetailShortcut.classList.remove('hide');
+        // profileDetailShortcut.classList.remove('hide');
     });
 
     expandCollapseButton.addEventListener('click', () => {
@@ -65,19 +65,19 @@ function profilHandler() {
     });
 }
 
-function programmingLanguageHandler() {
-    moreLanguagesBtn.addEventListener('click', () => {
-        programmingLanguage.style.maxHeight = '400px';
-        moreLanguagesBtn.style.display = 'none';
-    }, false);
+// function programmingLanguageHandler() {
+//     moreLanguagesBtn.addEventListener('click', () => {
+//         programmingLanguage.style.maxHeight = '400px';
+//         moreLanguagesBtn.style.display = 'none';
+//     }, false);
 
-    document.addEventListener('click', (event) => {
-        if (!programmingLanguage.contains(event.target)) {
-            programmingLanguage.style.maxHeight = '';
-            moreLanguagesBtn.style.display = '';
-        }
-    }, true);
-}
+//     document.addEventListener('click', (event) => {
+//         if (!programmingLanguage.contains(event.target)) {
+//             programmingLanguage.style.maxHeight = '';
+//             moreLanguagesBtn.style.display = '';
+//         }
+//     }, true);
+// }
 
 function proceedAfterOrder() {
     const proceedBtn = document.querySelector('.proceed-after-order-button');
@@ -89,6 +89,6 @@ function proceedAfterOrder() {
 
 export {
     profilHandler as profile,
-    programmingLanguageHandler as moreProgrammingLanguage,
+    // programmingLanguageHandler as moreProgrammingLanguage,
     proceedAfterOrder,
 }

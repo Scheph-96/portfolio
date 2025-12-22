@@ -1,11 +1,13 @@
-import { profile, moreProgrammingLanguage } from './plugins/website_events.js';
+import { profile, 
+    // moreProgrammingLanguage 
+} from './plugins/website_events.js';
 import { contentHandlerOnEvent, contentHandlerOnRawCode } from './plugins/navigation.js';
 import { renderContentBaseOnUrl } from "../tools/route_loader.tool.js";
 
 
 const main = () => {
     profile();
-    moreProgrammingLanguage();
+    // moreProgrammingLanguage();
     renderContentBaseOnUrl();
     contentHandlerOnEvent();
 

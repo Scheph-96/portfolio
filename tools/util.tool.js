@@ -12,8 +12,6 @@ const bcrypt = require('bcryptjs');
 // Custom requirement
 const FileUploadError = require('../errors/file_upload.error');
 const Log = require('../models/class/log.js');
-const NewOrder = require('../models/class/new_order.js');
-const OrderSchema = require('../models/Schema/order.js');
 
 
 /**
@@ -238,23 +236,6 @@ async function readOnDisk(path) {
 }
 
 /**
- * Parse the order object for view display
- * @param {OrderSchema.NewOrder} newOrder 
- * @returns 
- * 
- */
-async function parseNewOrder(newOrder) {
-    return new Promise((resolve, reject) => {
-        try {
-            let newOrderParsed = new NewOrder(newOrder.orderNumber ,newOrder.lastname+" "+newOrder.firstname, newOrder.service, timeago.simple(newOrder.created));
-            resolve(newOrderParsed);
-        } catch (error) {
-            reject(error);
-        }
-    })
-}
-
-/**
  * Validate BCrypt password
  * 
  * @param {String} password the clear password
@@ -313,7 +294,6 @@ module.exports = {
     getFileExtension: getFileExtension,
     writeOnDisk: writeOnDisk,
     readOnDisk: readOnDisk,
-    parseNewOrder: parseNewOrder,
     validatePassword: validatePassword,
     getCookie: getCookie,
     months: months,

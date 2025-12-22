@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.cdnfonts.com/css/bulletto-killa');
 
 
 :root {
@@ -31,6 +32,25 @@ body {
         Why? 
         I F** DON'T KNOW
     */
+}
+
+body .app-bar {
+    display: none;
+    width: 100%;
+    padding: var(--main-padding);
+    align-items: center;
+    justify-content: start;
+    gap: 2rem;
+}
+
+body .app-bar .menu-icon i {
+    font-size: 2rem;
+}
+
+body .app-bar h1 {
+    /* font-family: 'Bulletto Killa¬', sans-serif; */
+    letter-spacing: 1px;
+    font-size: 2rem;
 }
 
 main {
@@ -291,33 +311,39 @@ body.error .error-page .content p span {
     padding: var(--main-padding);
     background-color: var(--card-bg-color);
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
+    gap: 1rem;
     box-shadow: var(--y-shadow);
 }
 
 /* ------------------- profile-pic ------------------- */
 
 .profile-details .profile .profile-pic {
-    width: 5.5rem;
-    height: 5.5rem;
+    width: 4.5rem;
+    height: 4.5rem;
     border-radius: 50%;
     background-color: var(--main-bg-color);
     margin-bottom: 15px;
     overflow: hidden;
 }
 
-/* ------------------- name ------------------- */
+/* ------------------- credentials ------------------- */
 
-.profile-details .profile .name {
+.profile-details .profile .credentials {
     color: var(--default-text-color);
     text-align: center;
     margin-bottom: 15px;
 }
 
-.profile-details .profile .name h2 {
-    font-size: 1.2rem;
+.profile-details .profile .credentials h2 {
+    font-size: 1rem;
+}
+
+.profile-details .profile .credentials p {
+    font-size: .9rem;
+    color: var(--light-text-color);
 }
 
 /* ------------------- profession ------------------- */
@@ -363,10 +389,32 @@ body.error .error-page .content p span {
 /* ------------------- programming-language ------------------- */
 
 .profile-details .details-skills .programming-language {
-    margin-bottom: 40px;
-    max-height: 88px;
+    margin: 20px 0;
+    /* max-height: 88px; */
     overflow: hidden;
     transition: max-height .4s ease-in-out;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.profile-details .details-skills .programming-language .language {
+    padding: 5px 10px;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    border: 1px solid var(--primary-color);
+    border-radius: 30px;
+}
+
+.profile-details .details-skills .programming-language .language img {
+    width: 1rem;
+}
+
+.profile-details .details-skills .programming-language .language p {
+    font-size: .8rem;
+    text-transform: uppercase;
 }
 
 .profile-details .details-skills .programming-language .visible-language {
@@ -458,18 +506,22 @@ body.error .error-page .content p span {
 
 /* ------------------- language ------------------- */
 
-.profile-details .details-skills .languages .language {
+.profile-details .details-skills .spoken-languages div {
+    margin-top: 10px;
+}
+
+.profile-details .details-skills .spoken-languages .spoken-language {
     color: var(--default-text-color);
     font-size: .7rem;
 }
 
-.profile-details .details-skills .languages .language:first-child {
+.profile-details .details-skills .spoken-languages .spoken-language:first-child {
     margin-bottom: 15px;
 }
 
 /* ------------------- progressbar ------------------- */
 
-.profile-details .details-skills .languages .language span {
+.profile-details .details-skills .spoken-languages .spoken-language span {
     display: block;
     width: 100%;
     height: .3rem;
@@ -478,11 +530,11 @@ body.error .error-page .content p span {
     position: relative;
 }
 
-.profile-details .details-skills .languages .language:first-child span::before {
+.profile-details .details-skills .spoken-languages .spoken-language:first-child span::before {
     width: 80%;
 }
 
-.profile-details .details-skills .languages .language span::before {
+.profile-details .details-skills .spoken-languages .spoken-language span::before {
     content: '';
     position: absolute;
     top: 0;
@@ -770,6 +822,7 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
 
 .main-content .container .body .works .works-header {
     position: relative;
+    padding: 0 1rem;
 }
 
 .main-content .container .body .works .works-header .work-filter ul {
@@ -825,37 +878,37 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
 }
 
 .main-content .container .body .works .works-content .work-item li,
-.main-content .container .more-experience-page li,
+.main-content .container .more-experience-page .work-item li,
 .asset-showcase li {
     background-color: var(--card-bg-color);
 }
 
 .main-content .container .body .works .works-content .work-item .work-figure,
-.main-content .container .more-experience-page .work-figure {
+.main-content .container .more-experience-page .work-item .work-figure {
     padding: 1rem;
     box-shadow: var(--y-shadow);
 }
 
 .main-content .container .body .works .works-content .work-item .work-figure .work-figure-content,
-.main-content .container .more-experience-page .work-figure .work-figure-content {
+.main-content .container .more-experience-page .work-item .work-figure .work-figure-content {
     display: flex;
     flex-direction: column;
     gap: .8rem;
 }
 
 .main-content .container .body .works .works-content .work-item .work-figure .work-figure-content h4,
-.main-content .container .more-experience-page .work-figure .work-figure-content h4 {
+.main-content .container .more-experience-page .work-item .work-figure .work-figure-content h4 {
     padding-top: .5rem;
 }
 
 .main-content .container .body .works .works-content .work-item .work-figure .work-figure-content p,
-.main-content .container .more-experience-page .work-figure .work-figure-content p {
+.main-content .container .more-experience-page .work-item .work-figure .work-figure-content p {
     font-size: .8rem;
     color: var(--light-text-color);
 }
 
 .main-content .container .body .works .works-content .work-item .work-figure .work-figure-content .languages,
-.main-content .container .more-experience-page .work-figure .work-figure-content .languages {
+.main-content .container .more-experience-page .work-item .work-figure .work-figure-content .languages {
     display: flex;
     align-items: center;
     gap: .5rem;
@@ -863,7 +916,7 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
 }
 
 .main-content .container .body .works .works-content .work-item .work-figure .work-figure-content .languages span,
-.main-content .container .more-experience-page .work-figure .work-figure-content .languages span {
+.main-content .container .more-experience-page .work-item .work-figure .work-figure-content .languages span {
     /* width: fit-content; */
     font-size: .8rem;
     padding: 0 .8rem;
@@ -874,32 +927,32 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
 }
 
 .main-content .container .body .works .works-content .work-item .work-figure .work-figure-content .default-btn,
-.main-content .container .more-experience-page .work-figure .work-figure-content .default-btn {
+.main-content .container .more-experience-page .work-item .work-figure .work-figure-content .default-btn {
     border-radius: 10px;
     cursor: pointer;
 }
 
 .main-content .container .body .works .works-content .work-item .work-figure .work-figure-content .default-btn a,
-.main-content .container .more-experience-page .work-figure .work-figure-content .default-btn a {
+.main-content .container .more-experience-page .work-item .work-figure .work-figure-content .default-btn a {
     color: var(--card-bg-color);
 }
 
 .main-content .container .body .works .works-content .work-item .work-figure .work-figure-content .default-btn i,
-.main-content .container .more-experience-page .work-figure .work-figure-content .default-btn i {
+.main-content .container .more-experience-page .work-item .work-figure .work-figure-content .default-btn i {
     color: var(--card-bg-color);
     font-size: 1rem;
     margin-left: 1rem;
 }
 
 .main-content .container .body .works .works-content .work-item img,
-.main-content .container .more-experience-page img,
+.main-content .container .more-experience-page .work-item img,
 .asset-showcase ul img {
     aspect-ratio: 3 / 2;
     object-fit: cover;
 }
 
 .main-content .container .body .works .works-content .work-item .more-work,
-.main-content .container .more-experience-page .more-work {
+.main-content .container .more-experience-page .work-item .more-work {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -907,7 +960,7 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
 }
 
 .main-content .container .body .works .works-content .work-item .more-work>a,
-.main-content .container .more-experience-page .more-work>a {
+.main-content .container .more-experience-page .work-item .more-work>a {
     font-size: 2rem;
     font-weight: 700;
 }
@@ -1046,6 +1099,10 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
 
 .main-content .container .body .contact .form-container {
     margin: var(--main-padding) 0 0 0;
+}
+
+.main-content .container .body .contact h2 {
+    padding: 0 1rem;
 }
 
 /* ------------------- footer ------------------- */
@@ -1334,6 +1391,10 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
         grid-template-columns: auto;
     }
 
+body .app-bar {
+        display: flex;
+    }
+
     .profile-details-shortcut>div {
         display: flex;
         justify-content: center;
@@ -1436,12 +1497,12 @@ main:hover:not(:has(*:hover))>div.sidebar-collapse .collapse-expand-sidebar {
     /* ------------------- status ------------------- */
 
     .main-content .container .body .status {
-        display: grid;
         grid-template-columns: repeat(1, 1fr);
     }
 
     .main-content .container .body .status>div {
-        padding: var(--main-padding) 0;
+        width: fit-content;
+        padding: var(--main-padding) 1rem;
     }
 
     .profile-details {
