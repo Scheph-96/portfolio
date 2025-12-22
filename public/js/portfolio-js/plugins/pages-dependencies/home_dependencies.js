@@ -56,7 +56,7 @@ function workSwipe() {
       ajaxRequest.loadHtml(`/experience/favorite/ressource/${workTitles[i].getAttribute('type')}`, workContent, null);
 
       workContent.addEventListener('file-loaded', (e) => {
-        console.log("IN WORK CONTENT");
+
 
         workContent.innerHTML = e.detail.data;
 
@@ -86,7 +86,7 @@ function workMenuHandler() {
   if (workFilterShortcut) {
     workFilterShortcut.addEventListener('click', () => {
       workFilterShortcutDisplayer.classList.add('show');
-      console.log(workFilterShortcutDisplayer.classList);
+
     }, false);
 
     document.addEventListener('click', (event) => {
@@ -140,7 +140,7 @@ function contactFormHandler() {
   const contactForm = document.getElementById('contact-form');
   const submitButton = document.getElementById('submit-button');
   let isSubmit = false;
-  console.log('EXECUTE CONTACT');
+
   if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -156,8 +156,6 @@ function contactFormHandler() {
         const object = Object.fromEntries(contact);
         const json = JSON.stringify(object);
 
-        console.log('THE CONTACT: ', ...contact);
-
         fetch("https://api.web3forms.com/submit", {
           method: "POST",
           headers: {
@@ -167,17 +165,11 @@ function contactFormHandler() {
           body: json,
         })
           .then(async (result) => {
-                  let json = await result.json();
-
-            console.log(json);
-            // contentHandlerOnRawCode(result.page);
-            // customReplaceState(result.page, '', routes().reviewSuccess.addressBarUrl);
-            // window.history.replaceState('', '', routes().reviewSuccess.addressBarUrl);
-            // contentHandlerOnRawCode(result.page);
-            // alertToast(result.type, result.message);
-            // if (result.message) {
-            //   alertToast(result.type, result.message);
-            // }
+            result = await result.json();
+            
+            if (result.message) {
+              alertToast((result.success ? "success" : "danger"), result.message);
+            }
           })
           .catch((error) => {
             if (error.status === 404) {
@@ -190,8 +182,6 @@ function contactFormHandler() {
                 alertToast('danger', 'Unexpected error. Please try again!');
               }
             }
-            console.log(`ERR::::::::::::`);
-            console.error(`ERROR:: ${error.error}`);
           })
           .finally(() => {
             isSubmit = false;
@@ -205,53 +195,6 @@ function contactFormHandler() {
 
     });
   }
-
-
-  //   const contactForm = document.getElementById("contact-form");
-  // const result = document.getElementById("result");
-
-  // form.addEventListener("submit", function (e) {
-  //   e.preventDefault();
-
-  //   const formData = new FormData(form);
-  //   formData.append("3b2b4909-5a31-4aae-bfb5-1ba10cc266f2");
-  //   const object = Object.fromEntries(formData);
-  //   const json = JSON.stringify(object);
-
-  //   fetch("https://api.web3forms.com/submit", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Accept: "application/json",
-  //     },
-  //     body: json,
-  //   })
-  //     .then(async (response) => {
-  //       let json = await response.json();
-  //       if (response.status == 200) {
-  //         result.innerHTML = json.message;
-  //         result.classList.remove("text-gray-500");
-  //         result.classList.add("text-green-500");
-  //       } else {
-  //         console.log(response);
-  //         result.innerHTML = json.message;
-  //         result.classList.remove("text-gray-500");
-  //         result.classList.add("text-red-500");
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       result.innerHTML = "Something went wrong!";
-  //     })
-  //     .then(function () {
-  //       form.reset();
-  //       setTimeout(() => {
-  //         result.style.display = "none";
-  //       }, 5000);
-  //     });
-  // });
-
-
 }
 
 

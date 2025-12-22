@@ -289,19 +289,16 @@ body.error .error-page .content p span {
 /* =============================== PROFILE DETAILS =============================== */
 
 .profile-details {
+    width: 250px;
     background-color: var(--section-bg-color);
     box-shadow: var(--x-shadow);
-    z-index: 2;
+    z-index: 99;
     max-height: 100vh;
     overflow: hidden;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
     position: relative;
-}
-
-.profile-details:hover~.main-content .collapse-expand-sidebar {
-    transform: scaleX(1);
 }
 
 /* ------------------- profile ------------------- */
@@ -392,10 +389,10 @@ body.error .error-page .content p span {
     margin: 20px 0;
     /* max-height: 88px; */
     overflow: hidden;
-    transition: max-height .4s ease-in-out;
+    /* transition: max-height .4s ease-in-out; */
     display: flex;
     flex-wrap: wrap;
-    gap: .5rem;
+    gap: .4rem;
 }
 
 .profile-details .details-skills .programming-language .language {
@@ -571,11 +568,15 @@ body.error .error-page .content p span {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10;
+    z-index: 999;
     cursor: pointer;
     transform: scaleX(0);
     transform-origin: right;
     transition: transform .2s ease-in;
+}
+
+.profile-details:hover~.main-content .collapse-expand-sidebar {
+    transform: scaleX(1);
 }
 
 .main-content .collapse-expand-sidebar i {
@@ -595,7 +596,6 @@ main>div.sidebar-collapse .main-content .collapse-expand-sidebar {
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     transform-origin: left;
-    z-index: 9999;
 }
 
 
