@@ -102,7 +102,7 @@ app.use((err, req, res, next) => {
 
 
 httpServer.listen(PORT, () => {
-    console.log(`Server started at ${appConfig.host}:${appConfig.port}`);
+    console.log(`Server started at ${appConfig.siteUrl}`);
 });
 
 
