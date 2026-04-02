@@ -1,3 +1,5 @@
 # A Fully Responsive portfolio website
-## This portfolio website is for individuals or businesses 
-A way to showcase services and skills as a developer or designer
+
+A way to showcase services and skills as a developer
+
+This project is a Single Page App (SPA) coded from scratch with Nodejs templating website using ejs, javascript and MongoDB
