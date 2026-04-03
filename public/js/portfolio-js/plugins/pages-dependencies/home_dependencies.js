@@ -71,15 +71,6 @@ function workSwipe() {
   }
 }
 
-function orderPageHandler() {
-  const orderNow = document.querySelectorAll('.order-now');
-  for (let i = 0; i < orderNow.length; i++) {
-    orderNow[i].addEventListener('click', (e) => {
-      customPushState('', '', `/order/${e.currentTarget.getAttribute('service')}`);
-    }, { once: true });
-  }
-}
-
 function workMenuHandler() {
   const workFilterShortcut = document.querySelector('.work-filter-shortcut');
   const workFilterShortcutDisplayer = document.querySelector('.work-filter ul');
@@ -152,6 +143,7 @@ function contactFormHandler() {
         submitButton.value = "submitting...";
 
         let contact = new FormData(contactForm);
+        // It's Okay, it's a public key
         contact.append("access_key", "3b2b4909-5a31-4aae-bfb5-1ba10cc266f2");
         const object = Object.fromEntries(contact);
         const json = JSON.stringify(object);
@@ -172,6 +164,8 @@ function contactFormHandler() {
             }
           })
           .catch((error) => {
+            console.log(error);
+            
             if (error.status === 404) {
               alertToast(error.errorData.type, error.errorData.message);
               contentHandlerOnRawCode(error.errorData.page);
@@ -200,7 +194,7 @@ function contactFormHandler() {
 
 function homeDependencieMain() {
   swiper();
-  orderPageHandler();
+  // orderPageHandler();
   workSwipe();
   workMenuHandler();
   // openImage();

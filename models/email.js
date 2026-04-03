@@ -1,6 +1,9 @@
 class Email {
-    constructor(data) {
-        this.data = data;
+    constructor(name, email, subject, message) {
+        this.name = name;
+        this.email = email
+        this.subject = subject;
+        this.message = message;
     }
 }
 

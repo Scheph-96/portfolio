@@ -528,7 +528,7 @@ body.error .error-page .content p span {
 }
 
 .profile-details .details-skills .spoken-languages .spoken-language:first-child span::before {
-    width: 80%;
+    width: 60%;
 }
 
 .profile-details .details-skills .spoken-languages .spoken-language span::before {
