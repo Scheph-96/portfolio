@@ -9,3 +9,5 @@
 
 #Ignore logs
 /logs/
+
+.env
